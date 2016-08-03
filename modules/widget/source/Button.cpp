@@ -324,9 +324,9 @@ void Button::Component::SetBuilderAttributes(
 	//	_win->Update();
 }
 
-Button::Builder::Builder()
-{
-}
+//Button::Builder::Builder()
+//{
+//}
 
 // std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(
 //	const ax::Point& pos, const std::string& file_path)
