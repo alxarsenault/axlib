@@ -78,6 +78,7 @@ target_link_libraries(axLibDyn "-framework OpenGL")
 # Examples.
 add_subdirectory(example/example01)
 add_subdirectory(example/blank)
+add_subdirectory(example/widget)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION /usr/local/lib/)
 
