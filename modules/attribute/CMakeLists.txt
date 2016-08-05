@@ -107,6 +107,9 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 set_target_properties(libaxAttribute PROPERTIES FOLDER axAttribute)
 set_target_properties(libaxAttribute PROPERTIES OUTPUT_NAME axAttribute)
 
+#install(FILES ${ATTRIBUTE_INCLUDE_DIRECTORY}/*.hpp DESTINATION /usr/local/include/axlib/)
+install(TARGETS libaxAttribute DESTINATION /usr/local/lib/)
+
 # #------------------------------------------------------------------------------
 # # Example
 # #------------------------------------------------------------------------------

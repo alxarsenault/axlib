@@ -51,3 +51,6 @@ target_include_directories(libaxUtil PUBLIC ${UTIL_INCLUDE_DIRECTORY})
 
 set_target_properties(libaxUtil PROPERTIES FOLDER axUtil)
 set_target_properties(libaxUtil PROPERTIES OUTPUT_NAME axUtil)
+
+install(FILES ${UTIL_INCLUDE_FILES} DESTINATION /usr/local/include/axlib/)
+install(TARGETS libaxUtil DESTINATION /usr/local/lib/)

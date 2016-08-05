@@ -32,9 +32,6 @@ add_subdirectory(modules/graphic)
 add_subdirectory(modules/core)
 add_subdirectory(modules/widget)
 
-# Examples.
-add_subdirectory(example/example01)
-
 # Generate empty cpp file when generating Xcode projects.
 # Xcode won't build properly without an actual source file in the cmake add_library command.
 if(${CMAKE_GENERATOR} STREQUAL Xcode)
@@ -42,6 +39,7 @@ if(${CMAKE_GENERATOR} STREQUAL Xcode)
 	file(GLOB EMPTY_FILE ${CMAKE_CURRENT_BINARY_DIR}/empty.cpp)
 endif()
 
+# Create static library.
 add_library(${PROJECT_NAME} STATIC 
 	        ${EMPTY_FILE}
 	        $<TARGET_OBJECTS:axMath>
@@ -55,5 +53,32 @@ add_library(${PROJECT_NAME} STATIC
 
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
+
+# Create dynamic library.
+add_library(axLibDyn SHARED
+	        ${EMPTY_FILE}
+	        $<TARGET_OBJECTS:axMath>
+	        $<TARGET_OBJECTS:axUtil>
+	        $<TARGET_OBJECTS:axEvent>
+			$<TARGET_OBJECTS:axAttribute>
+			$<TARGET_OBJECTS:axOS>
+			$<TARGET_OBJECTS:axGraphic>
+			$<TARGET_OBJECTS:axCore>
+			$<TARGET_OBJECTS:axWidget>)
+
+set_target_properties(axLibDyn PROPERTIES LINKER_LANGUAGE CXX)
+set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
+
+set_target_properties(axLibDyn PROPERTIES OUTPUT_NAME axlib)
+
+target_link_libraries(axLibDyn ${PNG_LIBRARY} ${FREETYPE2_LIBRARY})
+target_link_libraries(axLibDyn "-framework Cocoa")
+target_link_libraries(axLibDyn "-framework OpenGL")
+
+# Examples.
+add_subdirectory(example/example01)
+add_subdirectory(example/blank)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION /usr/local/lib/)
 
 

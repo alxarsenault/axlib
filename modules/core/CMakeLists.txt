@@ -83,3 +83,6 @@ target_include_directories(axCore PUBLIC ${PNG_INCLUDE_DIRS})
 
 set_target_properties(libaxCore PROPERTIES FOLDER axCore)
 set_target_properties(libaxCore PROPERTIES OUTPUT_NAME axCore)
+
+install(FILES ${CORE_INCLUDE_FILES} ${CORE_OSX_INCLUDE_FILES} ${CORE_OSX_OBJC_INCLUDE_FILES} DESTINATION /usr/local/include/axlib/)
+install(TARGETS libaxCore DESTINATION /usr/local/lib/)
