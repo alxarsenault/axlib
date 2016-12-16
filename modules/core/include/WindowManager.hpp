@@ -28,7 +28,7 @@
 
 #include <map>
 #include "Object.hpp"
-#include "Math.hpp"
+#include "Util.hpp"
 #include "WindowTree.hpp"
 
 #include "MouseManager.hpp"

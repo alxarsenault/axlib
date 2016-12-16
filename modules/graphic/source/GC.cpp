@@ -84,7 +84,7 @@ void ax::GC::DrawRectangle(const ax::Rect& rect)
 	ax::FRect frect = RectToFRect(rect);
 
 	// Order : bl, tl, tr, br.
-	ax::math::RectPoints<ax::FPoint> points(frect.GetPoints<ax::FPoint>());
+	ax::util::RectPoints<ax::FPoint> points(frect.GetPoints<ax::FPoint>());
 
 	ax::Color& c0(current_color);
 	ax::Color colors[4] = { c0, c0, c0, c0 };
@@ -124,7 +124,7 @@ void ax::GC::DrawRectangleContour(const ax::Rect& rect, float linewidth)
 	glLineWidth(linewidth);
 
 	// Order : bl, tl, tr, br.
-	ax::math::RectPoints<ax::FPoint> points = frect.GetPoints<ax::FPoint>();
+	ax::util::RectPoints<ax::FPoint> points = frect.GetPoints<ax::FPoint>();
 
 	GLubyte indices[] = { 1, 2, 2, 3, 3, 0, 0, 1 };
 
@@ -509,7 +509,7 @@ struct axRectPointsOrder {
 	axRectPointsOrder()
 	{
 	}
-	axRectPointsOrder(const ax::math::RectPoints<ax::FPoint>& points)
+	axRectPointsOrder(const ax::util::RectPoints<ax::FPoint>& points)
 		: top_left(points.top_left)
 		, top_right(points.top_right)
 		, bottom_left(points.bottom_left)
@@ -1132,7 +1132,7 @@ void ax::GC::DrawRectangleColorFade(const ax::Rect& rectangle, const ax::Color& 
 	ax::Color colors[4] = { cc1, cc1, cc2, cc2 };
 
 	// Order : bl, tl, tr, br.
-	ax::math::RectPoints<ax::FPoint> points = rect.GetPoints<ax::FPoint>();
+	ax::util::RectPoints<ax::FPoint> points = rect.GetPoints<ax::FPoint>();
 
 	shader_normal.Activate();
 
@@ -1159,7 +1159,7 @@ void ax::GC::DrawRectangleColorFade(const ax::Rect& rectangle, const ax::Color& 
 	ax::Color colors[4] = { c1, c1, c2, c2 };
 
 	// Order : bl, tl, tr, br.
-	ax::math::RectPoints<ax::FPoint> points(rect.GetPoints<ax::FPoint>());
+	ax::util::RectPoints<ax::FPoint> points(rect.GetPoints<ax::FPoint>());
 
 	shader_normal.Activate();
 
@@ -1187,7 +1187,7 @@ void ax::GC::DrawRectangleVerticalColorFade(
 	ax::Color colors[4] = { c1, c2, c2, c1 };
 
 	// Order : bl, tl, tr, br.
-	ax::math::RectPoints<ax::FPoint> points(rect.GetPoints<ax::FPoint>());
+	ax::util::RectPoints<ax::FPoint> points(rect.GetPoints<ax::FPoint>());
 
 	shader_normal.Activate();
 
@@ -1213,7 +1213,7 @@ void ax::GC::DrawRectangleColorFade(const ax::Rect& rectangle, const std::vector
 	ax::FRect rect = RectToFRect(rectangle);
 
 	// Order : bl, tl, tr, br.
-	ax::math::RectPoints<ax::FPoint> points(rect.GetPoints<ax::FPoint>());
+	ax::util::RectPoints<ax::FPoint> points(rect.GetPoints<ax::FPoint>());
 
 	shader_normal.Activate();
 

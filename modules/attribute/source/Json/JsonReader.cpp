@@ -67,7 +67,8 @@ JsonReader::JsonReader(const std::string& file_path)
 	file_stream.seekg(0, std::ios_base::end);
 	const std::size_t file_size = file_stream.tellg();
 
-	std::vector<char> data;
+//	std::vector<char> data;
+	std::string data;
 	data.reserve(file_size + 1);
 
 	// Go back to beginning.
@@ -76,10 +77,8 @@ JsonReader::JsonReader(const std::string& file_path)
 	// Copy file content to vector.
 	data.assign(std::istreambuf_iterator<char>(file_stream), std::istreambuf_iterator<char>());
 	data.push_back('\n');
-	data.push_back('\n');
 
-	rapidjson::StringStream stream = rapidjson::StringStream(data.data());
-
+	rapidjson::StringStream stream = rapidjson::StringStream(data.c_str());
 	rapidjson::Reader reader;
 	rapidjson::ParseResult result = reader.Parse(stream, handler);
 

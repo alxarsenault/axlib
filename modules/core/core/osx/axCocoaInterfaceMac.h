@@ -19,10 +19,10 @@
  * To release a closed-source product which uses axFrameworks, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
-#ifndef MidiSequencer_axFileDialog_h
-#define MidiSequencer_axFileDialog_h
 
-#include "Math.hpp"
+#pragma once
+
+#include "Util.hpp"
 
 std::string axOpenFileDialog();
 
@@ -68,5 +68,3 @@ void axCocoaSetTitleBar(bool title_bar);
 void axCocoaSetFocusAndCenter();
 
 std::string axCocoaGetPasteboardContent();
-
-#endif

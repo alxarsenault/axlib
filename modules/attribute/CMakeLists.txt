@@ -88,6 +88,8 @@ target_include_directories(axAttribute PUBLIC ${ATTRIBUTE_SOURCE_DIRECTORY}/json
 target_include_directories(axAttribute PUBLIC ${ATTRIBUTE_SOURCE_DIRECTORY}/xml/)
 target_include_directories(axAttribute PUBLIC ${ATTRIBUTE_SOURCE_DIRECTORY}/xml/rapidxml)
 
+target_include_directories(axAttribute PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../util/include)
+
 # Generate empty cpp file when generating Xcode projects.
 # Xcode won't build properly without an actual source file in the cmake add_library command.
 if(${CMAKE_GENERATOR} STREQUAL Xcode)
@@ -107,7 +109,11 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 set_target_properties(libaxAttribute PROPERTIES FOLDER axAttribute)
 set_target_properties(libaxAttribute PROPERTIES OUTPUT_NAME axAttribute)
 
-#install(FILES ${ATTRIBUTE_INCLUDE_DIRECTORY}/*.hpp DESTINATION /usr/local/include/axlib/)
+file(GLOB_RECURSE ATTRIBUTE_INSTALL_INCLUDE_FILES  
+	${CMAKE_CURRENT_SOURCE_DIR} 
+	${ATTRIBUTE_INCLUDE_DIRECTORY}/*.hpp)
+
+install(FILES ${ATTRIBUTE_INSTALL_INCLUDE_FILES} DESTINATION /usr/local/include/axlib/)
 install(TARGETS libaxAttribute DESTINATION /usr/local/lib/)
 
 # #------------------------------------------------------------------------------

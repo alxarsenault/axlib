@@ -26,7 +26,6 @@
 /// @defgroup Core
 /// @{
 
-#include "Math.hpp"
 #include "Window.hpp"
 #include <deque>
 #include <map>

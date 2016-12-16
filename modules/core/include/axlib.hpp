@@ -44,7 +44,6 @@
  */
 #include "Util.hpp"
 
-#include "Math.hpp"
 /*
  * axEvent.
  */

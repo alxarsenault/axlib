@@ -23,7 +23,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYS
 # message("FOLDER :" ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG})
 
 # Modules.
-add_subdirectory(modules/math)
 add_subdirectory(modules/util)
 add_subdirectory(modules/event)
 add_subdirectory(modules/attribute)
@@ -42,7 +41,6 @@ endif()
 # Create static library.
 add_library(${PROJECT_NAME} STATIC 
 	        ${EMPTY_FILE}
-	        $<TARGET_OBJECTS:axMath>
 	        $<TARGET_OBJECTS:axUtil>
 	        $<TARGET_OBJECTS:axEvent>
 			$<TARGET_OBJECTS:axAttribute>
@@ -57,7 +55,6 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 # Create dynamic library.
 add_library(axLibDyn SHARED
 	        ${EMPTY_FILE}
-	        $<TARGET_OBJECTS:axMath>
 	        $<TARGET_OBJECTS:axUtil>
 	        $<TARGET_OBJECTS:axEvent>
 			$<TARGET_OBJECTS:axAttribute>
@@ -81,5 +78,5 @@ add_subdirectory(example/blank)
 add_subdirectory(example/widget)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION /usr/local/lib/)
-
+install(TARGETS axLibDyn DESTINATION /usr/local/lib/)
 

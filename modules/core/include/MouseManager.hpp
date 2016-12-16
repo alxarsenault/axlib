@@ -20,13 +20,12 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 
-#ifndef __AX_MOUSE_MANAGER__
-#define __AX_MOUSE_MANAGER__
+#pragma once
 
-/// @defgroup Core
+/// @defgroup core
 /// @{
 
-#include "Math.hpp"
+#include "Util.hpp"
 #include "Window.hpp"
 
 namespace ax {
@@ -110,4 +109,3 @@ namespace core {
 }
 
 /// @}
-#endif //__AX_MOUSE_MANAGER__

@@ -22,7 +22,7 @@
 #ifndef __AX_IMAGE__
 #define __AX_IMAGE__
 
-/// @defgroup Graphic
+/// @defgroup graphic
 /// @{
 
 //#define PNG_SKIP_SETJMP_CHECK
@@ -36,7 +36,6 @@
 #include <stdio.h>
 #include <map>
 
-#include "Math.hpp"
 #include "Util.hpp"
 
 namespace ax {

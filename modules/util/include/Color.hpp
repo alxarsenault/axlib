@@ -27,6 +27,7 @@
 
 #include "Clamp.hpp"
 #include "axString.hpp"
+#include "ConsolePrint.hpp"
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -38,6 +39,33 @@ namespace util {
 
 	template <typename T> class Color {
 	public:
+		static Color FromString(const std::string& color_str)
+		{
+			std::vector<std::string> color_elem = String::Split(color_str, ",");
+			Color color(0.0f, 0.0f, 0.0f, 1.0f);
+
+			if (color_elem.size() < 3) {
+				ax::util::console::Print(
+					"Parsing color (not enough argument) -> should be \"r, g, b\" or \"r, g, b, a\".");
+				return color;
+			}
+			else if (color_elem.size() > 4) {
+				ax::util::console::Print(
+					"Parsing color (too many argument) -> should be \"r, g, b\" or \"r, g, b, a\".");
+				return color;
+			}
+
+			color.SetRed(std::stoi(color_elem[0]) / 255.0f);
+			color.SetGreen(std::stoi(color_elem[1]) / 255.0f);
+			color.SetBlue(std::stoi(color_elem[2]) / 255.0f);
+
+			if (color_elem.size() == 4) {
+				color.SetAlpha(std::stoi(color_elem[3]) / 255.0f);
+			}
+
+			return color;
+		}
+
 		explicit Color(const T& r, const T& g, const T& b)
 			: _r(r)
 			, _g(g)

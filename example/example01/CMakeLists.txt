@@ -25,10 +25,9 @@ set_target_properties(libaxUtil PROPERTIES LINKER_LANGUAGE CXX)
 set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 
 target_include_directories(example01 PUBLIC 
-		${MATH_INCLUDE_DIRECTORY}
 		${UTIL_INCLUDE_DIRECTORY}
 		${EVENT_INCLUDE_DIRECTORY})
 
 set_target_properties(example01 PROPERTIES FOLDER example/)
 
-target_link_libraries(example01 libaxMath libaxUtil libaxEvent libaxGraphic)
+target_link_libraries(example01 libaxUtil libaxEvent libaxGraphic)

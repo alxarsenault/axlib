@@ -1,0 +1,22 @@
+{
+    "Widget": {
+    "builder": "Button",
+    "name": "TextButton",
+    "label": "Bonjour",
+    "description": "Default button.",
+    "img": "widget_menu_images/btn01.png",
+    "size": "60, 25",
+    "info": {
+        "normal": "230, 230, 230",
+        "hover": "235, 235, 235",
+        "clicking": "243, 243, 243",
+        "selected": "230, 230, 230",
+        "contour": "128, 128, 128",
+        "font_color": "25, 25, 25",
+        "corner_radius": "0"
+    },
+    "label": "Button",
+    "flags": "0",
+    "msg": "bing"
+    }
+}

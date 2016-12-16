@@ -1,10 +1,10 @@
-#include "Xml.hpp"
+#include "AttributeXml.hpp"
 #include <sstream>
 
 namespace ax {
 
 void XmlRecursiveWriter(
-	const Attribute& att, XmlHelper& doc, XmlHelper::Node& parent, bool value_as_attribute)
+	const Attribute& att, Xml& doc, Xml::Node& parent, bool value_as_attribute)
 {
 	switch (att.GetType()) {
 	case Attribute::Type::OBJECT:
@@ -14,7 +14,7 @@ void XmlRecursiveWriter(
 			}
 		}
 		else {
-			XmlHelper::Node child_node = doc.CreateNode(att.GetName());
+			Xml::Node child_node = doc.CreateNode(att.GetName());
 			parent.AddNode(child_node);
 
 			for (auto& n : att.GetAttributes()) {
@@ -24,7 +24,7 @@ void XmlRecursiveWriter(
 		break;
 	case Attribute::Type::ARRAY:
 		for (auto& n : att.GetAttributes()) {
-			XmlHelper::Node child_node = doc.CreateNode(att.GetName());
+			Xml::Node child_node = doc.CreateNode(att.GetName());
 			parent.AddNode(child_node);
 			XmlRecursiveWriter(n, doc, child_node, value_as_attribute);
 		}
@@ -37,7 +37,7 @@ void XmlRecursiveWriter(
 			parent.AddAttribute(att.GetName(), att.GetValue<std::string>());
 		}
 		else {
-			XmlHelper::Node child_node = doc.CreateNode(att.GetName(), att.GetValue<std::string>());
+			Xml::Node child_node = doc.CreateNode(att.GetName(), att.GetValue<std::string>());
 			parent.AddNode(child_node);
 		}
 
@@ -50,9 +50,9 @@ void XmlRecursiveWriter(
 
 std::string XmlWriter(const Attribute& att, bool value_as_attribute)
 {
-	XmlHelper doc;
+	Xml doc;
 	if (att.GetAttributes().size() == 1) {
-		XmlHelper::Node child_node = doc.CreateNode(att.GetAttributes()[0].GetName());
+		Xml::Node child_node = doc.CreateNode(att.GetAttributes()[0].GetName());
 		doc.AddMainNode(child_node);
 
 		for (auto& n : att.GetAttributes()[0].GetAttributes()) {

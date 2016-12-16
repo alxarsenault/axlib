@@ -37,7 +37,6 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 # Include directory.
 target_include_directories(axGraphic PUBLIC ${GRAPHIC_INCLUDE_DIRECTORY})
 target_include_directories(axGraphic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../util/include)
-target_include_directories(axGraphic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../math/include)
 target_include_directories(axGraphic PUBLIC ${FREETYPE2_INCLUDE_DIRS})
 target_include_directories(axGraphic PUBLIC ${PNG_INCLUDE_DIRS})
 
@@ -61,3 +60,6 @@ target_include_directories(libaxGraphic PUBLIC ${FREETYPE2_INCLUDE_DIRS})
 
 set_target_properties(libaxGraphic PROPERTIES FOLDER axGraphic)
 set_target_properties(libaxGraphic PROPERTIES OUTPUT_NAME axGraphic)
+
+install(FILES ${GRAPHIC_INCLUDE_FILES} DESTINATION /usr/local/include/axlib/)
+install(TARGETS libaxGraphic DESTINATION /usr/local/lib/)

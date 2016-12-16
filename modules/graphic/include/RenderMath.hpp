@@ -20,14 +20,12 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 
-#ifndef __AX_MATH__
-#define __AX_MATH__
+#pragma once
 
-/// @defgroup Graphic
+/// @defgroup graphic
 /// @{
 
 #include "Util.hpp"
-#include "Math.hpp"
 
 namespace ax {
 namespace GL {
@@ -96,4 +94,3 @@ namespace GL {
 //}
 
 /// @}
-#endif // __AX_MATH__

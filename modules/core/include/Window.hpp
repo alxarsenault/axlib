@@ -29,7 +29,7 @@
 #include "FrameBuffer.hpp"
 #include "GC.hpp"
 #include "Object.hpp"
-#include "Math.hpp"
+#include "Util.hpp"
 
 #include <array>
 

@@ -21,9 +21,7 @@ namespace GL {
 
 		Shader(const bool& content, const std::string& s_vextex_path,
 			const std::string& s_fragments_path);
-		
-//		Shader(const std::pair<std::string, std::string>& content);
-		
+
 		void CompileAndLink();
 		
 		void Activate();

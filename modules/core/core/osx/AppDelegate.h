@@ -21,8 +21,6 @@
  */
 #import <Cocoa/Cocoa.h>
 
-//NSOpenGLView,
-//NSOpenGLView,
 namespace ax
 {
     class App;

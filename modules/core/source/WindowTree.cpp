@@ -35,7 +35,6 @@ namespace core {
 	{
 	}
 
-	// void WindowTree::AddTopLevel(ax::Window::Ptr win)
 	void WindowTree::AddTopLevel(std::shared_ptr<ax::Window> win)
 	{
 		_nodes.push_back(win);
@@ -50,7 +49,6 @@ namespace core {
 		return nullptr;
 	}
 
-	//    ax::Window::Ptr WindowTree::FindMousePosition(const ax::Point& pos)
 	ax::Window* WindowTree::FindMousePosition(const ax::Point& pos)
 	{
 		std::shared_ptr<ax::Window> node = nullptr;

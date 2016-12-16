@@ -51,3 +51,6 @@ target_include_directories(libaxEvent PUBLIC ${EVENT_INCLUDE_DIRECTORY})
 
 set_target_properties(libaxEvent PROPERTIES FOLDER axEvent)
 set_target_properties(libaxEvent PROPERTIES OUTPUT_NAME axEvent)
+
+install(FILES ${EVENT_INCLUDE_FILES} DESTINATION /usr/local/include/axlib/)
+install(TARGETS libaxEvent DESTINATION /usr/local/lib/)

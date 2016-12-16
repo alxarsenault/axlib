@@ -3,13 +3,13 @@
 #include "Point2D.hpp"
 #include "Size2D.hpp"
 
-/// @defgroup math
+/// @defgroup util
 /// @{
 
 namespace ax {
-namespace math {
+namespace util {
 	/*
-	 * ax::math::RectPoints.
+	 * ax::util::RectPoints.
 	 */
 	template <typename T> struct RectPoints {
 		RectPoints()
@@ -28,7 +28,7 @@ namespace math {
 	};
 
 	/*
-	 * ax::math::Rect2D.
+	 * ax::util::Rect2D.
 	 */
 	template <typename T> class Rect2D {
 	public:

@@ -6,10 +6,9 @@
 //  Copyright (c) 2015 Alexandre Arsenault. All rights reserved.
 //
 
-#ifndef __axLib__axGraphicInterface__
-#define __axLib__axGraphicInterface__
+#pragma once
 
-#include "Math.hpp"
+#include "Util.hpp"
 
 namespace ax {
 namespace GL {
@@ -19,8 +18,7 @@ namespace GL {
 
 	void Draw(const ax::Size& size);
 
-	void BlockDrawing(const ax::Rect& absRect, const ax::Rect& showRect,
-		const ax::Size& frameSize);
+	void BlockDrawing(const ax::Rect& absRect, const ax::Rect& showRect, const ax::Size& frameSize);
 
 	void UnBlockDrawing();
 }
@@ -29,10 +27,6 @@ namespace GL {
 // namespace axGraphicInterface
 //{
 //    void Resize(const ax::Size& size);
-//
 //    void Init();
-//
 //    void Draw(const ax::Size& size);
 //}
-
-#endif /* defined(__axLib__axGraphicInterface__) */

@@ -158,7 +158,7 @@ public:
 	{
 		/// @todo Have this done statically.
 		std::cerr << "Create<> :: Type (" << typeid(T).name() << ") is not define as attribute." << std::endl;
-		return std::move(Attribute(Attribute::Type::NONE));
+		return Attribute(Attribute::Type::NONE);
 	}
 
 	/**
@@ -183,7 +183,7 @@ public:
 
 	/**
 	 * @brief Get the value of child attribute with given name if it exist or return the default value if not.
-	 * @details This function is the equivalent of using
+	 * @details This function is the equivalent of using (but a bit faster)
 	 *          \code
 	 *          if(att.Has("att_name") {
 	 *          	return att["att_name"].GetValue<T>();

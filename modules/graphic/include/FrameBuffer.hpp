@@ -32,7 +32,7 @@
 /// @defgroup Graphic
 /// @{
 
-#include "Math.hpp"
+#include "Util.hpp"
 #include <stdint.h>
 #include <functional>
 

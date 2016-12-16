@@ -9,17 +9,17 @@ template <> Attribute Attribute::Create<int>(const std::string& name, const int&
 	att._name = name;
 	att._value = std::to_string(value);
 	att._type = Type::NUMBER;
-	return std::move(att);
+	return att;
 }
 
 template <> Attribute Attribute::Create<double>(const std::string& name, const double& value)
 {
-	return std::move(Attribute(name, std::to_string(value), Type::NUMBER));
+	return Attribute(name, std::to_string(value), Type::NUMBER);
 }
 
 template <> Attribute Attribute::Create<std::string>(const std::string& name, const std::string& value)
 {
-	return std::move(Attribute(name, value, Type::STRING));
+	return Attribute(name, value, Type::STRING);
 }
 
 template <> void Attribute::SetValue<bool>(const bool& value)

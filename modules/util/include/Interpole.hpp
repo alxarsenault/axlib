@@ -2,11 +2,11 @@
 
 #include <cmath>
 
-/// @defgroup math
+/// @defgroup util
 /// @{
 
 namespace ax {
-namespace math {
+namespace util {
 	namespace Interpole {
 		template <typename T> T Lineair(const T& y1, const T& y2, const T& mu)
 		{

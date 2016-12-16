@@ -22,13 +22,14 @@
 
 #pragma once
 
-#include "Math.hpp"
+#include "Util.hpp"
 #include "Window.hpp"
 #include "AttributeDocument.hpp"
+#include "Xml.hpp"
 
 namespace ax {
 namespace widget {
-    /**
+	/**
 	 * @brief Parameter type enumeration.
 	 */
 	enum class ParamType {
@@ -125,15 +126,14 @@ namespace widget {
 			return _win;
 		}
 
-		//		virtual ax::Attribute::Node Save(ax::Xml& xml, ax::Xml::Node& node)
-		//		{
-		//			return node;
-		//		}
-		//
-		//		virtual void SetSaveChildCallback(std::function<void(ax::Xml&, ax::Xml::Node&, ax::Window*)>
-		//fct)
-		//		{
-		//		}
+		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node)
+		{
+			return node;
+		}
+
+		virtual void SetSaveChildCallback(std::function<void(ax::Xml&, ax::Xml::Node&, ax::Window*)> fct)
+		{
+		}
 
 	protected:
 		ax::Window* _win;
@@ -161,6 +161,15 @@ namespace widget {
 		};
 
 		virtual void SetCreateCallback(std::function<void(ax::Window*, ax::Attribute&)> fct)
+		{
+		}
+		
+		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node)
+		{
+			return nullptr;
+		};
+		
+		virtual void SetCreateCallback(std::function<void(ax::Window*, ax::Xml::Node&)> fct)
 		{
 		}
 	};

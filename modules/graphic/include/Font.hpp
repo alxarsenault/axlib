@@ -37,7 +37,6 @@
 #include FT_FREETYPE_H
 
 #include "Util.hpp"
-#include "Math.hpp"
 #include <map>
 
 namespace ax {

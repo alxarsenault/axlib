@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-/// @defgroup math
+/// @defgroup util
 /// @{
 
 namespace ax {
-namespace math {
+namespace util {
 	/*
 	 * Range2D.
 	 */

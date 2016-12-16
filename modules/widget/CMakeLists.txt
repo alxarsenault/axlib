@@ -61,3 +61,6 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 
 set_target_properties(libaxWidget PROPERTIES FOLDER axWidget)
 set_target_properties(libaxWidget PROPERTIES OUTPUT_NAME axWidget)
+
+install(FILES ${WIDGET_INCLUDE_FILES} DESTINATION /usr/local/include/axlib/)
+install(TARGETS libaxWidget DESTINATION /usr/local/lib/)

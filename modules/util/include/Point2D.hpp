@@ -2,13 +2,13 @@
 
 #include <iostream>
 
-/// @defgroup math
+/// @defgroup util
 /// @{
 
 namespace ax {
-namespace math {
+namespace util {
 	/*
-	 * ax::math::Point2D.
+	 * ax::util::Point2D.
 	 */
 	template <typename T> class Point2D {
 	public:

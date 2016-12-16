@@ -7,7 +7,7 @@
 
 int main()
 {
-	ax::math::Point2D<int> p01(12, 32);
+	ax::util::Point2D<int> p01(12, 32);
 	ax::util::console::CPrint(ax::util::console::Color::BoldBlue, p01);
 	ax::util::console::Print("test");
 	ax::util::console::Log("Bang");

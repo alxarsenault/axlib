@@ -1,14 +1,16 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <string>
 
-/// @defgroup math
+/// @defgroup util
 /// @{
 
 namespace ax {
-namespace math {
+namespace util {
 	/*
-	 * ax::math::Size2D.
+	 * ax::util::Size2D.
 	 */
 	template <typename T> class Size2D {
 	public:
@@ -16,6 +18,33 @@ namespace math {
 		{
 			w = W;
 			h = H;
+		}
+
+		Size2D(const std::string& size_str)
+			: w(-1)
+			, h(-1)
+		{
+			// Split string.
+			std::vector<std::string> size_elem;
+			std::string r = size_str;
+			size_t pos = 0;
+			std::string token;
+			const std::string delimiter(",");
+
+			while ((pos = r.find(delimiter)) != std::string::npos) {
+				token = r.substr(0, pos);
+				size_elem.push_back(token);
+				r.erase(0, pos + delimiter.length());
+			}
+
+			size_elem.push_back(r);
+
+			if (size_elem.size() != 2) {
+				return;
+			}
+
+			w = (T)std::stod(size_elem[0]);
+			h = (T)std::stod(size_elem[1]);
 		}
 
 		T w, h;

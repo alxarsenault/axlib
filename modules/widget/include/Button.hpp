@@ -151,15 +151,17 @@ public:
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 	};
 
-	//	class Builder : public ax::widget::Builder {
-	//	public:
-	//		Builder();
-	//
-	//		virtual std::shared_ptr<ax::Window::Backbone> Create(
-	//			const ax::Point& pos, const std::string& file_path);
-	//
-	//		std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node);
-	//	};
+	class Builder : public ax::widget::Builder {
+	public:
+		Builder();
+
+		virtual std::shared_ptr<ax::Window::Backbone> Create(
+			const ax::Point& pos, const std::string& file_path);
+
+		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Attribute& node);
+		
+		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node);
+	};
 
 	/*
 	 * ax::Button::Button.

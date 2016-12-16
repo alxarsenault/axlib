@@ -1,15 +1,30 @@
 #pragma once
 
-#include "rapidxml.hpp"
-#include "rapidxml_print.hpp"
-
 #include <vector>
 #include <string>
 #include <fstream>
 #include <sstream>
 
+// namespace rapidxml{
+// template<typename T = char>
+// class xml_document;
+//
+// template<typename T = char>
+// class xml_node;
+//}
+
+namespace rapidxml {
+template <class Ch> class xml_document;
+template <class Ch> class xml_node;
+}
+// namespace rapidxml
+//{
+//	template<>
+//	class xml_document;
+//}
+
 namespace ax {
-class XmlHelper {
+class Xml {
 public:
 	struct Exception : public std::exception {
 		std::string s;
@@ -29,9 +44,12 @@ public:
 		}
 	};
 
+	/**
+	 * @brief Xml node.
+	 */
 	class Node {
 	public:
-		Node(rapidxml::xml_node<>* node);
+		Node(rapidxml::xml_node<char>* node);
 
 		Node(const Node& node);
 
@@ -55,36 +73,24 @@ public:
 
 		std::string GetName();
 
-		rapidxml::xml_node<>* GetNodeHandle()
-		{
-			return _node;
-		}
+		rapidxml::xml_node<char>* GetNodeHandle();
 
-		void AddAttribute(const std::string& name, const std::string& value)
-		{
-			rapidxml::xml_document<>* doc = _node->document();
-			char* nn = doc->allocate_string(name.c_str());
-			char* vv = doc->allocate_string(value.c_str());
-			_node->append_attribute(doc->allocate_attribute(nn, vv));
-		}
+		void AddAttribute(const std::string& name, const std::string& value);
 
-		void AddNode(Node& node)
-		{
-			_node->append_node(node._node);
-		}
+		void AddNode(Node& node);
 
-		void AddNode(const Node& node)
-		{
-			_node->append_node(node._node);
-		}
+		void AddNode(const Node& node);
 
 	private:
-		rapidxml::xml_node<>* _node;
+		rapidxml::xml_node<char>* _node;
 	};
 
-	XmlHelper(const std::string& path);
+	/**
+	 * @brief Create Xml document from file.
+	 */
+	Xml(const std::string& path);
 
-	XmlHelper();
+	Xml();
 
 	void Save(const std::string& path);
 
@@ -98,13 +104,13 @@ public:
 
 	Node CreateNode(const std::string& name);
 
-	void AddMainNode(XmlHelper::Node& node);
+	void AddMainNode(Xml::Node& node);
 
 	Node CreateNode(const std::string& name, const std::string& value);
 
 private:
 	std::string _file_path;
-	rapidxml::xml_document<> _xml_doc;
+	std::shared_ptr<rapidxml::xml_document<char>> _xml_doc;
 	std::vector<char> _xml_buffer;
 };
 }

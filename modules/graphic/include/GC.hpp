@@ -28,7 +28,6 @@
 #include "Font.hpp"
 #include "Shader.hpp"
 #include "Image.hpp"
-#include "Math.hpp"
 #include "Util.hpp"
 #include <glm/mat4x4.hpp>
 

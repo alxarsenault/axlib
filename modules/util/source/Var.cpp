@@ -1,14 +1,14 @@
 /*
  * Copyright (c) 2016 Alexandre Arsenault.
  *
- * This file is part of axLib.
+ * This file is part of axlib.
  *
- * axLib is free or commercial software: you can redistribute it and/or
+ * axlib is free or commercial software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 or any later version of the
- * License or use a commercial axFrameworks License.
+ * License or use a commercial axlib License.
  *
- * axLib is distributed in the hope that it will be useful,
+ * axlib is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.

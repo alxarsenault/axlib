@@ -20,10 +20,9 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 
-#ifndef __axLib__axCoreFacade__
-#define __axLib__axCoreFacade__
+#pragma once
 
-#include "Math.hpp"
+#include "Util.hpp"
 #include "Core.hpp"
 #include <string>
 
@@ -94,5 +93,3 @@ namespace core {
 	};
 }
 }
-
-#endif /* defined(__axLib__axCoreFacade__) */
