@@ -25,8 +25,7 @@
 ///// @defgroup Widgets
 ///// @{
 //
-//#include "OpenAX.h"
-//#include "axObjectLoader.h"
+//#include "axlib.hpp"
 //
 ///*
 // * axLabel.

@@ -34,7 +34,7 @@ namespace core {
 	class Facade {
 	public:
 		Facade(const ax::Size& frame_size);
-		
+
 		Facade(const ax::Size& frame_size, Core* core);
 
 		void Init(const ax::Size& frame_size);
@@ -44,9 +44,9 @@ namespace core {
 		std::string GetAppPath();
 
 		std::string OpenFileDialog();
-		
+
 		std::string SaveFileDialog();
-		
+
 		ax::Rect GetScreenRect();
 
 		ax::Size GetScreenSize();
@@ -72,13 +72,13 @@ namespace core {
 		virtual void MainLoop();
 
 		void SetCursor(const Core::Cursor& cursor_id);
-		
+
 		void SetResizable(bool resizable);
-		
+
 		void SetTitleBar(bool titlebar);
-		
+
 		void SetFocusAndCenter();
-		
+
 		std::string GetPasteboardConent();
 
 		/// ax::App -> ax::core::Facade should be use instead of this.

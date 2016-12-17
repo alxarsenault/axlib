@@ -19,7 +19,7 @@
  * To release a closed-source product which uses axFrameworks, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
- 
+
 #ifndef __AX_MANAGER__
 #define __AX_MANAGER__
 
@@ -55,7 +55,7 @@ namespace core {
 
 		std::string _managerName;
 		WindowTree* GetWindowTree();
-		
+
 		void Clear();
 
 	private:

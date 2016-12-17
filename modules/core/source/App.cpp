@@ -46,7 +46,7 @@ ax::Size ax::App::_frameSize = ax::Size(500, 500);
 ax::App& ax::App::GetInstance()
 {
 	if (ax::App::_instance == nullptr) {
-		//ax::Print("new ax::App::GetInstance");
+		// ax::Print("new ax::App::GetInstance");
 		ax::App::_instance.reset(new ax::App());
 	}
 	return *ax::App::_instance;
@@ -55,7 +55,7 @@ ax::App& ax::App::GetInstance()
 ax::App* ax::App::Create(core::Core* core)
 {
 	if (ax::App::_instance == nullptr) {
-		//ax::Print("new ax::App::GetInstance");
+		// ax::Print("new ax::App::GetInstance");
 		ax::App::_instance.reset(new ax::App(core));
 	}
 
@@ -66,7 +66,7 @@ void ax::App::CloseApplication()
 {
 	_instance->GetPopupManager()->GetWindowTree()->GetNodeVector().clear();
 	_instance->GetWindowManager()->GetWindowTree()->GetNodeVector().clear();
-	
+
 	ax::App::_instance.reset();
 }
 
@@ -87,100 +87,93 @@ void ax::App::CallAfterGUILoadFunction()
 void ax::App::AddTopLevel(std::shared_ptr<ax::Window> win)
 {
 	GetWindowManager()->GetWindowTree()->AddTopLevel(win);
-	
+
 	ax::core::WindowManager* wm = GetWindowManager();
-	
+
 	// Connect all child to parent window manager.
 	ax::NodeVisitor::VisitFromNode(win.get(), [wm](ax::Window* window) {
-		if(window->GetWindowManager() == nullptr) {
+		if (window->GetWindowManager() == nullptr) {
 			window->SetWindowManager(wm);
 			window->event.OnAssignToWindowManager(0);
 		}
 	});
-	
 
-	win->dimension.GetFrameBuffer()->AssignCustomFBDrawFunction(
-		[win](ax::GL::FrameBuffer& fb) {
-			
-			ax::Size global_size = ax::App::GetInstance().GetFrameSize();
-		
-			#ifdef AX_EOS_CORE
-			ax::App& app(ax::App::GetInstance());
-			ax::CoreEOS* core = static_cast<ax::CoreEOS*>(app.GetCore());
-			//		core->DrawOnMainFBO();
-			glViewport(0, 0, global_size.x, global_size.y);
-		
-			// Bind main frame buffer.
-			glBindFramebuffer(GL_FRAMEBUFFER, core->GetMainFrameBufferID());
-			#endif
-			
-			glBlendFunc(GL_SRC_ALPHA, GL_SRC_COLOR);
-			ax::GC::shader_fb.Activate();
-			glEnable(GL_TEXTURE_2D);
+	win->dimension.GetFrameBuffer()->AssignCustomFBDrawFunction([win](ax::GL::FrameBuffer& fb) {
 
-			ax::FPoint pos(0.0, 0.0);
+		ax::Size global_size = ax::App::GetInstance().GetFrameSize();
 
-			const ax::Size& ss(win->dimension.GetShownRect().size);
-			const ax::FSize size(ss.Cast<float>());
+#ifdef AX_EOS_CORE
+		ax::App& app(ax::App::GetInstance());
+		ax::CoreEOS* core = static_cast<ax::CoreEOS*>(app.GetCore());
+		//		core->DrawOnMainFBO();
+		glViewport(0, 0, global_size.x, global_size.y);
 
-			// Bind framebuffer texture.
-			glBindTexture(GL_TEXTURE_2D,
-				win->dimension.GetFrameBuffer()->GetFrameBufferTexture());
+		// Bind main frame buffer.
+		glBindFramebuffer(GL_FRAMEBUFFER, core->GetMainFrameBufferID());
+#endif
 
-			float vertices[8] = { pos.x, pos.y, pos.x, pos.y + size.h,
-				pos.x + size.w, pos.y + size.h, pos.x + size.w, pos.y };
+		glBlendFunc(GL_SRC_ALPHA, GL_SRC_COLOR);
+		ax::GC::shader_fb.Activate();
+		glEnable(GL_TEXTURE_2D);
 
-			float tex_coords[8] = { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 };
+		ax::FPoint pos(0.0, 0.0);
 
-			ax::Point win_abs_pos = win->dimension.GetAbsoluteRect().position;
-			
+		const ax::Size& ss(win->dimension.GetShownRect().size);
+		const ax::FSize size(ss.Cast<float>());
 
-			// Projection matrix.
-			glm::mat4 projMat = glm::ortho((float)0.0, (float)global_size.w,
-				(float)global_size.h, (float)0.0);
+		// Bind framebuffer texture.
+		glBindTexture(GL_TEXTURE_2D, win->dimension.GetFrameBuffer()->GetFrameBufferTexture());
 
-			// View matrix.
-			glm::mat4 view = glm::translate(
-				glm::mat4(1.0f), glm::vec3(win_abs_pos.x, win_abs_pos.y, 0.0f));
+		float vertices[8]
+			= { pos.x, pos.y, pos.x, pos.y + size.h, pos.x + size.w, pos.y + size.h, pos.x + size.w, pos.y };
 
-			glm::mat4 model(1.0f);
+		float tex_coords[8] = { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 };
 
-			glm::mat4 model_view_proj = projMat * view * model;
+		ax::Point win_abs_pos = win->dimension.GetAbsoluteRect().position;
 
-			GLuint prog_id = ax::GC::shader_fb.GetProgramId();
-			GLuint MatrixID = glGetUniformLocation(prog_id, "mvp_matrix");
-			glUniformMatrix4fv(
-				MatrixID, 1, GL_FALSE, (float*)&model_view_proj[0][0]);
+		// Projection matrix.
+		glm::mat4 projMat = glm::ortho((float)0.0, (float)global_size.w, (float)global_size.h, (float)0.0);
 
-			// Vertex coordinate.
-			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-			glEnableVertexAttribArray(0);
+		// View matrix.
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(win_abs_pos.x, win_abs_pos.y, 0.0f));
 
-			// Texture coordinate.
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, tex_coords);
-			glEnableVertexAttribArray(1);
+		glm::mat4 model(1.0f);
 
-			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glm::mat4 model_view_proj = projMat * view * model;
 
-			glDisableVertexAttribArray(0);
-			glDisableVertexAttribArray(1);
-			// glDisableVertexAttribArray(5);
+		GLuint prog_id = ax::GC::shader_fb.GetProgramId();
+		GLuint MatrixID = glGetUniformLocation(prog_id, "mvp_matrix");
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (float*)&model_view_proj[0][0]);
 
-			glDisable(GL_TEXTURE_2D);
+		// Vertex coordinate.
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+		glEnableVertexAttribArray(0);
 
-		});
+		// Texture coordinate.
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, tex_coords);
+		glEnableVertexAttribArray(1);
 
-//	return win;
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		// glDisableVertexAttribArray(5);
+
+		glDisable(GL_TEXTURE_2D);
+
+	});
+
+	//	return win;
 }
 
 void ax::App::AddPopupTopLevel(std::shared_ptr<ax::Window> win)
 {
 	GetPopupManager()->GetWindowTree()->AddTopLevel(win);
 	ax::core::WindowManager* wm = GetPopupManager();
-	
+
 	// Connect all child to parent window manager.
 	ax::NodeVisitor::VisitFromNode(win.get(), [wm](ax::Window* window) {
-		if(window->GetWindowManager() != wm) {
+		if (window->GetWindowManager() != wm) {
 			window->SetWindowManager(wm);
 			window->event.OnAssignToWindowManager(0);
 		}
@@ -192,76 +185,71 @@ void ax::App::AddTopLevel(std::shared_ptr<ax::Window::Backbone> bone)
 	ax::Window* win = bone->GetWindow();
 	GetWindowManager()->GetWindowTree()->AddTopLevel(std::shared_ptr<ax::Window>(win));
 	win->backbone = bone;
-	
+
 	ax::core::WindowManager* wm = GetWindowManager();
-	
+
 	// Connect all child to parent window manager.
 	ax::NodeVisitor::VisitFromNode(win, [wm](ax::Window* window) {
-		if(window->GetWindowManager() != wm) {
+		if (window->GetWindowManager() != wm) {
 			window->SetWindowManager(wm);
 			window->event.OnAssignToWindowManager(0);
 		}
 	});
-	
 
-	win->dimension.GetFrameBuffer()->AssignCustomFBDrawFunction(
-		[win](ax::GL::FrameBuffer& fb) {
+	win->dimension.GetFrameBuffer()->AssignCustomFBDrawFunction([win](ax::GL::FrameBuffer& fb) {
 
-			glBlendFunc(GL_SRC_ALPHA, GL_SRC_COLOR);
-			ax::GC::shader_fb.Activate();
-			glEnable(GL_TEXTURE_2D);
+		glBlendFunc(GL_SRC_ALPHA, GL_SRC_COLOR);
+		ax::GC::shader_fb.Activate();
+		glEnable(GL_TEXTURE_2D);
 
-			ax::FPoint pos(0.0, 0.0);
+		ax::FPoint pos(0.0, 0.0);
 
-			const ax::Size& ss(win->dimension.GetShownRect().size);
-			const ax::FSize size(ss.Cast<float>());
+		const ax::Size& ss(win->dimension.GetShownRect().size);
+		const ax::FSize size(ss.Cast<float>());
 
-			// Bind framebuffer texture.
-			glBindTexture(GL_TEXTURE_2D,
-				win->dimension.GetFrameBuffer()->GetFrameBufferTexture());
+		// Bind framebuffer texture.
+		glBindTexture(GL_TEXTURE_2D, win->dimension.GetFrameBuffer()->GetFrameBufferTexture());
 
-			float vertices[8] = { pos.x, pos.y, pos.x, pos.y + size.h,
-				pos.x + size.w, pos.y + size.h, pos.x + size.w, pos.y };
+		float vertices[8]
+			= { pos.x, pos.y, pos.x, pos.y + size.h, pos.x + size.w, pos.y + size.h, pos.x + size.w, pos.y };
 
-			float tex_coords[8] = { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 };
+		float tex_coords[8] = { 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0 };
 
-			ax::Point win_abs_pos = win->dimension.GetAbsoluteRect().position;
-			ax::Size global_size = ax::App::GetInstance().GetFrameSize();
+		ax::Point win_abs_pos = win->dimension.GetAbsoluteRect().position;
+		ax::Size global_size = ax::App::GetInstance().GetFrameSize();
 
-			// Projection matrix.
-			glm::mat4 projMat = glm::ortho((float)0.0, (float)global_size.w,
-				(float)global_size.h, (float)0.0);
+		// Projection matrix.
+		glm::mat4 projMat = glm::ortho((float)0.0, (float)global_size.w, (float)global_size.h, (float)0.0);
 
-			// View matrix.
-			glm::mat4 view = glm::translate(
-				glm::mat4(1.0f), glm::vec3(win_abs_pos.x, win_abs_pos.y, 0.0f));
+		// View matrix.
+		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(win_abs_pos.x, win_abs_pos.y, 0.0f));
 
-			glm::mat4 model(1.0f);
+		glm::mat4 model(1.0f);
 
-			glm::mat4 model_view_proj = projMat * view * model;
+		glm::mat4 model_view_proj = projMat * view * model;
 
-			GLuint prog_id = ax::GC::shader_fb.GetProgramId();
-			GLuint MatrixID = glGetUniformLocation(prog_id, "mvp_matrix");
-			glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (float*)&model_view_proj[0][0]);
+		GLuint prog_id = ax::GC::shader_fb.GetProgramId();
+		GLuint MatrixID = glGetUniformLocation(prog_id, "mvp_matrix");
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, (float*)&model_view_proj[0][0]);
 
-			// Vertex coordinate.
-			glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-			glEnableVertexAttribArray(0);
+		// Vertex coordinate.
+		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+		glEnableVertexAttribArray(0);
 
-			// Texture coordinate.
-			glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, tex_coords);
-			glEnableVertexAttribArray(1);
+		// Texture coordinate.
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, tex_coords);
+		glEnableVertexAttribArray(1);
 
-			glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
-			glDisableVertexAttribArray(0);
-			glDisableVertexAttribArray(1);
-			// glDisableVertexAttribArray(5);
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		// glDisableVertexAttribArray(5);
 
-			glDisable(GL_TEXTURE_2D);
-		});
+		glDisable(GL_TEXTURE_2D);
+	});
 
-//	return win;
+	//	return win;
 }
 
 void ax::App::AddPopupTopLevel(std::shared_ptr<ax::Window::Backbone> bone)
@@ -269,12 +257,12 @@ void ax::App::AddPopupTopLevel(std::shared_ptr<ax::Window::Backbone> bone)
 	ax::Window* win = bone->GetWindow();
 	GetPopupManager()->GetWindowTree()->AddTopLevel(std::shared_ptr<ax::Window>(win));
 	win->backbone = bone;
-	
+
 	ax::core::WindowManager* wm = GetPopupManager();
-	
+
 	// Connect all child to parent window manager.
 	ax::NodeVisitor::VisitFromNode(win, [wm](ax::Window* window) {
-		if(window->GetWindowManager() != wm) {
+		if (window->GetWindowManager() != wm) {
 			window->SetWindowManager(wm);
 			window->event.OnAssignToWindowManager(0);
 		}
@@ -293,8 +281,8 @@ ax::App::App()
 	, _evtManager(new ax::event::Manager([&] { PushEventOnSystemQueue(); }))
 	, _resourceManager(new ax::util::ResourceStorage())
 {
-//	ax::Print("new ax::App::_evtManager");
-//	ax::Print("new ax::App::_resourceManager");
+	//	ax::Print("new ax::App::_evtManager");
+	//	ax::Print("new ax::App::_resourceManager");
 }
 
 ax::App::App(core::Core* core)
@@ -302,8 +290,8 @@ ax::App::App(core::Core* core)
 	, _evtManager(new ax::event::Manager([&] { PushEventOnSystemQueue(); }))
 	, _resourceManager(new ax::util::ResourceStorage())
 {
-//	ax::Print("new ax::App::_evtManager");
-//	ax::Print("new ax::App::_resourceManager");
+	//	ax::Print("new ax::App::_evtManager");
+	//	ax::Print("new ax::App::_resourceManager");
 }
 
 ax::App::App(const ax::App& a)

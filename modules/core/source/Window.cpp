@@ -306,14 +306,14 @@ void ax::Window::Node::Add(std::shared_ptr<ax::Window> child)
 
 	child->node._parent = _win;
 	_children.push_back(child);
-	
+
 	// If parent is already connected to window manager.
-	if(_win->GetWindowManager() != nullptr) {
+	if (_win->GetWindowManager() != nullptr) {
 		ax::core::WindowManager* wm = _win->GetWindowManager();
-		
+
 		// Connect all child to parent window manager.
 		ax::NodeVisitor::VisitFromChild(_win, [wm](ax::Window* win) {
-			if(win->GetWindowManager() != wm) {
+			if (win->GetWindowManager() != wm) {
 				win->SetWindowManager(wm);
 				win->event.OnAssignToWindowManager(0);
 			}
@@ -328,14 +328,14 @@ void ax::Window::Node::Add(std::shared_ptr<Backbone> backbone)
 	child->node._parent = _win;
 
 	_children.push_back(std::shared_ptr<ax::Window>(child));
-	
+
 	// If parent is already connected to window manager.
-	if(_win->GetWindowManager() != nullptr) {		
+	if (_win->GetWindowManager() != nullptr) {
 		ax::core::WindowManager* wm = _win->GetWindowManager();
-		
+
 		// Connect all child to parent window manager.
 		ax::NodeVisitor::VisitFromChild(_win, [wm](ax::Window* win) {
-			if(win->GetWindowManager() != wm) {
+			if (win->GetWindowManager() != wm) {
 				win->SetWindowManager(wm);
 				win->event.OnAssignToWindowManager(0);
 			}
@@ -474,7 +474,7 @@ void ax::Window::Node::UnBlockDrawing(ax::Window* win)
 	}
 }
 
-//void DrawWindow(ax::Window* win)
+// void DrawWindow(ax::Window* win)
 //{
 //	//	ax::GL::Math::Matrix4 mview;
 //	//	mview.Identity().Load();
@@ -489,17 +489,17 @@ void ax::Window::Node::UnBlockDrawing(ax::Window* win)
 
 void DrawOverChildren(ax::Window* win)
 {
-	if(win->event.OnPaintOverChildren == true) {
+	if (win->event.OnPaintOverChildren == true) {
 		ax::Point win_abs_pos = win->dimension.GetAbsoluteRect().position;
 		ax::Size global_size = ax::App::GetInstance().GetFrameSize();
 		glm::mat4 projMat = glm::ortho((float)0.0, (float)global_size.w, (float)global_size.h, (float)0.0);
-		
+
 		// View matrix.
 		glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(win_abs_pos.x, win_abs_pos.y, 0.0f));
 		glm::mat4 model_view_proj = projMat * view;
 		ax::GC::mvp_matrix = model_view_proj;
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		
+
 		win->dimension.GetFrameBuffer()->DrawingOnFrameBufferBlendFunction();
 		win->event.OnPaintOverChildren(ax::GC());
 	}
@@ -514,12 +514,12 @@ void Window::Node::Draw()
 
 	// Prevent from drawing beside framebuffer.
 	BlockDrawing(_win);
-	
+
 	_win->RenderWindow();
 
 	// Draw all children recursively.
 	for (std::shared_ptr<ax::Window> it : _children) {
-		
+
 		if (it == nullptr) {
 			continue;
 		}
@@ -542,25 +542,24 @@ void Window::Node::Draw()
 
 		// Unblock rectangle.
 		UnBlockDrawing(it.get());
-		
+
 		// Draw over children and framebuffer.
 		DrawOverChildren(it.get());
 	}
 
 	UnBlockDrawing(_win);
-	
+
 	// Draw over children and framebuffer.
 	DrawOverChildren(_win);
 }
 
-
 /// @todo Change window manager.
 Window::Window(const ax::Rect& rect)
 	: ax::event::Object(ax::App::GetInstance().GetEventManager())
-//	, _windowManager(ax::App::GetInstance().GetWindowManager())
+	//	, _windowManager(ax::App::GetInstance().GetWindowManager())
 	, _windowManager(nullptr)
 	, dimension(this, rect) // Members
-//	, event(this, ax::App::GetInstance().GetWindowManager())
+	//	, event(this, ax::App::GetInstance().GetWindowManager())
 	, event(this, nullptr)
 	, state(this)
 	, node(this)
@@ -589,7 +588,8 @@ std::shared_ptr<ax::Window> Window::RemoveWindow()
 		children = &_windowManager->GetWindowTree()->GetNodeVector();
 	}
 	else {
-		children = &parent->node.GetChildren();;
+		children = &parent->node.GetChildren();
+		;
 	}
 
 	int index = -1;
@@ -610,19 +610,19 @@ std::shared_ptr<ax::Window> Window::RemoveWindow()
 	event.UnGrabMouse();
 	event.UnGrabKey();
 	event.UnGrabScroll();
-	
+
 	event.UnGrabGlobalKey();
 	event.UnGrabGlobalMouse();
-	
+
 	_windowManager->RemoveIfPastWindow(this);
-	
+
 	_windowManager = nullptr;
-	
+
 	std::shared_ptr<ax::Window> w = (*children)[index];
-	
+
 	// Remove from parent vector.
 	children->erase(children->begin() + index);
-	
+
 	return w;
 }
 

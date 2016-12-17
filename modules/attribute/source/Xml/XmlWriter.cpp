@@ -3,8 +3,7 @@
 
 namespace ax {
 
-void XmlRecursiveWriter(
-	const Attribute& att, Xml& doc, Xml::Node& parent, bool value_as_attribute)
+void XmlRecursiveWriter(const Attribute& att, Xml& doc, Xml::Node& parent, bool value_as_attribute)
 {
 	switch (att.GetType()) {
 	case Attribute::Type::OBJECT:

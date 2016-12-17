@@ -63,13 +63,13 @@ namespace event {
 	private:
 		T _msg;
 	};
-	
+
 	class EmptyMsg : public Msg {
 	public:
 		EmptyMsg()
 		{
 		}
-		
+
 		virtual Msg* GetCopy()
 		{
 			return new EmptyMsg();

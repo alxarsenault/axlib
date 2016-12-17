@@ -19,7 +19,7 @@
 // * To release a closed-source product which uses axFrameworks, commercial
 // * licenses are available, email alx.arsenault@gmail.com for more information.
 // */
-//#include "axWidgetSelector.h"
+//#include "WidgetSelector.hpp"
 //
 ///*
 // * axWidgetSelector::Info.

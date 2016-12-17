@@ -38,10 +38,10 @@ namespace core {
 		_windowTree = tree;
 	}
 
-//	void KeyboardManager::SetPastKeyWindow(ax::Window* win)
-//	{
-//		_keyGrabbedWindow = win;
-//	}
+	//	void KeyboardManager::SetPastKeyWindow(ax::Window* win)
+	//	{
+	//		_keyGrabbedWindow = win;
+	//	}
 
 	bool KeyboardManager::IsPastKeySelected(const ax::Window* win)
 	{

@@ -21,57 +21,49 @@
  */
 #import <Cocoa/Cocoa.h>
 
-namespace ax
-{
-    class App;
+namespace ax {
+class App;
 }
 
-@interface axAppDelegate : NSOpenGLView
-{
-    ax::App* _axApp;
+@interface axAppDelegate : NSOpenGLView {
+	ax::App* _axApp;
 }
-
 
 // Windows paint callback.
-- (void) drawRect: (NSRect)bounds;
+- (void)drawRect:(NSRect)bounds;
 
 // Mouse mouve event.
-- (void) mouseMoved:(NSEvent *) evt;
+- (void)mouseMoved:(NSEvent*)evt;
 
-- (void) windowDidResize:(NSNotification *)notification;
-- (void) windowDidMove:(NSNotification *)notification;
+- (void)windowDidResize:(NSNotification*)notification;
+- (void)windowDidMove:(NSNotification*)notification;
 
 //- (void) setFrameSize:(NSSize)newSize;
-- (void) SetFrameSize:(NSSize)newSize;
-- (void) itemChanged:(NSMenuItem *)anObject;
+- (void)SetFrameSize:(NSSize)newSize;
+- (void)itemChanged:(NSMenuItem*)anObject;
 
--(BOOL) canBecomeKeyWindow;
+- (BOOL)canBecomeKeyWindow;
 
-- (void) flagsChanged: (NSEvent *)theEvent;
+- (void)flagsChanged:(NSEvent*)theEvent;
 
 - (id)ChangeMouseCursor:(int)cursor_id;
-- (id) MemberTestFunc;
--(void)SetNotResizable;
--(void)SetResizable;
--(void)SetNoTitleBar;
--(void)SetTitleBar;
+- (id)MemberTestFunc;
+- (void)SetNotResizable;
+- (void)SetResizable;
+- (void)SetNoTitleBar;
+- (void)SetTitleBar;
 
--(void)SetFocusAndCenter;
+- (void)SetFocusAndCenter;
 
--(void)renderTimer:(NSTimer *)timer;
+- (void)renderTimer:(NSTimer*)timer;
 
-- (BOOL)application:(NSApplication *)app
-		   openFile:(NSString *)filename;
+- (BOOL)application:(NSApplication*)app openFile:(NSString*)filename;
 
-- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication;
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;
-- (void)applicationWillTerminate:(NSNotification *)aNotification;
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication*)theApplication;
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication*)sender;
+- (void)applicationWillTerminate:(NSNotification*)aNotification;
 
-@property(assign) id< NSApplicationDelegate > delegate;
+@property (assign) id<NSApplicationDelegate> delegate;
 @end
 
 extern axAppDelegate* GlobalAppDelegate;
-
-
-
-

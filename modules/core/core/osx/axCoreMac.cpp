@@ -39,7 +39,7 @@ namespace core {
 
 	void CoreMac::Init(const ax::Size& frame_size)
 	{
-//		std::cout << "Init axCoreMac." << std::endl;
+		//		std::cout << "Init axCoreMac." << std::endl;
 		InitManagers();
 		InitGL();
 		ResizeFrame(frame_size);
@@ -96,7 +96,7 @@ namespace core {
 	{
 		return axOpenFileDialog();
 	}
-	
+
 	std::string CoreMac::SaveFileDialog()
 	{
 		return axSaveFileDialog();
@@ -136,7 +136,7 @@ namespace core {
 	{
 		axCocoaChangeMouseCursor(cursor_id);
 	}
-	
+
 	std::string CoreMac::GetPasteboardContent()
 	{
 		return axCocoaGetPasteboardContent();

@@ -19,7 +19,7 @@
  * To release a closed-source product which uses axFrameworks, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
- 
+
 #pragma once
 
 /// @defgroup core
@@ -30,60 +30,60 @@
 
 namespace ax {
 namespace core {
-class WindowTree;
+	class WindowTree;
 
-class KeyboardManager {
-public:
-	KeyboardManager();
+	class KeyboardManager {
+	public:
+		KeyboardManager();
 
-	void SetWindowTree(WindowTree* tree);
+		void SetWindowTree(WindowTree* tree);
 
-	void OnKeyDown(const char& key);
-	void OnKeyUp(const char& key);
-	void OnEnterDown();
-	void OnKeyDeleteDown();
-	void OnBackSpaceDown();
-	void OnLeftArrowDown();
-	void OnRightArrowDown();
-	void OnUpArrowDown();
-	void OnDownArrowDown();
-	
-	void OnCmdDown();
+		void OnKeyDown(const char& key);
+		void OnKeyUp(const char& key);
+		void OnEnterDown();
+		void OnKeyDeleteDown();
+		void OnBackSpaceDown();
+		void OnLeftArrowDown();
+		void OnRightArrowDown();
+		void OnUpArrowDown();
+		void OnDownArrowDown();
 
-	void GrabKey(ax::Window* win);
-	
-	void UnGrabKey();
-	
-	void UnGrabKey(const ax::Window* win);
+		void OnCmdDown();
 
-	bool IsKeyGrab(const ax::Window* win) const;
-	
-	bool IsCmdDown() const;
-	
-	void AddGlobalGrabedWindow(ax::Window* win);
-	
-	bool IsGlobalKeyGrabbed(const ax::Window* win);
-	
-	void UnGrabGlobalKey(const ax::Window* win);
-	
-//	void SetPastKeyWindow(ax::Window* win);
-	
-	bool IsPastKeySelected(const ax::Window* win);
-	
-	void ClearKeyboardManager();
-	
-	void ClearGrabbedWindow();
-	
-	void ClearGlobalGrabbedWindows();
+		void GrabKey(ax::Window* win);
 
-private:
-	WindowTree* _windowTree;
-	ax::Window* _keyGrabbedWindow;
-	
-	std::vector<ax::Window*> _globalKeyGrabbed;
-	
-	bool _isCmdDown;
-};
+		void UnGrabKey();
+
+		void UnGrabKey(const ax::Window* win);
+
+		bool IsKeyGrab(const ax::Window* win) const;
+
+		bool IsCmdDown() const;
+
+		void AddGlobalGrabedWindow(ax::Window* win);
+
+		bool IsGlobalKeyGrabbed(const ax::Window* win);
+
+		void UnGrabGlobalKey(const ax::Window* win);
+
+		//	void SetPastKeyWindow(ax::Window* win);
+
+		bool IsPastKeySelected(const ax::Window* win);
+
+		void ClearKeyboardManager();
+
+		void ClearGrabbedWindow();
+
+		void ClearGlobalGrabbedWindows();
+
+	private:
+		WindowTree* _windowTree;
+		ax::Window* _keyGrabbedWindow;
+
+		std::vector<ax::Window*> _globalKeyGrabbed;
+
+		bool _isCmdDown;
+	};
 }
 }
 

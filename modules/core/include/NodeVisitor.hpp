@@ -30,17 +30,17 @@
 
 namespace ax {
 namespace NodeVisitor {
-	
+
 	void VisitFromNode(ax::Window* window, std::function<void(ax::Window*)> fct);
-	
+
 	void VisitFromChild(ax::Window* window, std::function<void(ax::Window*)> fct);
-	
+
 	ax::Window* FirstFindFromNode(ax::Window* window, std::function<bool(ax::Window*)> fct);
-	
+
 	ax::Window* FirstFindFromChild(ax::Window* window, std::function<bool(ax::Window*)> fct);
-	
+
 	std::vector<ax::Window*> AccumulateFromNode(ax::Window* window, std::function<bool(ax::Window*)> fct);
-	
+
 	std::vector<ax::Window*> AccumulateFromChild(ax::Window* window, std::function<bool(ax::Window*)> fct);
 }
 }

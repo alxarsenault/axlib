@@ -19,6 +19,13 @@ namespace util {
 			w = W;
 			h = H;
 		}
+		
+		Size2D(const std::pair<T, T>& p) :
+		 w(p.first),
+		 h(p.second)
+		{
+		
+		}
 
 		Size2D(const std::string& size_str)
 			: w(-1)
@@ -48,6 +55,10 @@ namespace util {
 		}
 
 		T w, h;
+		
+		std::pair<T, T> ToPair() const {
+			return std::pair<T, T>(w, h);
+		}
 
 		template <typename P> Size2D<P> Cast() const
 		{
@@ -159,6 +170,8 @@ namespace util {
 			h = H;
 			return *this;
 		}
+		
+		
 
 		friend std::ostream& operator<<(std::ostream& stream, const Size2D& size)
 		{

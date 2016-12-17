@@ -32,7 +32,7 @@
 //}
 //
 // axStaticImage* axStaticImage::axStaticImageBuilder::
-// Create(ax::StringPairVector attributes)
+// Create(std::vector<std::pair<std::string, std::string>> attributes)
 //{
 //    std::string name;
 //    ax::Point pos;
@@ -45,7 +45,7 @@
 //        else if(s.first == "pos")
 //        {
 //            ax::StringVector strVec;
-//            strVec = ax::Utils::String::Split(s.second, ",");
+//            strVec = ax::util::String::Split(s.second, ",");
 ////            strVec = GetVectorFromStringDelimiter(s.second, ",");
 //
 //            pos = ax::Point(stoi(strVec[0]),

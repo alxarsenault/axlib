@@ -1,6 +1,8 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
+#include <string>
 
 /// @defgroup util
 /// @{
@@ -17,8 +19,46 @@ namespace util {
 			x = X;
 			y = Y;
 		}
+		
+		Point2D(const std::pair<T, T>& p) :
+		x(p.first),
+		y(p.second)
+		{
+		
+		}
+		
+		Point2D(const std::string& size_str)
+		: x(-1)
+		, y(-1)
+		{
+			// Split string.
+			std::vector<std::string> size_elem;
+			std::string r = size_str;
+			size_t pos = 0;
+			std::string token;
+			const std::string delimiter(",");
+			
+			while ((pos = r.find(delimiter)) != std::string::npos) {
+				token = r.substr(0, pos);
+				size_elem.push_back(token);
+				r.erase(0, pos + delimiter.length());
+			}
+			
+			size_elem.push_back(r);
+			
+			if (size_elem.size() != 2) {
+				return;
+			}
+			
+			x = (T)std::stod(size_elem[0]);
+			y = (T)std::stod(size_elem[1]);
+		}
 
 		T x, y;
+		
+		std::pair<T, T> ToPair() const {
+			return std::pair<T, T>(x, y);
+		}
 
 		template <typename P> Point2D<P> Cast() const
 		{

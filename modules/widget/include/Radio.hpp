@@ -57,7 +57,7 @@
 //            const axRadio::Info& info,
 //            std::string img_path = "",
 //            std::string label = "",
-//            ax::Flag flags = 0,
+//            ax::util::Flag flags = 0,
 //            std::string msg = "");
 //    
 //    void SetMsg(const std::string& msg);

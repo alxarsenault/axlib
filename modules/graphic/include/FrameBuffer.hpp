@@ -41,44 +41,42 @@ namespace GL {
 	class FrameBuffer {
 	public:
 		FrameBuffer(const ax::Size& size);
-		
+
 		~FrameBuffer();
 
 		void Init(const ax::Size& size);
 
 		void Resize(const ax::Size& size);
 
-		void DrawOnFrameBuffer(const std::function<void()>& fct,
-			const ax::Size& size, const ax::Size& globalSize);
+		void DrawOnFrameBuffer(
+			const std::function<void()>& fct, const ax::Size& size, const ax::Size& globalSize);
 
 		void DrawFrameBuffer(const ax::Size& shownSize, ax::Point scroll = ax::Point(0, 0),
-		ax::Rect abs_rect = ax::Rect(0, 0, 100, 100), void* data = nullptr);
+			ax::Rect abs_rect = ax::Rect(0, 0, 100, 100), void* data = nullptr);
 
 		inline unsigned int GetFrameBufferTexture()
 		{
 			return _frameBufferTexture;
 		}
-		
+
 		void AssignCustomFBDrawFunction(const std::function<void(FrameBuffer&)>& fct);
 		void AssignCustomFBDrawOnFunction(const std::function<void(FrameBuffer&)>& fct);
-		
+
 		// Don't call this unless you realy know what you are doing.
 		void DrawingOnFrameBufferBlendFunction();
 		void DrawingFrameBufferBlendFunction();
-		
+
 		void ChangeTextureData(const ax::Size& size, void* data);
 
 	private:
 		std::function<void(FrameBuffer&)> _custom_draw_fb_func;
 		std::function<void(FrameBuffer&)> _custom_draw_on_fb_func;
-	
+
 #ifdef ANDROID
 		unsigned int _frameBuffer, _frameBufferTexture, _depthBuffer;
 #else
 		uint32_t _frameBuffer, _frameBufferTexture; // _depthBuffer;
 #endif
-
-		
 	};
 }
 }

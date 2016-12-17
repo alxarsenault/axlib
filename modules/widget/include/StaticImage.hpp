@@ -49,7 +49,7 @@
 //    public:
 //        axStaticImageBuilder(ax::Window* win);
 //        
-//        axStaticImage* Create(ax::StringPairVector attributes);
+//        axStaticImage* Create(std::vector<std::pair<std::string, std::string>> attributes);
 //        
 //    private:
 //        ax::Window* _parent;

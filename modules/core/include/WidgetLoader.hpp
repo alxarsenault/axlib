@@ -30,19 +30,18 @@
 
 namespace ax {
 namespace widget {
-	class Loader
-	{
+	class Loader {
 	public:
 		static Loader* GetInstance();
-		
+
 		void AddBuilder(const std::string& name, ax::widget::Builder* builder);
-		
+
 		ax::widget::Builder* GetBuilder(const std::string& name);
-	
+
 	private:
 		static std::shared_ptr<Loader> _instance;
 		Loader();
-		
+
 		std::map<std::string, ax::widget::Builder*> _builders;
 	};
 }

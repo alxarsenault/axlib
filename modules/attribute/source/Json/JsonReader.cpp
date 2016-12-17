@@ -67,7 +67,7 @@ JsonReader::JsonReader(const std::string& file_path)
 	file_stream.seekg(0, std::ios_base::end);
 	const std::size_t file_size = file_stream.tellg();
 
-//	std::vector<char> data;
+	//	std::vector<char> data;
 	std::string data;
 	data.reserve(file_size + 1);
 

@@ -55,7 +55,7 @@ namespace core {
 		void Draw();
 
 		std::vector<std::shared_ptr<ax::Window>>& GetNodeVector();
-		
+
 	private:
 		std::vector<std::shared_ptr<ax::Window>> _nodes;
 	};

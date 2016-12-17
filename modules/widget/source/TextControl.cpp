@@ -27,7 +27,7 @@
 //                             const axTextControlInfo& info,
 //                             std::string img_path,
 //                             std::string label,
-//                             ax::Flag flags) :
+//                             ax::util::Flag flags) :
 //// Heritage.
 // axPanel(parent, rect),
 //// Members.
@@ -54,7 +54,7 @@
 //
 //    if(ax::IsFlag(axTEXT_CTRL_FLASHING_CURSOR, _flags))
 //    {
-//        _flashingCursor = new ax::Event::Timer(ax::App::GetMainApp()->GetEventManager());
+//        _flashingCursor = new ax::event::Timer(ax::App::GetMainApp()->GetEventManager());
 //        _flashingCursor->AddConnection(0, GetOnFlashingCursorTimer());
 //    }
 //
@@ -89,7 +89,7 @@
 //    Update();
 //}
 //
-// void axTextControl::OnFlashingCursorTimer(const ax::Event::Timer::Msg& msg)
+// void axTextControl::OnFlashingCursorTimer(const ax::event::Timer::Msg& msg)
 //{
 //    _cursorFlashActive = !_cursorFlashActive;
 //    Update();
@@ -144,7 +144,7 @@
 //
 //    if(ax::IsFlag(axTEXT_CTRL_FLASHING_CURSOR, _flags))
 //    {
-//        _flashingCursor->StartTimer(ax::Event::Timer::TimeMs(500));
+//        _flashingCursor->StartTimer(ax::event::Timer::TimeMs(500));
 //    }
 //
 //    Update();

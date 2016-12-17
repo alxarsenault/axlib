@@ -31,7 +31,7 @@ namespace event {
 	}
 
 	//		Manager::Manager(const std::function<void()>&
-	//unblock_main_thread_fct):
+	// unblock_main_thread_fct):
 	//		_unblockMainThreadFct(unblock_main_thread_fct)
 	//		{}
 
@@ -71,8 +71,8 @@ namespace event {
 	void Manager::PushEvent(const ID& id, const Id& evtId, Msg* msg)
 	{
 		manager_mutex.lock();
-		
-//		std::cout << "Manager::PushEvent\n" << std::endl;
+
+		//		std::cout << "Manager::PushEvent\n" << std::endl;
 
 		auto it = _event_fct_map.find(id);
 

@@ -19,21 +19,20 @@ namespace GL {
 	public:
 		Shader();
 
-		Shader(const bool& content, const std::string& s_vextex_path,
-			const std::string& s_fragments_path);
+		Shader(const bool& content, const std::string& s_vextex_path, const std::string& s_fragments_path);
 
 		void CompileAndLink();
-		
+
 		void Activate();
-		
+
 		GLint GetProgramId() const;
-		
+
 		GLuint GetUniformLocation(const char* path);
 
 	private:
 		GLuint _program_id;
 		bool _is_content;
-		
+
 		std::string _s_vertex_path;
 		std::string _s_fragments_path;
 	};

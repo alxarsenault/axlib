@@ -28,15 +28,16 @@ int main(int arc, char* argv[])
 		ax::Point next_pos_right = btn->GetWindow()->dimension.GetRect().GetNextPosRight(8);
 
 		ax::Button::Builder btn_builder;
-		auto btn2 = btn_builder.Create(next_pos_right, "/Volumes/Alex/Projects/axlib/example/widget/ButtonText.json");
+		auto btn2 = btn_builder.Create(
+			next_pos_right, "/Volumes/Alex/Projects/axlib/example/widget/ButtonText.json");
 
-//		auto btn = std::make_shared<ax::Button>( );
-//
-//		auto btn2 = std::make_shared<ax::Button>(ax::Rect(next_pos_right, ax::Size(60, 25)),
-//			ax::Button::Events([](ax::event::Msg* msg) { ax::util::console::Print("Button click"); }),
-//			ax::Button::Info(), "", "Button");
-		
-		if(btn2 != nullptr) {
+		//		auto btn = std::make_shared<ax::Button>( );
+		//
+		//		auto btn2 = std::make_shared<ax::Button>(ax::Rect(next_pos_right, ax::Size(60, 25)),
+		//			ax::Button::Events([](ax::event::Msg* msg) { ax::util::console::Print("Button click"); }),
+		//			ax::Button::Info(), "", "Button");
+
+		if (btn2 != nullptr) {
 			win->node.Add(btn2);
 		}
 

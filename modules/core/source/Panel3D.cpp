@@ -19,7 +19,7 @@
  * To release a closed-source product which uses axFrameworks, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
- 
+
 #include "Panel3D.hpp"
 
 namespace ax {
@@ -38,7 +38,7 @@ void Window3D::Render3D()
 	// Calculate the aspect ratio of the window.
 	//	double asp_ratio = rect.size.x / (double)rect.size.y;
 
-//	ax::Print("NOT GLU PERSPECTIVE.");
+	//	ax::Print("NOT GLU PERSPECTIVE.");
 	// gluPerspective(45.0, asp_ratio, 0.1, 100.0);
 
 	glMatrixMode(GL_MODELVIEW);
@@ -57,11 +57,13 @@ void Window3D::RenderWindow()
 
 	if (property.HasProperty("BackBuffer")) {
 		if (state[NeedUpdate]) {
-			dimension.GetFrameBuffer()->DrawOnFrameBuffer([this]() {
-				event.OnPaint(ax::GC());
-				Render3D();
+			dimension.GetFrameBuffer()->DrawOnFrameBuffer(
+				[this]() {
+					event.OnPaint(ax::GC());
+					Render3D();
 
-			}, dimension.GetRect().size, ax::App::GetInstance().GetFrameSize());
+				},
+				dimension.GetRect().size, ax::App::GetInstance().GetFrameSize());
 
 			state[NeedUpdate] = false;
 		}

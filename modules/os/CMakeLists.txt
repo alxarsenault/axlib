@@ -56,3 +56,6 @@ target_include_directories(libaxOS PUBLIC ${OS_INCLUDE_DIRECTORY} ${UTIL_INCLUDE
 
 set_target_properties(libaxOS PROPERTIES FOLDER axOS)
 set_target_properties(libaxOS PROPERTIES OUTPUT_NAME axOS)
+
+install(FILES ${OS_INCLUDE_FILES} DESTINATION /usr/local/include/axlib/)
+install(TARGETS libaxOS DESTINATION /usr/local/lib/)

@@ -34,13 +34,13 @@
 /////*
 //// * axTextControlFlags.
 ////*/
-////#define axTEXT_CTRL_FLASHING_CURSOR      ax::FlagValue::FLAG_1
-////#define axTEXT_CTRL_CONTOUR_HIGHLIGHT    ax::FlagValue::FLAG_2
-////#define axTEXT_CTRL_CONOUR_NO_FADE       ax::FlagValue::FLAG_3
+////#define axTEXT_CTRL_FLASHING_CURSOR      ax::util::FlagValue::FLAG_1
+////#define axTEXT_CTRL_CONTOUR_HIGHLIGHT    ax::util::FlagValue::FLAG_2
+////#define axTEXT_CTRL_CONOUR_NO_FADE       ax::util::FlagValue::FLAG_3
 ////
 //// class axTextControl;
 ////
-//// class axTextControlMsg : public ax::Event::Msg
+//// class axTextControlMsg : public ax::event::Msg
 ////{
 //// public:
 ////    axTextControlMsg()
@@ -64,7 +64,7 @@
 ////        return _msg;
 ////    }
 ////
-////    ax::Event::Msg* GetCopy()
+////    ax::event::Msg* GetCopy()
 ////    {
 ////        return new axTextControlMsg(*this);
 ////    }
@@ -76,12 +76,12 @@
 ////
 //// struct axTextControlEvents
 ////{
-////    enum : ax::Event::Id { BUTTON_CLICK };
+////    enum : ax::event::Id { BUTTON_CLICK };
 ////
 ////	axTextControlEvents(){}
-////    axTextControlEvents(ax::Event::Function& fct){ button_click = fct; }
+////    axTextControlEvents(ax::event::Function& fct){ button_click = fct; }
 ////
-////    ax::Event::Function button_click;
+////    ax::event::Function button_click;
 ////};
 ////
 //// struct axTextControlInfo
@@ -172,19 +172,19 @@
 ////                  const axTextControlInfo& info,
 ////                  std::string img_path = "",
 ////                  std::string label = "",
-////                  ax::Flag flags = 0);
+////                  ax::util::Flag flags = 0);
 ////
 ////    void SetLabel(const std::string& label);
 ////
 ////
-////    axEVENT_ACCESSOR(ax::Event::Timer::Msg, OnFlashingCursorTimer);
+////    axEVENT_ACCESSOR(ax::event::Timer::Msg, OnFlashingCursorTimer);
 ////
 //// protected:
 ////    axTextControlEvents _events;
 ////    axTextControlInfo _info;
 ////    std::string _label;
 ////    ax::Image* _btnImg;
-////    ax::Flag _flags;
+////    ax::util::Flag _flags;
 ////    ax::Font* _font;
 ////
 ////    ax::Color* _currentColor;
@@ -204,7 +204,7 @@
 ////        axBTN_SELECTED
 ////    };
 ////
-////    ax::Event::Timer* _flashingCursor;
+////    ax::event::Timer* _flashingCursor;
 ////
 ////	virtual void OnPaint();
 ////	virtual void OnMouseLeftDown(const ax::Point& pos);
@@ -225,7 +225,7 @@
 ////    //
 ////    virtual void DrawContourRectangle(ax::GC* gc);
 ////
-////    void OnFlashingCursorTimer(const ax::Event::Timer::Msg& msg);
+////    void OnFlashingCursorTimer(const ax::event::Timer::Msg& msg);
 ////
 ////    bool _cursorFlashActive;
 ////};

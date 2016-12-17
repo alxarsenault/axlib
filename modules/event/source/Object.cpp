@@ -45,7 +45,7 @@ namespace event {
 
 	Object::~Object()
 	{
-//		std::cout << "Delete object id : " << _id << std::endl;
+		//		std::cout << "Delete object id : " << _id << std::endl;
 	}
 
 	void Object::AddConnection(const Id& evtId, Function fct) const

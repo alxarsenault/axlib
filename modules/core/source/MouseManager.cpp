@@ -235,7 +235,7 @@ namespace core {
 	void MouseManager::OnMouseLeftUp(const ax::Point& pos)
 	{
 		_mousePosition = pos;
-		
+
 		if (_global_click_listener.size()) {
 			for (auto& n : _global_click_listener) {
 				ax::Window::Event::GlobalClick msg;
@@ -244,19 +244,19 @@ namespace core {
 				n->event.OnGlobalClick(msg);
 			}
 		}
-		
+
 		// If mouse is already grabbed.
 		if (_mouseCaptureWindow != nullptr) {
 			_mouseCaptureWindow->event.OnMouseLeftUp(pos);
 			_evtHasReachWindow = true;
 		}
 		else {
-			
+
 			ax::Window* win = _windowTree->FindMousePosition(pos);
-			
+
 			if (win != nullptr && win->property.HasProperty("Selectable")) {
 				_currentWindow = win;
-				
+
 				if (win != nullptr) {
 					win->event.OnMouseLeftUp(pos);
 					_evtHasReachWindow = true;
@@ -264,7 +264,7 @@ namespace core {
 				else {
 					_evtHasReachWindow = false;
 				}
-				
+
 				VerifyAndProcessWindowChange();
 			}
 			else {
@@ -272,25 +272,25 @@ namespace core {
 			}
 		}
 
-//		if (_mouseCaptureWindow) {
-//			_currentWindow = _windowTree->FindMousePosition(pos);
-//			_mouseCaptureWindow->event.OnMouseLeftUp(pos);
-//			_evtHasReachWindow = true;
-//		}
-//		else {
-//			ax::Window* win = _windowTree->FindMousePosition(pos);
-//			_currentWindow = win;
-//
-//			if (win != nullptr) {
-//				win->event.OnMouseLeftUp(pos);
-//				_evtHasReachWindow = true;
-//			}
-//			else {
-//				_evtHasReachWindow = false;
-//			}
-//
-//			VerifyAndProcessWindowChange();
-//		}
+		//		if (_mouseCaptureWindow) {
+		//			_currentWindow = _windowTree->FindMousePosition(pos);
+		//			_mouseCaptureWindow->event.OnMouseLeftUp(pos);
+		//			_evtHasReachWindow = true;
+		//		}
+		//		else {
+		//			ax::Window* win = _windowTree->FindMousePosition(pos);
+		//			_currentWindow = win;
+		//
+		//			if (win != nullptr) {
+		//				win->event.OnMouseLeftUp(pos);
+		//				_evtHasReachWindow = true;
+		//			}
+		//			else {
+		//				_evtHasReachWindow = false;
+		//			}
+		//
+		//			VerifyAndProcessWindowChange();
+		//		}
 	}
 
 	void MouseManager::OnScrollWheel(const ax::Point& delta)
@@ -324,10 +324,10 @@ namespace core {
 	{
 		_mouseCaptureWindow = nullptr;
 	}
-	
+
 	void MouseManager::UnGrabMouse(const ax::Window* win)
 	{
-		if(_mouseCaptureWindow == win) {
+		if (_mouseCaptureWindow == win) {
 			_mouseCaptureWindow = nullptr;
 		}
 	}
@@ -341,24 +341,24 @@ namespace core {
 	{
 		return (win == _currentWindow);
 	}
-	
+
 	void MouseManager::GrabScroll(ax::Window* win)
 	{
 		_scrollCaptureWindow = win;
 	}
-	
+
 	void MouseManager::UnGrabScroll()
 	{
 		_scrollCaptureWindow = nullptr;
 	}
-	
+
 	void MouseManager::UnGrabScroll(const ax::Window* win)
 	{
-		if(_scrollCaptureWindow == win) {
+		if (_scrollCaptureWindow == win) {
 			_scrollCaptureWindow = nullptr;
 		}
 	}
-	
+
 	bool MouseManager::IsScrollGrabbed(const ax::Window* win)
 	{
 		return _scrollCaptureWindow == win;
@@ -383,10 +383,10 @@ namespace core {
 	{
 		_pastWindow = win;
 	}
-	
+
 	void MouseManager::RemoveIfPastWindow(const ax::Window* win)
 	{
-		if(_pastWindow == win) {
+		if (_pastWindow == win) {
 			_pastWindow = nullptr;
 		}
 	}
@@ -394,7 +394,7 @@ namespace core {
 	void MouseManager::GrabGlobalMouse(ax::Window* win)
 	{
 		// Prevent from adding twice.
-		if(IsGlobalMouseGrabbed(win) == false) {
+		if (IsGlobalMouseGrabbed(win) == false) {
 			_global_click_listener.push_back(win);
 		}
 	}
@@ -402,29 +402,29 @@ namespace core {
 	void MouseManager::UnGrabGlobalMouse(ax::Window* win)
 	{
 		int index = -1;
-		
+
 		for (int i = 0; i < _global_click_listener.size(); i++) {
 			if (_global_click_listener[i] == win) {
 				index = i;
 				break;
 			}
 		}
-		
+
 		if (index != -1) {
 			_global_click_listener.erase(_global_click_listener.begin() + index);
 		}
 	}
-	
+
 	void MouseManager::ClearGlobalMouseGrab()
 	{
 		_global_click_listener.clear();
 	}
-	
+
 	bool MouseManager::IsGlobalMouseGrabbed() const
 	{
 		return (bool)_global_click_listener.size();
 	}
-	
+
 	bool MouseManager::IsGlobalMouseGrabbed(const ax::Window* win) const
 	{
 		for (auto& n : _global_click_listener) {
@@ -432,7 +432,7 @@ namespace core {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }

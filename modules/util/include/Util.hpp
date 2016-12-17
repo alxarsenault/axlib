@@ -16,6 +16,7 @@
 #include "Point2D.hpp"
 #include "Size2D.hpp"
 #include "Rect2D.hpp"
+#include "Range2D.hpp"
 
 namespace ax {
 

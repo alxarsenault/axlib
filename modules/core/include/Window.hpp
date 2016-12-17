@@ -43,10 +43,9 @@ namespace core {
 /*******************************************************************************
  * Window.
  ******************************************************************************/
-class Window : public ax::event::Object,
-			   public std::enable_shared_from_this<ax::Window> {
+class Window : public ax::event::Object, public std::enable_shared_from_this<ax::Window> {
 public:
-//	typedef std::shared_ptr<ax::Window> Ptr;
+	//	typedef std::shared_ptr<ax::Window> Ptr;
 
 	/***************************************************************************
 	 * Window dimensions.
@@ -164,17 +163,17 @@ public:
 
 		void GrabScroll();
 		void UnGrabScroll();
-		
+
 		bool IsScrollGrabbed() const;
 
 		void GrabKey();
 		void UnGrabKey();
 		bool IsKeyGrab() const;
-		
+
 		void GrabGlobalKey();
 		bool IsGlobalKeyGrabbed() const;
 		void UnGrabGlobalKey();
-		
+
 		void GrabGlobalMouse();
 		bool IsGlobalMouseGrabbed() const;
 		void UnGrabGlobalMouse();
@@ -221,39 +220,34 @@ public:
 
 		Function<ax::Point> OnMouseEnter;
 		Function<ax::Point> OnMouseLeave;
-		
+
 		Function<ax::Point> OnMouseEnterChild;
 		Function<ax::Point> OnMouseLeaveChild;
-		
+
 		// Track pad.
 		Function<ax::Point> OnScrollWheel;
 
 		struct GlobalClick {
-			enum ClickType {
-				LEFT_CLICK_DOWN,
-				LEFT_CLICK_UP,
-				RIGHT_CLICK_DOWN,
-				RIGHT_CLICK_UP
-			};
+			enum ClickType { LEFT_CLICK_DOWN, LEFT_CLICK_UP, RIGHT_CLICK_DOWN, RIGHT_CLICK_UP };
 
 			int type;
 			ax::Point pos;
 		};
 
 		Function<GlobalClick> OnGlobalClick;
-		
+
 		Function<int> OnAssignToWindowManager;
-		
+
 		inline void SetWindowManager(ax::core::WindowManager* wm)
 		{
 			_windowManager = wm;
 		}
-		
+
 		inline ax::core::WindowManager* GetWindowManager()
 		{
 			return _windowManager;
 		}
-		
+
 	protected:
 		ax::Window* _win = nullptr;
 		ax::core::WindowManager* _windowManager;
@@ -292,10 +286,10 @@ public:
 		}
 
 		inline void AssignWindow(std::shared_ptr<ax::Window> window);
-		
+
 		inline ax::Window* GetWindow();
 		inline const ax::Window* GetWindow() const;
-		
+
 		virtual Backbone* GetCopy()
 		{
 			return nullptr;
@@ -321,10 +315,10 @@ public:
 		inline void SetWindow(ax::Window* win);
 
 		inline ax::Window* GetWindow();
-		
+
 		void Reparent(Window* parent, const ax::Point& position);
 
-//		Ptr Add(Ptr child);
+		//		Ptr Add(Ptr child);
 		void Add(std::shared_ptr<ax::Window> win);
 
 		void Add(std::shared_ptr<Backbone> child);
@@ -337,12 +331,12 @@ public:
 
 		/// This is the owner of the window.
 		std::vector<std::shared_ptr<ax::Window>> _children;
-		
+
 		struct BlockDrawingInfo {
 			ax::Rect abs_rect;
 			ax::Rect shown_rect;
 		};
-		
+
 		void BlockDrawing(ax::Window* win);
 		void UnBlockDrawing(ax::Window* win);
 		static std::vector<BlockDrawingInfo> _block_drawing_queue;
@@ -359,7 +353,7 @@ public:
 	virtual ~Window();
 
 	std::shared_ptr<ax::Window> RemoveWindow();
-	
+
 	bool IsShown();
 	void Show();
 	void Hide();
@@ -372,7 +366,7 @@ public:
 	ax::Rect GetWindowPixelData(unsigned char*& data) const;
 
 	void GetWindowPixelData(unsigned char*& data, const ax::Rect& rect) const;
-	
+
 	inline ax::core::WindowManager* GetWindowManager()
 	{
 		return _windowManager;
@@ -424,8 +418,7 @@ template <typename... Args> using WFunc = ax::Window::Event::Function<Args...>;
 template <typename T, typename Class, typename Member, typename Object>
 inline ax::WFunc<T> WBind(Object&& obj, Member Class::*mem_ptr)
 {
-	return ax::WFunc<T>(
-		std::bind(mem_ptr, std::forward<Object>(obj), std::placeholders::_1));
+	return ax::WFunc<T>(std::bind(mem_ptr, std::forward<Object>(obj), std::placeholders::_1));
 }
 
 /*******************************************************************************
@@ -438,10 +431,9 @@ inline Window::Event::Function<Args...>::Function()
 }
 
 template <typename... Args>
-inline Window::Event::Function<Args...>::Function(
-	const Window::Event::Func_T<Args...>& fct)
+inline Window::Event::Function<Args...>::Function(const Window::Event::Func_T<Args...>& fct)
 {
-//	ax::Print("Window::Event::Function");
+	//	ax::Print("Window::Event::Function");
 	_fct = new Func_T<Args...>(fct);
 }
 
@@ -453,8 +445,7 @@ template <typename... Args> Window::Event::Function<Args...>::~Function()
 }
 
 /// Call the internal std::function.
-template <typename... Args>
-inline void Window::Event::Function<Args...>::operator()(Args... args)
+template <typename... Args> inline void Window::Event::Function<Args...>::operator()(Args... args)
 {
 	if (_fct != nullptr && *_fct) {
 		_fct->operator()(args...);
@@ -463,8 +454,7 @@ inline void Window::Event::Function<Args...>::operator()(Args... args)
 
 /// Return a copy of the internal std::function.
 template <typename... Args>
-inline Window::Event::Func_T<Args...>
-Window::Event::Function<Args...>::GetFunction() const
+inline Window::Event::Func_T<Args...> Window::Event::Function<Args...>::GetFunction() const
 {
 	if (_fct != nullptr) {
 		return *_fct;
@@ -475,19 +465,17 @@ Window::Event::Function<Args...>::GetFunction() const
 }
 
 template <typename... Args>
-inline void Window::Event::Function<Args...>::operator=(
-	const Function<Args...>& fct)
+inline void Window::Event::Function<Args...>::operator=(const Function<Args...>& fct)
 {
 	if (_fct != nullptr) {
 		delete _fct;
 	}
 
-//	ax::Print("Window::Event::Function operator=");
+	//	ax::Print("Window::Event::Function operator=");
 	_fct = new Window::Event::Func_T<Args...>(fct.GetFunction());
 }
 
-template <typename... Args>
-bool Window::Event::Function<Args...>::operator==(const bool& v)
+template <typename... Args> bool Window::Event::Function<Args...>::operator==(const bool& v)
 {
 	return v == (_fct != nullptr);
 }
@@ -501,21 +489,18 @@ inline Window::State<N>::State(ax::Window* win)
 {
 }
 
-template <std::size_t N>
-inline void Window::State<N>::SetWindow(ax::Window* win)
+template <std::size_t N> inline void Window::State<N>::SetWindow(ax::Window* win)
 {
 	_win = win;
 }
 
-template <std::size_t N>
-inline void Window::State<N>::Apply(Window::StateOption state, bool value)
+template <std::size_t N> inline void Window::State<N>::Apply(Window::StateOption state, bool value)
 {
 	this->operator[](state) = value;
 	_win->Update();
 }
 
-template <std::size_t N>
-inline bool Window::State<N>::Get(const Window::StateOption& state)
+template <std::size_t N> inline bool Window::State<N>::Get(const Window::StateOption& state)
 {
 	return this->operator[](state);
 }
@@ -542,7 +527,7 @@ inline const ax::Window* Window::Backbone::GetWindow() const
 	return win;
 }
 
-//inline Window::Ptr Window::Backbone::GetWindow()
+// inline Window::Ptr Window::Backbone::GetWindow()
 //{
 //	return win;
 //}

@@ -139,7 +139,6 @@ TEST(AttributeRead, ArrayType)
 TEST(FileWrite, Writer)
 {
 	erft::tk::AttributeDocument att_doc("file01.json", erft::tk::AttributeDocument::Type::JSON);
-
 }
 
 int main(int argc, char** argv)

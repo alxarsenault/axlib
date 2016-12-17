@@ -47,18 +47,17 @@ namespace core {
 		void OnMouseLeftUp(const ax::Point& pos);
 		void OnMouseRightDown(const ax::Point& pos);
 		void OnMouseRightUp();
-		
+
 		void GrabMouse(ax::Window* win);
 		void UnGrabMouse(const ax::Window* win);
 		void UnGrabMouse();
 
 		bool IsGrab(const ax::Window* win) const;
-		
 
 		bool IsMouseStillInChildWindow(const ax::Window* win) const;
 		bool IsMouseHoverWindow(const ax::Window* win) const;
 		bool IsEventReachWindow() const;
-		
+
 		void ReleaseMouseHover();
 
 		void GrabScroll(ax::Window* win);
@@ -70,16 +69,16 @@ namespace core {
 		/// Set the last window for mouse enter and leave functions.
 		/// Be careful with this function, it might break the user app logic.
 		void SetPastWindow(ax::Window* win);
-		
+
 		void RemoveIfPastWindow(const ax::Window* win);
 
 		void GrabGlobalMouse(ax::Window* win);
 		void UnGrabGlobalMouse(ax::Window* win);
 		void ClearGlobalMouseGrab();
-		
+
 		bool IsGlobalMouseGrabbed() const;
 		bool IsGlobalMouseGrabbed(const ax::Window* win) const;
-		
+
 		void ClearMouseManager()
 		{
 			_global_click_listener.clear();

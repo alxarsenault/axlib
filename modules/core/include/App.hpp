@@ -59,7 +59,7 @@ class App : public core::Facade {
 public:
 	/// Create or access the application.
 	static ax::App& GetInstance();
-	
+
 	static ax::App* Create(core::Core* core);
 
 	/// Use this before getInstance to set your application window size.
@@ -109,35 +109,35 @@ public:
 	void AddTopLevel(std::shared_ptr<ax::Window::Backbone> win);
 
 	void AddPopupTopLevel(std::shared_ptr<ax::Window> win);
-	
+
 	void AddPopupTopLevel(std::shared_ptr<ax::Window::Backbone> win);
 
 	std::shared_ptr<ax::Window> GetTopLevel();
-	
+
 	void CloseApplication();
-	
+
 	inline std::string AppOpenFilePath() const
 	{
 		return _app_open_file_path;
 	}
-	
+
 	inline void SetAppOpenFilePath(const std::string& path)
 	{
 		_app_open_file_path = path;
 	}
-	
+
 protected:
 	static ax::Size _frameSize;
 	App();
 	std::function<void()> _mainEntryFunction; /// Main GUI callback.
 	std::function<void()> _afterGuiLoadFunction; /// After GUI callback.
 	std::string _app_open_file_path;
-	
+
 private:
 	/* Singleton */
 	static std::shared_ptr<ax::App> _instance;
 	static std::once_flag _onlyOne;
-	
+
 	App(const ax::App& a);
 	App(core::Core* core);
 	App& operator=(const ax::App& a);

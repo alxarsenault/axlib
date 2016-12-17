@@ -41,78 +41,75 @@
 #include <thread>
 
 namespace x11 {
-	typedef Window Window;
+typedef Window Window;
 }
 
 namespace ax {
-	
-	namespace Event {
-		class Timer;
-	}	
 
-	namespace Core {
-		class X11 : public axCore
+namespace Event {
+	class Timer;
+}
+
+namespace Core {
+	class X11 : public axCore {
+	public:
+		X11();
+
+		virtual void MainLoop();
+
+		virtual void Init(const ax::Size& frame_size);
+
+		virtual std::string GetAppDirectory();
+
+		virtual std::string GetAppPath();
+
+		virtual ax::Rect GetScreenRect();
+
+		virtual ax::Size GetScreenSize();
+
+		virtual std::string OpenFileDialog();
+
+		virtual void PushEventOnSystemQueue();
+
+		virtual void KillGLWindow();
+
+		virtual bool CreateGLWindow(const char* title, int width, int height, int bits = 16)
 		{
-		public:
-			X11();
-			
-			virtual void MainLoop();
-			
-			virtual void Init(const ax::Size& frame_size);
+			return true;
+		}
 
-			virtual std::string GetAppDirectory();
-			
-			virtual std::string GetAppPath();
-			
-			virtual ax::Rect GetScreenRect();
-			
-			virtual ax::Size GetScreenSize();
-			
-			virtual std::string OpenFileDialog();
-			
-			virtual void PushEventOnSystemQueue();
+		virtual void UpdateAll();
 
-			virtual void KillGLWindow();
+		virtual void ResizeFrame(const ax::Size& size);
 
-			virtual bool CreateGLWindow(const char* title, int width, int height, 
-					int bits = 16)
-			{
-				return true;
-			}
-			
-			virtual void UpdateAll();
-			
-			virtual void ResizeFrame(const ax::Size& size);
-			
-			// Test --------------------
-			std::thread _evt_thread;
-			std::mutex _evt_mutex;
-  			std::condition_variable _evt_cond;
-			std::mutex _display_mutex;
-			std::atomic<bool> _evt_ready;
-			//--------------------------
-		private:
-			//std::mutex _display_mutex;
-			Display* _display;
-			x11::Window _win, _rootWindow;
-			XVisualInfo* _visualInfo;
-			int _screen, _nScreen, _depth;
-			Colormap _colormap;
-			GLXContext _glxContext;
-			ax::Rect _winRect;
-			std::atomic<bool> _refresh;	
-	
+		// Test --------------------
+		std::thread _evt_thread;
+		std::mutex _evt_mutex;
+		std::condition_variable _evt_cond;
+		std::mutex _display_mutex;
+		std::atomic<bool> _evt_ready;
+		//--------------------------
+	private:
+		// std::mutex _display_mutex;
+		Display* _display;
+		x11::Window _win, _rootWindow;
+		XVisualInfo* _visualInfo;
+		int _screen, _nScreen, _depth;
+		Colormap _colormap;
+		GLXContext _glxContext;
+		ax::Rect _winRect;
+		std::atomic<bool> _refresh;
 
-			std::fstream trace;
+		std::fstream trace;
 
-			ax::Event::Timer* _drawing_timer;
-			
-			Display* CreateDisplay();
-			XVisualInfo* GetGLXVisualInfo(Display* dpy);
-			x11::Window CreateWindow(Display* dpy, const ax::Rect& rect, x11::Window& root_win, 
-					Colormap& cmap, XVisualInfo* v_info);	
-		};
-	}
+		ax::Event::Timer* _drawing_timer;
+
+		Display* CreateDisplay();
+		XVisualInfo* GetGLXVisualInfo(Display* dpy);
+		x11::Window CreateWindow(
+			Display* dpy, const ax::Rect& rect, x11::Window& root_win, Colormap& cmap, XVisualInfo* v_info);
+	};
+}
 }
 #endif // axCoreX11
 #endif // _AX_CORE_X11_H_

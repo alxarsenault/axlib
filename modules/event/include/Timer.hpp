@@ -69,8 +69,7 @@ namespace event {
 
 		Timer(std::shared_ptr<Manager> evtManager);
 
-		static void timer_thread(
-			Timer& timer, const TimeMs& interval_ms, const TimeMs& length_ms);
+		static void timer_thread(Timer& timer, const TimeMs& interval_ms, const TimeMs& length_ms);
 
 		static void timer_thread_no_end(Timer& timer, const TimeMs& interval_ms);
 

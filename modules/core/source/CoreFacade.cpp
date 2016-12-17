@@ -77,7 +77,7 @@ namespace core {
 		_core->Init(frame_size);
 		_core->SetGlobalSize(frame_size);
 #else
-//		ax::Print("Facade _core = new axCoreMac");
+		//		ax::Print("Facade _core = new axCoreMac");
 		_core = new CoreMac();
 		_core->SetGlobalSize(frame_size);
 //_core->Init(frame_size);
@@ -85,14 +85,13 @@ namespace core {
 
 #endif // __APPLE__
 	}
-	
+
 	Facade::Facade(const ax::Size& frame_size, Core* core)
 	{
 		_core = core;
-//		_core->Init(frame_size);
+		//		_core->Init(frame_size);
 		_core->SetGlobalSize(frame_size);
 	}
-
 
 	void Facade::Init(const ax::Size& frame_size)
 	{
@@ -113,7 +112,7 @@ namespace core {
 	{
 		return _core->OpenFileDialog();
 	}
-	
+
 	std::string Facade::SaveFileDialog()
 	{
 		return _core->SaveFileDialog();
@@ -143,7 +142,7 @@ namespace core {
 	{
 		_core->ResizeFrame(size);
 	}
-	
+
 	void Facade::SetFocusAndCenter()
 	{
 		_core->SetFocusAndCenter();
@@ -183,17 +182,17 @@ namespace core {
 	{
 		return _core->DrawGLScene();
 	}
-	
+
 	void Facade::SetResizable(bool resizable)
 	{
 		_core->SetResizable(resizable);
 	}
-	
+
 	void Facade::SetTitleBar(bool titlebar)
 	{
 		_core->SetTitleBar(titlebar);
 	}
-	
+
 	std::string Facade::GetPasteboardConent()
 	{
 		return _core->GetPasteboardContent();

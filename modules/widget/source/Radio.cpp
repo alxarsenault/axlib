@@ -31,7 +31,7 @@
 //                 const axRadio::Info& info,
 //                 std::string img_path,
 //                 std::string label,
-//                 ax::Flag flags,
+//                 ax::util::Flag flags,
 //                 std::string msg) :
 //// Heritage.
 // axToggle(parent, rect, events, info, img_path, label, flags, msg)

@@ -66,12 +66,12 @@ namespace core {
 	void WindowManager::OnSize(const ax::Size& size)
 	{
 		std::shared_ptr<ax::Window> win = _windowTree.GetTopLevel();
-		
-		if(win) {
+
+		if (win) {
 			win->dimension.SetSize(size);
 		}
 	}
-	
+
 	void WindowManager::Clear()
 	{
 		ClearMouseManager();

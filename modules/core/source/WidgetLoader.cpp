@@ -25,7 +25,7 @@
 namespace ax {
 namespace widget {
 	std::shared_ptr<Loader> Loader::_instance = nullptr;
-	
+
 	Loader* Loader::GetInstance()
 	{
 		if (_instance == nullptr) {
@@ -33,26 +33,24 @@ namespace widget {
 		}
 		return _instance.get();
 	}
-	
+
 	Loader::Loader()
 	{
 	}
 
-	void Loader::AddBuilder(
-		const std::string& name, ax::widget::Builder* builder)
+	void Loader::AddBuilder(const std::string& name, ax::widget::Builder* builder)
 	{
 		auto it = _builders.find(name);
 
 		if (it == _builders.end()) {
-			_builders.insert(
-				std::pair<std::string, ax::widget::Builder*>(name, builder));
+			_builders.insert(std::pair<std::string, ax::widget::Builder*>(name, builder));
 		}
 	}
-	
+
 	ax::widget::Builder* Loader::GetBuilder(const std::string& name)
 	{
 		auto it = _builders.find(name);
-		
+
 		if (it != _builders.end()) {
 			return it->second;
 		}

@@ -30,50 +30,50 @@
 
 namespace ax {
 namespace core {
-class CoreMac : public Core {
-public:
-	CoreMac();
+	class CoreMac : public Core {
+	public:
+		CoreMac();
 
-	virtual void MainLoop();
+		virtual void MainLoop();
 
-	virtual void Init(const ax::Size& frame_size);
+		virtual void Init(const ax::Size& frame_size);
 
-	virtual std::string GetAppDirectory();
+		virtual std::string GetAppDirectory();
 
-	virtual std::string GetAppPath();
+		virtual std::string GetAppPath();
 
-	virtual ax::Rect GetScreenRect();
+		virtual ax::Rect GetScreenRect();
 
-	virtual ax::Size GetScreenSize();
+		virtual ax::Size GetScreenSize();
 
-	virtual std::string OpenFileDialog();
-	
-	virtual std::string SaveFileDialog();
+		virtual std::string OpenFileDialog();
 
-	virtual void PushEventOnSystemQueue();
+		virtual std::string SaveFileDialog();
 
-	virtual void KillGLWindow();
+		virtual void PushEventOnSystemQueue();
 
-	virtual bool CreateGLWindow(const char* title, int width, int height, int bits);
+		virtual void KillGLWindow();
 
-	virtual void UpdateAll();
+		virtual bool CreateGLWindow(const char* title, int width, int height, int bits);
 
-	virtual void ResizeFrame(const ax::Size& size);
+		virtual void UpdateAll();
 
-	virtual void HideMouse();
+		virtual void ResizeFrame(const ax::Size& size);
 
-	virtual void ShowMouse();
-	
-	virtual void SetCoreCursor(const Cursor& cursor_id);
-	
-	virtual void SetResizable(bool resizable);
-	
-	virtual void SetTitleBar(bool titlebar);
-	
-	virtual void SetFocusAndCenter();
-	
-	virtual std::string GetPasteboardContent();
-};
+		virtual void HideMouse();
+
+		virtual void ShowMouse();
+
+		virtual void SetCoreCursor(const Cursor& cursor_id);
+
+		virtual void SetResizable(bool resizable);
+
+		virtual void SetTitleBar(bool titlebar);
+
+		virtual void SetFocusAndCenter();
+
+		virtual std::string GetPasteboardContent();
+	};
 }
 }
 

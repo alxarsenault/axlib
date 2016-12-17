@@ -71,9 +71,9 @@ private:
 class Image {
 public:
 	enum ColorType { RGB, RGBA };
-	
+
 	typedef std::shared_ptr<ax::Image> Ptr;
-	
+
 	Image(const std::string& path);
 
 	Image(void* data, const ax::Size& size, ColorType type = RGBA);
@@ -109,7 +109,7 @@ public:
 
 	~BigImage()
 	{
-		delete[](unsigned char*)_imgData;
+		delete[](unsigned char*) _imgData;
 	}
 
 	bool InitImage(const std::string& path);
