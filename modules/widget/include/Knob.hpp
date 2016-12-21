@@ -89,17 +89,16 @@ public:
 		virtual std::vector<std::string> GetParamNameList() const;
 		virtual std::string GetAttributeValue(const std::string& name);
 		virtual void SetAttribute(const std::pair<std::string, std::string>& attribute);
-		
+
 		virtual std::vector<widget::ParamInfo> GetParametersInfo() const
 		{
-			return {
-				widget::ParamInfo(widget::ParamType::COLOR, "bgColorNormal"),
+			return { widget::ParamInfo(widget::ParamType::COLOR, "bgColorNormal"),
 				widget::ParamInfo(widget::ParamType::COLOR, "bgColorHover"),
 				widget::ParamInfo(widget::ParamType::COLOR, "bgColorClicked"),
-				
+
 				widget::ParamInfo(widget::ParamType::FILEPATH, "img_path"),
 				widget::ParamInfo(widget::ParamType::FILEPATH, "selected_img_path"),
-				
+
 				widget::ParamInfo(widget::ParamType::SIZE, "knob_size"),
 				widget::ParamInfo(widget::ParamType::INTEGER, "n_knob") };
 		}
@@ -108,7 +107,7 @@ public:
 		std::string img_path, selected_img_path;
 		ax::Size knob_size;
 		unsigned int n_knob;
-		
+
 		std::shared_ptr<ax::Image> img;
 	};
 
@@ -128,7 +127,7 @@ public:
 
 		virtual std::vector<std::pair<std::string, std::string>> GetBuilderAttributes();
 		virtual std::vector<ax::widget::ParamInfo> GetBuilderAttributesInfo() const;
-		
+
 		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void ReloadInfo();
@@ -147,8 +146,8 @@ public:
 	/*
 	 * axKnob::axKnob.
 	 */
-	Knob(const ax::Rect& rect, const ax::Knob::Events& events, const ax::Knob::Info& info, ax::util::Flag flags = 0,
-		double value = 0.0, const std::string& msg = "");
+	Knob(const ax::Rect& rect, const ax::Knob::Events& events, const ax::Knob::Info& info,
+		ax::util::Flag flags = 0, double value = 0.0, const std::string& msg = "");
 
 	ax::Window::Backbone* GetCopy();
 
@@ -168,7 +167,7 @@ public:
 	{
 		return _msg;
 	}
-	
+
 	void SetMsg(const std::string& msg)
 	{
 		_msg = msg;

@@ -19,7 +19,7 @@
  * To release a closed-source product which uses axLib, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
- 
+
 #include "FileSystem.hpp"
 #include "ConsolePrint.hpp"
 

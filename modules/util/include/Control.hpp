@@ -36,22 +36,12 @@ namespace util {
 		/*
 		 * ax::Utils::Control::Unit.
 		 */
-		enum Unit {
-			axCTRL_NO_UNIT,
-			axCTRL_HERTZ,
-			axCTRL_DECIBEL,
-			axCTRL_TIME_MS,
-			axCTRL_TIME_SEC
-		};
+		enum Unit { axCTRL_NO_UNIT, axCTRL_HERTZ, axCTRL_DECIBEL, axCTRL_TIME_MS, axCTRL_TIME_SEC };
 
 		/*
 		 * ax::Utils::Control::Interpolation.
 		 */
-		enum Interpolation {
-			axCTRL_LINEAR,
-			axCTRL_EXPONENTIAL,
-			axCTRL_LOGARITHME
-		};
+		enum Interpolation { axCTRL_LINEAR, axCTRL_EXPONENTIAL, axCTRL_LOGARITHME };
 	}
 }
 }

@@ -49,31 +49,19 @@ namespace core {
 		void OnDownArrowDown();
 
 		void OnCmdDown();
-
 		void GrabKey(ax::Window* win);
-
 		void UnGrabKey();
-
 		void UnGrabKey(const ax::Window* win);
-
 		bool IsKeyGrab(const ax::Window* win) const;
-
 		bool IsCmdDown() const;
-
 		void AddGlobalGrabedWindow(ax::Window* win);
-
 		bool IsGlobalKeyGrabbed(const ax::Window* win);
-
 		void UnGrabGlobalKey(const ax::Window* win);
-
 		//	void SetPastKeyWindow(ax::Window* win);
-
 		bool IsPastKeySelected(const ax::Window* win);
 
 		void ClearKeyboardManager();
-
 		void ClearGrabbedWindow();
-
 		void ClearGlobalGrabbedWindows();
 
 	private:

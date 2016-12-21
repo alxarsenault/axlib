@@ -61,7 +61,8 @@ Knob::Info::Info()
 
 std::vector<std::string> Knob::Info::GetParamNameList() const
 {
-	return std::vector<std::string>{ "knob_size", "n_knob", "bgColorNormal", "bgColorHover", "bgColorClicked" };
+	return std::vector<std::string>{ "knob_size", "n_knob", "bgColorNormal", "bgColorHover",
+		"bgColorClicked" };
 }
 
 std::string Knob::Info::GetAttributeValue(const std::string& name)
@@ -299,8 +300,8 @@ std::shared_ptr<Window::Backbone> Knob::Builder::Create(Xml::Node& node)
 /*
  * axKnob.
  */
-Knob::Knob(const Rect& rect, const Knob::Events& events, const Knob::Info& info, util::Flag flags, double value,
-	const std::string& msg)
+Knob::Knob(const Rect& rect, const Knob::Events& events, const Knob::Info& info, util::Flag flags,
+	double value, const std::string& msg)
 	: _events(events)
 	, _msg(msg)
 	, _flags(flags)

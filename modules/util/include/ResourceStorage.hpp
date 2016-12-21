@@ -19,7 +19,7 @@
  * To release a closed-source product which uses axLib, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
- 
+
 #pragma once
 
 /// @defgroup util
@@ -37,9 +37,9 @@ namespace util {
 	class ResourceStorage {
 	public:
 		ResourceStorage();
-		
+
 		~ResourceStorage();
-		
+
 		void Add(std::string id, Var value);
 
 		Var GetResource(const std::string& id);

@@ -34,13 +34,13 @@
 ///*
 // * axStaticImage.
 // */
-//class axStaticImage: public axPanel
+// class axStaticImage: public axPanel
 //{
-//public:
+// public:
 //    axStaticImage(ax::Window* parent, const ax::Rect& rect, const std::string& path);
-//    
+//
 //    axStaticImage(ax::Window* parent, const ax::Rect& rect, ax::Image* img);
-//    
+//
 //    /*
 //     * axStaticImageBuilder.
 //     */
@@ -48,9 +48,9 @@
 //    {
 //    public:
 //        axStaticImageBuilder(ax::Window* win);
-//        
+//
 //        axStaticImage* Create(std::vector<std::pair<std::string, std::string>> attributes);
-//        
+//
 //    private:
 //        ax::Window* _parent;
 //        std::string _path;
@@ -58,10 +58,10 @@
 //        ax::Size _size;
 //        ax::Image* _img;
 //    };
-//    
-//private:
+//
+// private:
 //    ax::Image* _img;
-//    
+//
 //    // Events.
 //    virtual void OnPaint();
 //};

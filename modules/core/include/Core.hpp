@@ -20,8 +20,7 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 
-#ifndef __AX_CORE__
-#define __AX_CORE__
+#pragma once
 
 /// @defgroup Core
 /// @{
@@ -136,7 +135,6 @@ namespace core {
 		std::unique_ptr<ax::core::WindowManager> _windowManager;
 		std::unique_ptr<ax::core::WindowManager> _popupManager;
 		std::unique_ptr<ax::core::WindowManager> _editor_manager;
-
 		std::unique_ptr<ax::core::WindowManager> _realPopWindowManager;
 
 		bool _needToDraw, _popupNeedToDraw;
@@ -153,4 +151,3 @@ namespace core {
 }
 
 /// @}
-#endif //__AX_CORE__

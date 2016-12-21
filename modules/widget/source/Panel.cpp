@@ -175,7 +175,8 @@ ax::Xml::Node Panel::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 	return widget_node;
 }
 
-void Panel::Component::SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes)
+void Panel::Component::SetBuilderAttributes(
+	const std::vector<std::pair<std::string, std::string>>& attributes)
 {
 	for (auto& n : attributes) {
 		if (n.first == "position") {
@@ -187,22 +188,18 @@ void Panel::Component::SetBuilderAttributes(const std::vector<std::pair<std::str
 			GetWindow()->dimension.SetSize(size);
 		}
 		else if (n.first == "bg_img") {
-			//ax::Print("ax::Panel SetBuilderAttributes bg_img -> Not implemented yet.");
-			
+			// ax::Print("ax::Panel SetBuilderAttributes bg_img -> Not implemented yet.");
+
 			Panel* panel = static_cast<Panel*>(_win->backbone.get());
 
-
-			if(panel->_bg_img) {
-				if(panel->_bg_img->GetImagePath() != n.second) {
+			if (panel->_bg_img) {
+				if (panel->_bg_img->GetImagePath() != n.second) {
 					panel->_bg_img.reset(new ax::Image(n.second));
 				}
 			}
 			else {
 				panel->_bg_img.reset(new ax::Image(n.second));
 			}
-			
-			
-			
 		}
 	}
 
@@ -219,8 +216,6 @@ std::vector<ax::widget::ParamInfo> Panel::Component::GetBuilderAttributesInfo() 
 void Panel::Component::ReloadInfo()
 {
 	_win->Update();
-	
-	
 }
 
 void Panel::Component::SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes)
@@ -339,8 +334,8 @@ void Panel::Builder::CreateChildren(ax::Xml::Node& node, ax::Panel* panel)
 /*
  * ax::Panel.
  */
-Panel::Panel(
-	const Rect& rect, const Panel::Info& info, const std::string& bg_img, const std::string& name, ax::util::Flag flags)
+Panel::Panel(const Rect& rect, const Panel::Info& info, const std::string& bg_img, const std::string& name,
+	ax::util::Flag flags)
 	: _flags(flags)
 	, _bg_img_path(bg_img)
 	, _name(name)
@@ -369,16 +364,16 @@ ax::Window::Backbone* Panel::GetCopy()
 	widget::Component* widget = static_cast<widget::Component*>(win->component.Get("Widget").get());
 	ax::Panel::Info* info = static_cast<ax::Panel::Info*>(widget->GetInfo());
 	ax::Panel* panel = new ax::Panel(win->dimension.GetRect(), *info, _bg_img_path, _name, _flags);
-	
+
 	std::vector<std::shared_ptr<ax::Window>>& children = win->node.GetChildren();
-	
+
 	if (children.size()) {
 		for (auto& n : children) {
 			std::shared_ptr<ax::Window::Backbone> child_bck_bone(n->backbone->GetCopy());
 			panel->win->node.Add(child_bck_bone);
 		}
 	}
-	
+
 	return panel;
 }
 

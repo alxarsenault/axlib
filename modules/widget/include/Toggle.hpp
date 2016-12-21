@@ -111,7 +111,7 @@ public:
 		ax::Color hover;
 		ax::Color clicking;
 		ax::Color font_color;
-		
+
 		ax::Color selected;
 		ax::Color selected_hover;
 		ax::Color selected_clicking;
@@ -119,7 +119,7 @@ public:
 		ax::Color selected_font_color;
 
 		ax::Color contour;
-		
+
 		int font_size = 12;
 
 		std::string img;
@@ -129,25 +129,24 @@ public:
 		virtual std::vector<std::string> GetParamNameList() const;
 		virtual std::string GetAttributeValue(const std::string& name);
 		virtual void SetAttribute(const std::pair<std::string, std::string>& attribute);
-				
+
 		virtual std::vector<widget::ParamInfo> GetParametersInfo() const
 		{
-			return {
-				widget::ParamInfo(widget::ParamType::COLOR, "normal"),
+			return { widget::ParamInfo(widget::ParamType::COLOR, "normal"),
 				widget::ParamInfo(widget::ParamType::COLOR, "hover"),
 				widget::ParamInfo(widget::ParamType::COLOR, "clicking"),
 				widget::ParamInfo(widget::ParamType::COLOR, "font_color"),
-				
+
 				widget::ParamInfo(widget::ParamType::COLOR, "selected"),
 				widget::ParamInfo(widget::ParamType::COLOR, "selected_hover"),
 				widget::ParamInfo(widget::ParamType::COLOR, "selected_clicking"),
 				widget::ParamInfo(widget::ParamType::COLOR, "selected_font_color"),
-				
+
 				widget::ParamInfo(widget::ParamType::COLOR, "contour"),
-				
+
 				widget::ParamInfo(widget::ParamType::INTEGER, "font_size"),
 				widget::ParamInfo(widget::ParamType::FILEPATH, "img"),
-				widget::ParamInfo(widget::ParamType::BOOLEAN, "single_img")  };
+				widget::ParamInfo(widget::ParamType::BOOLEAN, "single_img") };
 		}
 	};
 
@@ -157,14 +156,14 @@ public:
 
 		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
 		virtual std::vector<std::pair<std::string, std::string>> GetBuilderAttributes();
-		
+
 		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);
-		
+
 		virtual std::vector<ax::widget::ParamInfo> GetBuilderAttributesInfo() const;
-		
+
 		virtual void ReloadInfo();
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
-		
+
 		std::string GetBuilderName() const
 		{
 			return "Toggle";
@@ -202,7 +201,7 @@ public:
 	{
 		return _label;
 	}
-	
+
 	void SetLabel(const std::string& label)
 	{
 		_label = label;
@@ -213,7 +212,7 @@ public:
 	{
 		return _msg;
 	}
-	
+
 	ax::util::Flag GetFlags() const
 	{
 		return _flags;

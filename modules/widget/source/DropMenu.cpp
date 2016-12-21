@@ -63,7 +63,7 @@ int ax::DropMenu::Msg::GetIndex() const
 
 ax::event::Msg* ax::DropMenu::Msg::GetCopy()
 {
-//	ax::Print("ax::DropMenu::Msg::GetCopy()");
+	//	ax::Print("ax::DropMenu::Msg::GetCopy()");
 	return new ax::DropMenu::Msg(*this);
 }
 
@@ -90,8 +90,7 @@ ax::DropMenu::Info::Info()
  * ax::DropMenu::DropMenu.
  */
 ax::DropMenu::DropMenu(const ax::Rect& rect, const ax::DropMenu::Events& events,
-	const ax::DropMenu::Info& info, const std::vector<std::string>& items,
-	ax::util::Flag flags)
+	const ax::DropMenu::Info& info, const std::vector<std::string>& items, ax::util::Flag flags)
 	: _events(events)
 	, _flags(flags)
 	, _selected_item(-1)
@@ -143,24 +142,19 @@ ax::DropMenu::DropMenu(const ax::Rect& rect, const ax::DropMenu::Events& events,
 	// Builtin event connection.
 	win->event.OnPaint = ax::WBind<ax::GC>(this, &DropMenu::OnPaint);
 
-	win->event.OnMouseLeftDown
-		= ax::WBind<ax::Point>(this, &DropMenu::OnMouseLeftDown);
-	win->event.OnMouseLeftUp
-		= ax::WBind<ax::Point>(this, &DropMenu::OnMouseLeftUp);
-	win->event.OnMouseEnter
-		= ax::WBind<ax::Point>(this, &DropMenu::OnMouseEnter);
-	win->event.OnMouseLeave
-		= ax::WBind<ax::Point>(this, &DropMenu::OnMouseLeave);
-	win->event.OnMouseMotion
-		= ax::WBind<ax::Point>(this, &DropMenu::OnMouseMotion);
+	win->event.OnMouseLeftDown = ax::WBind<ax::Point>(this, &DropMenu::OnMouseLeftDown);
+	win->event.OnMouseLeftUp = ax::WBind<ax::Point>(this, &DropMenu::OnMouseLeftUp);
+	win->event.OnMouseEnter = ax::WBind<ax::Point>(this, &DropMenu::OnMouseEnter);
+	win->event.OnMouseLeave = ax::WBind<ax::Point>(this, &DropMenu::OnMouseLeave);
+	win->event.OnMouseMotion = ax::WBind<ax::Point>(this, &DropMenu::OnMouseMotion);
 
 	if (_events.item_click) {
 		win->AddConnection(DropMenu::Events::ITEM_CLICK, _events.item_click);
 	}
 
-//	ax::Print("new ax::DropMenu::win->component");
-	win->component.Add("Widget", widget::Component::Ptr(new widget::Component(
-									 win, new ax::DropMenu::Info(info))));
+	//	ax::Print("new ax::DropMenu::win->component");
+	win->component.Add(
+		"Widget", widget::Component::Ptr(new widget::Component(win, new ax::DropMenu::Info(info))));
 
 	if (info.font_path.empty()) {
 		_font = ax::unique<ax::Font>(0);
@@ -213,10 +207,8 @@ void ax::DropMenu::SetSelectedItem(const int& index)
 
 int ax::DropMenu::MousePosToIndex(const ax::Point& pos)
 {
-	widget::Component::Ptr widget
-		= win->component.Get<widget::Component>("Widget");
-	ax::DropMenu::Info* info
-		= static_cast<ax::DropMenu::Info*>(widget->GetInfo());
+	widget::Component::Ptr widget = win->component.Get<widget::Component>("Widget");
+	ax::DropMenu::Info* info = static_cast<ax::DropMenu::Info*>(widget->GetInfo());
 
 	if (pos.y < 0) {
 		return ITEM_NONE_SELECTED;
@@ -328,13 +320,12 @@ void ax::DropMenu::OnMouseLeftDown(const ax::Point& pos)
 		return;
 	}
 
-//	if (i != _selected_item) {
-		_selected_item = i;
-//		ax::Print("new ax::DropMenu::win->PushEvent");
-		win->PushEvent(
-			Events::ITEM_CLICK, new ax::DropMenu::Msg(this, _items[i], i));
-		win->Update();
-//	}
+	//	if (i != _selected_item) {
+	_selected_item = i;
+	//		ax::Print("new ax::DropMenu::win->PushEvent");
+	win->PushEvent(Events::ITEM_CLICK, new ax::DropMenu::Msg(this, _items[i], i));
+	win->Update();
+	//	}
 }
 
 void ax::DropMenu::OnMouseLeftUp(const ax::Point& pos)
@@ -362,10 +353,8 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 {
 	const ax::Rect rect(win->dimension.GetDrawingRect());
 
-	widget::Component::Ptr widget
-		= win->component.Get<widget::Component>("Widget");
-	ax::DropMenu::Info* info
-		= static_cast<ax::DropMenu::Info*>(widget->GetInfo());
+	widget::Component::Ptr widget = win->component.Get<widget::Component>("Widget");
+	ax::DropMenu::Info* info = static_cast<ax::DropMenu::Info*>(widget->GetInfo());
 
 	gc.SetColor(ax::Color(255, 0, 0));
 	gc.DrawRectangle(rect);
@@ -401,24 +390,20 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 		}
 	}
 
-	std::function<void(ax::Font&, const std::string&, const ax::Rect&)>
-		draw_string;
+	std::function<void(ax::Font&, const std::string&, const ax::Rect&)> draw_string;
 
 	if (ax::util::HasFlag(Flags::TEXT_ALIGN_CENTER, _flags)) {
-		draw_string = [&](
-			ax::Font& font, const std::string& text, const ax::Rect& s_rect) {
+		draw_string = [&](ax::Font& font, const std::string& text, const ax::Rect& s_rect) {
 			gc.DrawStringAlignedCenter(font, text, s_rect);
 		};
 	}
 	else if (ax::util::HasFlag(Flags::TEXT_ALIGN_RIGHT, _flags)) {
-		draw_string = [&](
-			ax::Font& font, const std::string& text, const ax::Rect& s_rect) {
+		draw_string = [&](ax::Font& font, const std::string& text, const ax::Rect& s_rect) {
 			gc.DrawStringAlignedRight(font, text, s_rect);
 		};
 	}
 	else {
-		draw_string = [&](
-			ax::Font& font, const std::string& text, const ax::Rect& s_rect) {
+		draw_string = [&](ax::Font& font, const std::string& text, const ax::Rect& s_rect) {
 			gc.DrawStringAlignedLeft(font, text, s_rect);
 		};
 	}
@@ -440,8 +425,7 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 			gc.DrawRectangle(up_rect);
 
 			ax::Size u_img_s = _up_img->GetSize();
-			ax::Point img_pos(
-				up_rect.position.x + (up_rect.size.w - u_img_s.w) * 0.5,
+			ax::Point img_pos(up_rect.position.x + (up_rect.size.w - u_img_s.w) * 0.5,
 				up_rect.position.y + (up_rect.size.h - u_img_s.h) * 0.5);
 
 			gc.DrawImageColor(_up_img.get(), img_pos, info->up_down_arrow);
@@ -458,8 +442,7 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 			gc.DrawRectangle(down_rect);
 
 			ax::Size d_img_s = _down_img->GetSize();
-			ax::Point d_img_pos(
-				down_rect.position.x + (down_rect.size.w - d_img_s.w) * 0.5,
+			ax::Point d_img_pos(down_rect.position.x + (down_rect.size.w - d_img_s.w) * 0.5,
 				down_rect.position.y + (down_rect.size.h - d_img_s.h) * 0.5);
 
 			gc.DrawImageColor(_down_img.get(), d_img_pos, info->up_down_arrow);
@@ -476,8 +459,7 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 			gc.DrawRectangle(up_rect);
 
 			ax::Size u_img_s = _up_img->GetSize();
-			ax::Point u_img_pos(
-				up_rect.position.x + (up_rect.size.w - u_img_s.w) * 0.5,
+			ax::Point u_img_pos(up_rect.position.x + (up_rect.size.w - u_img_s.w) * 0.5,
 				up_rect.position.y + (up_rect.size.h - u_img_s.h) * 0.5);
 
 			gc.DrawImageColor(_up_img.get(), u_img_pos, info->up_down_arrow);
@@ -494,8 +476,7 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 			gc.DrawRectangle(down_rect);
 
 			ax::Size d_img_s = _down_img->GetSize();
-			ax::Point d_img_pos(
-				down_rect.position.x + (down_rect.size.w - d_img_s.w) * 0.5,
+			ax::Point d_img_pos(down_rect.position.x + (down_rect.size.w - d_img_s.w) * 0.5,
 				down_rect.position.y + (down_rect.size.h - d_img_s.h) * 0.5);
 
 			gc.DrawImageColor(_down_img.get(), d_img_pos, info->up_down_arrow);
@@ -563,7 +544,7 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 	//
 	////					gc.DrawImage(_right_img.get(), img_pos);
 	//					gc.DrawImageColor(_right_img.get(), img_pos,
-	//ax::Color(1.0f,
+	// ax::Color(1.0f,
 	// 0.0f, 0.0f));
 	//					break;
 	//				}
@@ -593,8 +574,7 @@ void ax::DropMenu::OnPaint(ax::GC gc)
 		for (auto& n : _right_arrow_index) {
 			if (index == n) {
 				ax::Size img_s = _right_img->GetSize();
-				ax::Point img_pos(
-					item_rect.position.x + (item_rect.size.w - img_s.w),
+				ax::Point img_pos(item_rect.position.x + (item_rect.size.w - img_s.w),
 					item_rect.position.y + (item_rect.size.h - img_s.h) * 0.5);
 
 				gc.DrawImageColor(_right_img.get(), img_pos, info->right_arrow);

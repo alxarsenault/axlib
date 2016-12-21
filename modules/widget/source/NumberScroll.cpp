@@ -30,11 +30,11 @@ ax::event::Msg* NumberScroll::Msg::GetCopy()
 
 NumberScroll::Info::Info()
 {
-	
 }
 
-NumberScroll::NumberScroll(const ax::Rect& rect, const NumberScroll::Events& events, const ax::NumberScroll::Info& info, double value,
-	ax::util::Control::Type type, const ax::util::Range2D<double>& range, double increment)
+NumberScroll::NumberScroll(const ax::Rect& rect, const NumberScroll::Events& events,
+	const ax::NumberScroll::Info& info, double value, ax::util::Control::Type type,
+	const ax::util::Range2D<double>& range, double increment)
 	: _value(value)
 	, _type(type)
 	, _range(range)
@@ -48,15 +48,15 @@ NumberScroll::NumberScroll(const ax::Rect& rect, const NumberScroll::Events& eve
 		win->AddConnection(Events::VALUE_CHANGE, events.value_change);
 	}
 
-//	ax::TextBox::Info txtInfo;
-//	txtInfo.normal = ax::Color(1.0);
-//	txtInfo.hover = ax::Color(1.0);
-//	txtInfo.selected = ax::Color(1.0);
-//	txtInfo.highlight = ax::Color(0.4f, 0.4f, 0.6f, 0.2f);
-//	txtInfo.contour = ax::Color(0.7);
-//	txtInfo.cursor = ax::Color(1.0f, 0.0f, 0.0f);
-//	txtInfo.selected_shadow = ax::Color(0.8f, 0.8f, 0.8f);
-//	txtInfo.font_color = ax::Color(0.0);
+	//	ax::TextBox::Info txtInfo;
+	//	txtInfo.normal = ax::Color(1.0);
+	//	txtInfo.hover = ax::Color(1.0);
+	//	txtInfo.selected = ax::Color(1.0);
+	//	txtInfo.highlight = ax::Color(0.4f, 0.4f, 0.6f, 0.2f);
+	//	txtInfo.contour = ax::Color(0.7);
+	//	txtInfo.cursor = ax::Color(1.0f, 0.0f, 0.0f);
+	//	txtInfo.selected_shadow = ax::Color(0.8f, 0.8f, 0.8f);
+	//	txtInfo.font_color = ax::Color(0.0);
 
 	ax::TextBox::Events txt_evts;
 	txt_evts.enter_click = GetOnTextEnter();
@@ -72,24 +72,24 @@ NumberScroll::NumberScroll(const ax::Rect& rect, const NumberScroll::Events& eve
 		v_str = std::to_string(_value);
 	}
 
-	auto txt_box = ax::shared<ax::TextBox>(
-		ax::Rect(ax::Point(0, 0), ax::Size(rect.size.w - 19, rect.size.h)), txt_evts, info.txt_info, "", v_str);
+	auto txt_box = ax::shared<ax::TextBox>(ax::Rect(ax::Point(0, 0), ax::Size(rect.size.w - 19, rect.size.h)),
+		txt_evts, info.txt_info, "", v_str);
 
 	win->node.Add(txt_box);
 	_txtbox = txt_box.get();
 
-//	ax::Button::Info btn_info;
-//	btn_info.normal = ax::Color(0.85);
-//	btn_info.hover = ax::Color(0.86);
-//	btn_info.clicking = ax::Color(0.83);
-//	btn_info.selected = btn_info.normal;
-//	btn_info.contour = ax::Color(0.7);
-//	btn_info.font_color = ax::Color(0.0, 0.0);
+	//	ax::Button::Info btn_info;
+	//	btn_info.normal = ax::Color(0.85);
+	//	btn_info.hover = ax::Color(0.86);
+	//	btn_info.clicking = ax::Color(0.83);
+	//	btn_info.selected = btn_info.normal;
+	//	btn_info.contour = ax::Color(0.7);
+	//	btn_info.font_color = ax::Color(0.0, 0.0);
 
 	auto btn_top = ax::shared<ax::Button>(
 		ax::Rect(ax::Point(rect.size.w - 20, 0), ax::Size(20, rect.size.h / 2 + 1)), GetOnButtonUp(),
 		info.btn_info, info.up_btn, "", ax::Button::Flags::SINGLE_IMG | ax::Button::Flags::IMG_RESIZE);
-	
+
 	win->node.Add(btn_top);
 	_btn_up = btn_top.get();
 

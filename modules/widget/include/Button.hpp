@@ -159,7 +159,7 @@ public:
 			const ax::Point& pos, const std::string& file_path);
 
 		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Attribute& node);
-		
+
 		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node);
 	};
 

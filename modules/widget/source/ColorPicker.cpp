@@ -22,12 +22,11 @@ ColorPicker::ColorPicker(const ax::Point& position, const ax::ColorPicker::Event
 	win = ax::Window::Create(ax::Rect(position, size));
 	win->event.OnPaint = ax::WBind<ax::GC>(this, &ColorPicker::OnPaint);
 
-
-	if(events.select) {
+	if (events.select) {
 		win->AddConnection(Events::SELECT, events.select);
 	}
-	
-	if(events.cancel) {
+
+	if (events.cancel) {
 		win->AddConnection(Events::CANCEL, events.cancel);
 	}
 
