@@ -104,7 +104,8 @@ axAppDelegate* GlobalAppDelegate = nullptr;
 
 - (void)applicationDidFinishLaunching:(NSNotification*)aNotification
 {
-	ax::App::GetInstance().CallAfterGUILoadFunction();
+//	ax::App::GetInstance().CallAfterGUILoadFunction();
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	[[self window] center];
 }
 
@@ -119,7 +120,8 @@ axAppDelegate* GlobalAppDelegate = nullptr;
 
 	_axApp = &ax::App::GetInstance();
 	_axApp->Init(ax::Size(500, 500));
-	_axApp->CallMainEntryFunction();
+//	_axApp->CallMainEntryFunction();
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	[GlobalAppDelegate setNeedsDisplay:YES];
 }

@@ -55,6 +55,11 @@ namespace core {
 
 		void SetFrameSize(const ax::Size& size);
 
+		inline std::shared_ptr<ax::event::Manager> GetEventManager()
+		{
+			return _core->GetEventManager();
+		}
+
 		ax::core::WindowManager* GetWindowManager();
 
 		ax::core::WindowManager* GetPopupManager();
@@ -80,6 +85,19 @@ namespace core {
 		void SetFocusAndCenter();
 
 		std::string GetPasteboardConent();
+
+		/// Add a GUI init main entry callback function.
+		/// This function will be call when the ax::Core is done initializing.
+		inline void AddMainEntry(std::function<void()> fct)
+		{
+			_core->AddMainEntry(fct);
+		}
+
+		/// Add a callback function to load after the GUI is loaded.
+		inline void AddAfterGUILoadFunction(std::function<void()> fct)
+		{
+			_core->AddAfterGUILoadFunction(fct);
+		}
 
 		/// ax::App -> ax::core::Facade should be use instead of this.
 		/// You better know what you are doing when you're using this function.

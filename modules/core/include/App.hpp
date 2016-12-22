@@ -68,10 +68,10 @@ public:
 		_frameSize = appSize;
 	}
 
-	inline std::shared_ptr<ax::event::Manager> GetEventManager()
-	{
-		return _evtManager;
-	}
+	//	inline std::shared_ptr<ax::event::Manager> GetEventManager()
+	//	{
+	//		return _evtManager;
+	//	}
 
 	/// Store data accessible from any windows in app.
 	/// Use the resource storage lock mecanisme for multi-thread use.
@@ -80,28 +80,28 @@ public:
 		return _resourceManager;
 	}
 
-	/// Add a GUI init main entry callback function.
-	/// This function will be call when the ax::Core is done initializing.
-	inline void AddMainEntry(std::function<void()> fct)
-	{
-		_mainEntryFunction = fct;
-	}
+	//	/// Add a GUI init main entry callback function.
+	//	/// This function will be call when the ax::Core is done initializing.
+	//	inline void AddMainEntry(std::function<void()> fct)
+	//	{
+	//		_mainEntryFunction = fct;
+	//	}
+	//
+	//	/// Add a callback function to load after the GUI is loaded.
+	//	inline void AddAfterGUILoadFunction(std::function<void()> fct)
+	//	{
+	//		_afterGuiLoadFunction = fct;
+	//	}
 
-	/// Add a callback function to load after the GUI is loaded.
-	inline void AddAfterGUILoadFunction(std::function<void()> fct)
-	{
-		_afterGuiLoadFunction = fct;
-	}
-
-	/// Call the main entry callback..
-	/// This function should only be called by the ax::Core or any backend
-	/// implementatiion.
-	void CallMainEntryFunction();
-
-	/// Call the after gui load callback when the gui is done loading.
-	/// This function should only be called by the ax::Core or any backend
-	/// implementatiion.
-	void CallAfterGUILoadFunction();
+	//	/// Call the main entry callback..
+	//	/// This function should only be called by the ax::Core or any backend
+	//	/// implementatiion.
+	//	void CallMainEntryFunction();
+	//
+	//	/// Call the after gui load callback when the gui is done loading.
+	//	/// This function should only be called by the ax::Core or any backend
+	//	/// implementatiion.
+	//	void CallAfterGUILoadFunction();
 
 	/// Add the main window.
 	void AddTopLevel(std::shared_ptr<ax::Window> win);
@@ -129,8 +129,8 @@ public:
 protected:
 	static ax::Size _frameSize;
 	App();
-	std::function<void()> _mainEntryFunction; /// Main GUI callback.
-	std::function<void()> _afterGuiLoadFunction; /// After GUI callback.
+	//	std::function<void()> _mainEntryFunction; /// Main GUI callback.
+	//	std::function<void()> _afterGuiLoadFunction; /// After GUI callback.
 	std::string _app_open_file_path;
 
 private:
@@ -143,7 +143,7 @@ private:
 	App& operator=(const ax::App& a);
 
 	/* Managers */
-	std::shared_ptr<ax::event::Manager> _evtManager;
+	//	std::shared_ptr<ax::event::Manager> _evtManager;
 	std::shared_ptr<ax::util::ResourceStorage> _resourceManager;
 };
 }

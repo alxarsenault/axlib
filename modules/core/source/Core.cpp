@@ -23,11 +23,13 @@
 #include "Core.hpp"
 #include "GraphicInterface.hpp"
 #include "Render.hpp"
+#include <fst/print.h>
 
 namespace ax {
 namespace core {
 	Core::Core()
-		: _needToDraw(true)
+		: _evtManager(new ax::event::Manager([&] { PushEventOnSystemQueue(); }))
+		, _needToDraw(true)
 		, _popupNeedToDraw(true)
 	{
 		_windowManager = nullptr;
@@ -254,12 +256,12 @@ namespace core {
 		_needToDraw = true;
 		_popupNeedToDraw = true;
 
-		GetWindowManager()->OnSize(size);
+		GetWindowManager()->OnSize(_size);
 		//	GetPopupManager()->OnSize(size);
 		//	GetEditorWindowManager()->OnSize(size);
 	}
 
-	ax::Size Core::GetGlobalSize() const
+	ax::Size Core::GetFrameSize() const
 	{
 		return _size;
 	}
@@ -277,7 +279,10 @@ namespace core {
 
 	int Core::DrawGLScene()
 	{
+		fst::print(ptrace);
+
 		if (_needToDraw) {
+			fst::print("DrawGLScene :: _needToDraw = true");
 			ax::GL::Draw(_size);
 
 			GetWindowManager()->OnPaint();
@@ -290,6 +295,20 @@ namespace core {
 		}
 
 		return false;
+	}
+
+	void Core::CallMainEntryFunction()
+	{
+		if (_mainEntryFunction) {
+			_mainEntryFunction();
+		}
+	}
+
+	void Core::CallAfterGUILoadFunction()
+	{
+		if (_afterGuiLoadFunction) {
+			_afterGuiLoadFunction();
+		}
 	}
 }
 }

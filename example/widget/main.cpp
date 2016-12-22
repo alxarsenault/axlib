@@ -20,7 +20,9 @@ int main(int arc, char* argv[])
 
 		// Add button.
 		auto btn = std::make_shared<ax::Button>(ax::Rect(20, 20, 60, 25),
-			ax::Button::Events([](ax::event::Msg* msg) { ax::util::console::Print("Button click"); }),
+			ax::Button::Events([](ax::event::Msg* msg) { ax::util::console::Print("Button click");
+			ax::App::GetInstance().SetFrameSize(ax::Size(200, 200));
+			ax::App::GetInstance().SetTitleBar(false);}),
 			ax::Button::Info(), "", "Button");
 
 		win->node.Add(btn);
@@ -29,7 +31,7 @@ int main(int arc, char* argv[])
 
 		ax::Button::Builder btn_builder;
 		auto btn2 = btn_builder.Create(
-			next_pos_right, "/Volumes/Alex/Projects/axlib/example/widget/ButtonText.json");
+			next_pos_right, "/Users/alexarse/Desktop/Projects/axlib/example/widget/ButtonText.json");
 
 		//		auto btn = std::make_shared<ax::Button>( );
 		//
