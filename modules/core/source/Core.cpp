@@ -279,10 +279,10 @@ namespace core {
 
 	int Core::DrawGLScene()
 	{
-		fst::print(ptrace);
+		// fst::print(ptrace);
 
 		if (_needToDraw) {
-			fst::print("DrawGLScene :: _needToDraw = true");
+			// fst::print("DrawGLScene :: _needToDraw = true");
 			ax::GL::Draw(_size);
 
 			GetWindowManager()->OnPaint();

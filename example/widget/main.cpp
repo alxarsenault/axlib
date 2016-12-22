@@ -21,8 +21,12 @@ int main(int arc, char* argv[])
 		// Add button.
 		auto btn = std::make_shared<ax::Button>(ax::Rect(20, 20, 60, 25),
 			ax::Button::Events([](ax::event::Msg* msg) { ax::util::console::Print("Button click");
-			ax::App::GetInstance().SetFrameSize(ax::Size(200, 200));
-			ax::App::GetInstance().SetTitleBar(false);}),
+			std::string file = ax::App::GetInstance().OpenFileDialog();
+			ax::console::Print("File :", file);
+//			ax::App::GetInstance().SetFrameSize(ax::Size(200, 200));
+//			ax::App::GetInstance().SetTitleBar(false);
+}
+			),
 			ax::Button::Info(), "", "Button");
 
 		win->node.Add(btn);

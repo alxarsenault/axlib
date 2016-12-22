@@ -1,9 +1,9 @@
 #pragma once
 
 #include "CocoaType.h"
-#include <OpenGL/OpenGL.h>
-#include <OpenGL/glu.h>
-#include <OpenGL/gl3.h>
+//#include <OpenGL/OpenGL.h>
+//#include <OpenGL/glu.h>
+//#include <OpenGL/gl3.h>
 
 #include "Util.hpp"
 

@@ -80,11 +80,11 @@ ax::Toggle::Info::Info()
 	, normal(0.5f)
 	, hover(0.6f)
 	, clicking(0.4f)
+	, font_color(0.0)
 	, selected(0.7f)
 	, selected_hover(0.8f)
 	, selected_clicking(0.6f)
 	, contour(0.0)
-	, font_color(0.0)
 	, img("")
 	, single_img(false)
 {
@@ -491,13 +491,13 @@ std::shared_ptr<ax::Window::Backbone> ax::Toggle::Builder::Create(ax::Xml::Node&
  */
 ax::Toggle::Toggle(const ax::Rect& rect, const ax::Toggle::Events& events, const ax::Toggle::Info& info,
 	std::string img_path, std::string label, ax::util::Flag flags, std::string msg)
-	: _events(events)
+	: _nCurrentImg(axTOG_NORMAL)
+	, _events(events)
 	, _label(label)
-	, _flags(flags)
-	, _nCurrentImg(axTOG_NORMAL)
-	, _selected(false)
 	, _msg(msg)
 	, _font(nullptr)
+	, _selected(false)
+	, _flags(flags)
 {
 	win = ax::Window::Create(rect);
 	win->event.OnPaint = ax::WBind<ax::GC>(this, &Toggle::OnPaint);

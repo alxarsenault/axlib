@@ -20,13 +20,9 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 #include "axCoreMac.hpp"
-#include <fst/print.h>
-
-/// @todo Put in axLib core lib.
-#include "axCocoaInterfaceMac.h"
 #include "CocoaInterface.h"
-
 #include <unistd.h>
+#include <fst/print.h>
 
 namespace ax {
 namespace core {
@@ -38,22 +34,16 @@ namespace core {
 	{
 		fst::print(ptrace);
 		_cocoa_app.run();
-		// axCallNSApplicationMain();
 	}
 
 	void CoreMac::Init(const ax::Size& frame_size)
 	{
-		fst::print(ptrace);
 		InitManagers();
 
 		// This will create CocoaAppDelegate.
 		_cocoa_view = std::make_shared<cocoa::OpenGLView>(this, frame_size);
 		_cocoa_app.setDelegate(_cocoa_view->GetDelegate());
 		SetGlobalSize(frame_size);
-
-		// InitGL();
-		// ResizeFrame(frame_size);
-		//    _size = frame_size;
 	}
 
 	ax::Size CoreMac::GetScreenSize()
@@ -70,11 +60,6 @@ namespace core {
 	{
 		return std::string(cocoa::GetAppPath() + std::string("/"));
 	}
-
-	// bool axCoreMac::CreatePopupWindow(const char* title, int width, int height)
-	//{
-	//    return false;
-	//}
 
 	ax::Rect CoreMac::GetScreenRect()
 	{

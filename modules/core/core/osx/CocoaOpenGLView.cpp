@@ -5,14 +5,14 @@
 namespace cocoa {
 void OpenGLView::OnInit()
 {
-	fst::print(ptrace);
+	// fst::print(ptrace);
 	_core->InitGL();
 	_core->ResizeFrame(_core->GetFrameSize());
 }
 
 void OpenGLView::OnDraw()
 {
-	fst::print(ptrace);
+	// fst::print(ptrace);
 	_core->DrawGLScene();
 }
 

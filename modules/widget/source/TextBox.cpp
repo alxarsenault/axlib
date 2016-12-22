@@ -182,13 +182,13 @@ TextBox::TextBox(const ax::Rect& rect, const TextBox::Events& events, const Text
 	, _label(label)
 	, _flags(flags)
 	, _font(nullptr)
+	, _nCurrentImg(axBTN_NORMAL)
 	, _cursorBarXPosition(5)
 	, _lastCharXPosition(5)
 	, _maxNumChar(10000000)
 	, _isHightlight(false)
 	, _findClickCursorIndex(false)
 	, _cursorFlashActive(true)
-	, _nCurrentImg(axBTN_NORMAL)
 	, _flashingCursor(nullptr)
 {
 	win = ax::Window::Create(rect);

@@ -44,9 +44,7 @@ Slider::Info::Info(const std::vector<std::pair<std::string, std::string>>& attri
 }
 
 Slider::Info::Info()
-	: img_path("")
-	, btn_size(0, 0)
-	, bgColorNormal(0.9)
+	: bgColorNormal(0.9)
 	, bgColorHover(0.92)
 	, bgColorClicked(0.91)
 	, sliderColorNormal(220, 0, 0)
@@ -56,6 +54,8 @@ Slider::Info::Info()
 	, contourColor(0.0)
 	, backSliderColor(0.5)
 	, backSliderContourColor(0.6)
+	, img_path("")
+	, btn_size(0, 0)
 	, slider_width(8)
 	, contour_round_radius(0)
 {
@@ -610,11 +610,11 @@ ax::Slider::Slider(const ax::Rect& rect, const ax::Slider::Events& events, const
 	  //	  _info(info),
 	  _currentBgColor(info.bgColorNormal),
 	  _currentSliderColor(info.sliderColorNormal),
-
+	  _flags(flags),
 	  _nCurrentImg(axBTN_NORMAL),
 	  _delta_click(0),
-	  _sliderValue(0.0),
-	  _flags(flags)
+
+	  _sliderValue(0.0)
 //	  _bg_alpha(1.0)
 {
 

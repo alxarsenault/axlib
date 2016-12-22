@@ -41,6 +41,8 @@
 #include "axCoreEOS.h"
 #endif
 
+#include <fst/print.h>
+
 namespace ax {
 /*
  * ax::Window::Dimension
@@ -556,10 +558,8 @@ void Window::Node::Draw()
 /// @todo Change window manager.
 Window::Window(const ax::Rect& rect)
 	: ax::event::Object(ax::App::GetInstance().GetEventManager())
-	//	, _windowManager(ax::App::GetInstance().GetWindowManager())
 	, _windowManager(nullptr)
 	, dimension(this, rect) // Members
-	//	, event(this, ax::App::GetInstance().GetWindowManager())
 	, event(this, nullptr)
 	, state(this)
 	, node(this)
@@ -712,7 +712,8 @@ void Window::RenderWindow()
 		while ((err = glGetError()) != GL_NO_ERROR) {
 			// Process/log the error.
 
-			util::console::Error("GL :", err);
+			//			util::console::Error("GL :", err);
+			fst::errprint(ptrace, "GL :", err);
 		}
 	}
 	else {

@@ -62,27 +62,60 @@ namespace cocoa {
 		[NSCursor unhide];
 	}
 	
+	// http://stackoverflow.com/questions/20790249/cocoa-file-selection-dialog-allowed-filetypes
 	std::string OpenFileDialog()
 	{
-		NSOpenPanel* openDlg = [NSOpenPanel openPanel];
-		[openDlg setCanChooseFiles:YES];
-		[openDlg setCanChooseDirectories:YES];
-		[openDlg setPrompt:@"Select"];
+//		NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+//		[openDlg setCanChooseFiles:YES];
+//		[openDlg setCanChooseDirectories:YES];
+//		[openDlg setPrompt:@"Select"];
+//		
+//		//	NSArray* filesType = [NSImage imageTypes];
+//		NSArray* fileTypes = [[NSArray alloc] initWithObjects:@"atproj", @"ATPROJ", nil];
+//		[openDlg setAllowedFileTypes:fileTypes];
+//		
+//		std::string file_path;
+//		
+//		if ([openDlg runModalForDirectory:nil file:nil] == NSOKButton) {
+//			// NSArray* files = [openDlg filenames];
+//			for (NSString* filePath in [openDlg filenames]) {
+//				file_path = std::string([filePath UTF8String]);
+//			}
+//		}
+//		
+//		return file_path;
 		
-		//	NSArray* filesType = [NSImage imageTypes];
-		NSArray* fileTypes = [[NSArray alloc] initWithObjects:@"atproj", @"ATPROJ", nil];
-		[openDlg setAllowedFileTypes:fileTypes];
+//		std::string file_path;
+//		NSOpenPanel* openDlg = [NSOpenPanel openPanel];
+//		//NSString* str;
+//		
+//		[openDlg setCanChooseFiles:YES];
+//		
+//		//[openDlg setAllowedFileTypes:@[@"html", @"htm"]];
+//		
+//		[openDlg beginWithCompletionHandler:^(NSInteger result) {
+//			if(result==NSFileHandlingPanelOKButton) {
+//				for (NSURL *url in openDlg.URLs) {
+//					//NSLog(@"%@", url);
+//					//str = [url absoluteString];
+//					std::string test([[url absoluteString] UTF8String]);
+//					//file_path = test;
+//				}
+//			}
+//		}];
+//		
+//		return file_path;
 		
-		std::string file_path;
+		NSSavePanel* opnDlg = [NSOpenPanel savePanel];
 		
-		if ([openDlg runModalForDirectory:nil file:nil] == NSOKButton) {
-			// NSArray* files = [openDlg filenames];
-			for (NSString* filePath in [openDlg filenames]) {
-				file_path = std::string([filePath UTF8String]);
-			}
+		int modal = (int)[opnDlg runModal];
+		
+		if (modal != NSModalResponseOK) {
+			return "";
 		}
 		
-		return file_path;
+		NSString* filename = [[opnDlg URL] absoluteString];
+		return std::string([filename UTF8String]);
 	}
 	
 	std::string SaveFileDialog()
@@ -91,11 +124,11 @@ namespace cocoa {
 		
 		int modal = (int)[saveDlg runModal];
 		
-		if (modal != NSOKButton) {
+		if (modal != NSModalResponseOK) {
 			return "";
 		}
-		
-		NSString* filename = [saveDlg filename];
+				
+		NSString* filename = [[saveDlg URL] absoluteString];
 		return std::string([filename UTF8String]);
 	}
 	
