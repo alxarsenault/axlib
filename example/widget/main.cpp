@@ -3,6 +3,10 @@
 
 int main(int arc, char* argv[])
 {
+	ax::Xml xml;
+	ax::Xml::Node layout = xml.CreateNode("Layout");
+	xml.AddMainNode(layout);
+	xml.Save("/Users/alexarse/Desktop/potatoj.xml");
 	// Get app instance.
 	ax::App& app(ax::App::GetInstance());
 

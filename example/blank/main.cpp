@@ -3,6 +3,7 @@
 
 int main(int arc, char* argv[])
 {
+	
 	// Get app instance.
 	ax::App& app(ax::App::GetInstance());
 

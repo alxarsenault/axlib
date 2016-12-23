@@ -114,7 +114,7 @@ namespace cocoa {
 			return "";
 		}
 		
-		NSString* filename = [[opnDlg URL] absoluteString];
+		NSString* filename = [[opnDlg URL] path];
 		return std::string([filename UTF8String]);
 	}
 	
@@ -128,7 +128,7 @@ namespace cocoa {
 			return "";
 		}
 				
-		NSString* filename = [[saveDlg URL] absoluteString];
+		NSString* filename = [[saveDlg URL] path];
 		return std::string([filename UTF8String]);
 	}
 	

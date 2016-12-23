@@ -135,7 +135,7 @@ public:
 	public:
 		Component(ax::Window* win, Info* info);
 
-		//		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
+		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
 		virtual std::vector<std::pair<std::string, std::string>> GetBuilderAttributes();
 
 		std::string GetBuilderName() const

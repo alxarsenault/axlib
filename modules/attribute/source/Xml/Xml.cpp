@@ -24,8 +24,7 @@ Xml::Xml()
 void Xml::Save(const std::string& path)
 {
 	std::ofstream file_stored(path);
-
-	file_stored << _xml_doc;
+	file_stored << *(_xml_doc.get());
 	file_stored.close();
 	_xml_doc->clear();
 }
@@ -33,7 +32,7 @@ void Xml::Save(const std::string& path)
 std::string Xml::GetString()
 {
 	std::stringstream str;
-	str << _xml_doc;
+	str << *(_xml_doc.get());
 	return str.str();
 }
 
