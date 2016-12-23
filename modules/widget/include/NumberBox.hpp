@@ -112,25 +112,23 @@ public:
 		virtual std::vector<std::string> GetParamNameList() const;
 		virtual std::string GetAttributeValue(const std::string& name);
 		virtual void SetAttribute(const std::pair<std::string, std::string>& attribute);
-		
+
 		std::string GetBuilderName() const
 		{
 			return "NumberBox";
 		}
-		
+
 		virtual std::vector<widget::ParamInfo> GetParametersInfo() const
 		{
-			return {
-				widget::ParamInfo(widget::ParamType::COLOR, "normal"),
+			return { widget::ParamInfo(widget::ParamType::COLOR, "normal"),
 				widget::ParamInfo(widget::ParamType::COLOR, "hover"),
 				widget::ParamInfo(widget::ParamType::COLOR, "clicking"),
 				widget::ParamInfo(widget::ParamType::COLOR, "selected"),
 				widget::ParamInfo(widget::ParamType::COLOR, "contour"),
 				widget::ParamInfo(widget::ParamType::COLOR, "font_color"),
-				
+
 				widget::ParamInfo(widget::ParamType::TEXT, "img"),
-				widget::ParamInfo(widget::ParamType::BOOLEAN, "single_img")
-				};
+				widget::ParamInfo(widget::ParamType::BOOLEAN, "single_img") };
 		}
 
 		ax::Color normal;
@@ -148,7 +146,8 @@ public:
 	 * ax::NumberBox::axNumberBox.
 	 */
 	NumberBox(const ax::Rect& rect, const ax::NumberBox::Events& events, const ax::NumberBox::Info& info,
-		ax::util::Flag flags = 0, double value = 0.0, ax::util::Range2D<double> range = ax::util::Range2D<double>(0.0, 1.0),
+		ax::util::Flag flags = 0, double value = 0.0,
+		ax::util::Range2D<double> range = ax::util::Range2D<double>(0.0, 1.0),
 		ax::util::Control::Type type = ax::util::Control::Type::REAL,
 		ax::util::Control::Unit m_unit = ax::util::Control::axCTRL_NO_UNIT,
 		ax::util::Control::Interpolation interpolation = ax::util::Control::axCTRL_LINEAR,
@@ -174,7 +173,7 @@ public:
 		return ax::NumberBox::Ptr(
 			new ax::NumberBox(pos, events, info, flags, value, range, type, m_unit, interpolation, label));
 	}
-	
+
 	ax::Window::Backbone* GetCopy();
 
 	double GetValue();
@@ -193,7 +192,7 @@ private:
 
 	ax::util::Control::Type _type;
 	ax::util::Range2D<double> _range;
-//	ax::util::Control::Interpolation _interpolation;
+	//	ax::util::Control::Interpolation _interpolation;
 
 	ax::Color _currentColor;
 	int _nCurrentImg;

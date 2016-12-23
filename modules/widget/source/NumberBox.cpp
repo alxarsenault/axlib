@@ -78,8 +78,8 @@ ax::NumberBox::Info::Info(const std::vector<std::pair<std::string, std::string>>
 
 std::vector<std::string> ax::NumberBox::Info::GetParamNameList() const
 {
-	return std::vector<std::string>{ "normal", "hover", "clicking", "selected", "contour", "font_color", "img",
-		"single_img" };
+	return std::vector<std::string>{ "normal", "hover", "clicking", "selected", "contour", "font_color",
+		"img", "single_img" };
 }
 
 std::string ax::NumberBox::Info::GetAttributeValue(const std::string& name)
@@ -235,9 +235,9 @@ ax::Window::Backbone* ax::NumberBox::GetCopy()
 {
 	widget::Component* widget = static_cast<widget::Component*>(win->component.Get("Widget").get());
 	ax::NumberBox::Info* info = static_cast<ax::NumberBox::Info*>(widget->GetInfo());
-	ax::NumberBox* nbox = new ax::NumberBox(win->dimension.GetRect(), _events, *info, _flags, _value, _range,
-		_type, ax::util::Control::Unit::axCTRL_NO_UNIT, ax::util::Control::Interpolation::axCTRL_LINEAR,
-		_label);
+	ax::NumberBox* nbox
+		= new ax::NumberBox(win->dimension.GetRect(), _events, *info, _flags, _value, _range, _type,
+			ax::util::Control::Unit::axCTRL_NO_UNIT, ax::util::Control::Interpolation::axCTRL_LINEAR, _label);
 	return nbox;
 }
 

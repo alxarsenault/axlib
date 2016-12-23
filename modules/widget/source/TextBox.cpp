@@ -160,21 +160,21 @@ void TextBox::Info::SetAttribute(const std::pair<std::string, std::string>& attr
 /*
  * TextBox::Info.
  */
- 
+
 // TextBox::Events _events;
 //	std::string _label;
 //	ax::Image* _btnImg;
 //	ax::util::Flag _flags;
 //	ax::Font* _font;
-//	
+//
 //	ax::Color _currentColor;
 //	int _nCurrentImg, _cursorIndex, _cursorBarXPosition, _lastCharXPosition;
 //	unsigned int _maxNumChar;
 //	bool _isHightlight, _findClickCursorIndex, _cursorFlashActive;
 //	ax::Point _clickPosition;
-//	
+//
 //	enum axTextBoxState { axBTN_NORMAL, axBTN_HOVER, axBTN_DOWN, axBTN_SELECTED };
-//	
+//
 //	ax::event::Timer* _flashingCursor;
 TextBox::TextBox(const ax::Rect& rect, const TextBox::Events& events, const TextBox::Info& info,
 	std::string img_path, std::string label, ax::util::Flag flags)
@@ -182,13 +182,13 @@ TextBox::TextBox(const ax::Rect& rect, const TextBox::Events& events, const Text
 	, _label(label)
 	, _flags(flags)
 	, _font(nullptr)
+	, _nCurrentImg(axBTN_NORMAL)
 	, _cursorBarXPosition(5)
 	, _lastCharXPosition(5)
 	, _maxNumChar(10000000)
 	, _isHightlight(false)
 	, _findClickCursorIndex(false)
 	, _cursorFlashActive(true)
-	, _nCurrentImg(axBTN_NORMAL)
 	, _flashingCursor(nullptr)
 {
 	win = ax::Window::Create(rect);

@@ -20,12 +20,12 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 
-#ifndef __AX_CORE__
-#define __AX_CORE__
+#pragma once
 
 /// @defgroup Core
 /// @{
 
+#include "EventManager.hpp"
 #include "WindowManager.hpp"
 #include <memory>
 #include <time.h>
@@ -88,6 +88,11 @@ namespace core {
 			}
 		}
 
+		inline std::shared_ptr<ax::event::Manager> GetEventManager()
+		{
+			return _evtManager;
+		}
+
 		virtual ax::core::WindowManager* GetWindowManager();
 
 		virtual ax::core::WindowManager* GetPopupManager();
@@ -99,7 +104,11 @@ namespace core {
 			return _editor_manager.get();
 		}
 
-		ax::Size GetGlobalSize() const;
+		//		virtual ax::Size GetFrameSize() const = 0;
+
+		//		virtual void SetFrameSize(const ax::Size& size) = 0;
+
+		ax::Size GetFrameSize() const;
 
 		void SetGlobalSize(const ax::Size& size);
 
@@ -132,16 +141,43 @@ namespace core {
 
 		virtual int DrawGLScene();
 
+		/// Add a GUI init main entry callback function.
+		/// This function will be call when the ax::Core is done initializing.
+		inline void AddMainEntry(std::function<void()> fct)
+		{
+			_mainEntryFunction = fct;
+		}
+
+		/// Add a callback function to load after the GUI is loaded.
+		inline void AddAfterGUILoadFunction(std::function<void()> fct)
+		{
+			_afterGuiLoadFunction = fct;
+		}
+
+		/// Call the main entry callback..
+		/// This function should only be called by the ax::Core or any backend
+		/// implementatiion.
+		void CallMainEntryFunction();
+
+		/// Call the after gui load callback when the gui is done loading.
+		/// This function should only be called by the ax::Core or any backend
+		/// implementatiion.
+		void CallAfterGUILoadFunction();
+
 	protected:
+		std::shared_ptr<ax::event::Manager> _evtManager;
+
 		std::unique_ptr<ax::core::WindowManager> _windowManager;
 		std::unique_ptr<ax::core::WindowManager> _popupManager;
 		std::unique_ptr<ax::core::WindowManager> _editor_manager;
-
 		std::unique_ptr<ax::core::WindowManager> _realPopWindowManager;
 
 		bool _needToDraw, _popupNeedToDraw;
 		ax::Size _size, _popSize;
 		Cursor _cursor_id = NORMAL;
+
+		std::function<void()> _mainEntryFunction; /// Main GUI callback.
+		std::function<void()> _afterGuiLoadFunction; /// After GUI callback.
 
 		virtual void InitManagers();
 
@@ -153,4 +189,3 @@ namespace core {
 }
 
 /// @}
-#endif //__AX_CORE__

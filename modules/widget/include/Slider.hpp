@@ -60,7 +60,7 @@ public:
 		Msg(Slider* slider, const double& value)
 			: _value(value)
 			, _slider(slider)
-		
+
 		{
 		}
 
@@ -117,22 +117,22 @@ public:
 		virtual std::vector<std::string> GetParamNameList() const;
 		virtual std::string GetAttributeValue(const std::string& name);
 		virtual void SetAttribute(const std::pair<std::string, std::string>& attribute);
-		
+
 		virtual std::vector<widget::ParamInfo> GetParametersInfo() const;
 
 		ax::Color bgColorNormal;
 		ax::Color bgColorHover;
 		ax::Color bgColorClicked;
-		
+
 		ax::Color sliderColorNormal;
 		ax::Color sliderColorHover;
 		ax::Color sliderColorClicked;
 		ax::Color sliderContourColor;
-		
+
 		ax::Color contourColor;
 		ax::Color backSliderColor;
 		ax::Color backSliderContourColor;
-		
+
 		std::string img_path;
 		ax::Size btn_size;
 		unsigned int slider_width;
@@ -149,7 +149,7 @@ public:
 		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void ReloadInfo();
-		
+
 		inline std::string GetBuilderName() const
 		{
 			return "Slider";
@@ -170,16 +170,16 @@ public:
 
 	ax::Window::Backbone* GetCopy();
 
-//	void SetBackgroundAlpha(const float& alpha)
-//	{
-//		_bg_alpha = alpha;
-//	}
+	//	void SetBackgroundAlpha(const float& alpha)
+	//	{
+	//		_bg_alpha = alpha;
+	//	}
 
 	void ResizeSlider(const ax::Size& size)
 	{
 		widget::Component* widget = static_cast<widget::Component*>(win->component.Get("Widget").get());
 		ax::Slider::Info* info = static_cast<ax::Slider::Info*>(widget->GetInfo());
-		
+
 		win->dimension.SetSize(size);
 		_sliderYPos = int((size.w - info->slider_width) * 0.5);
 		_btnYPos = int((size.w - info->btn_size.w) * 0.5);
@@ -199,7 +199,7 @@ public:
 
 protected:
 	Events _events;
-//	Info _info;
+	//	Info _info;
 	//	ax::util::Flag _flag;
 	ax::Color _currentBgColor, _currentSliderColor;
 
@@ -207,7 +207,7 @@ protected:
 	ax::util::Flag _flags;
 
 	int _nCurrentImg, _sliderPosition, _btnYPos, _sliderYPos, _delta_click;
-//	float _bg_alpha;
+	//	float _bg_alpha;
 	double _sliderValue;
 
 	enum axButtonState { axBTN_NORMAL, axBTN_HOVER, axBTN_DOWN };

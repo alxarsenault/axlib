@@ -1,11 +1,14 @@
 #include "axlib.hpp"
+#include <fst/print.h>
 
 int main(int arc, char* argv[])
 {
+	
 	// Get app instance.
 	ax::App& app(ax::App::GetInstance());
 
 	app.AddMainEntry([&app]() {
+		fst::print("App main entry.");
 		// Create main window.
 		ax::Window* win = ax::Window::Create(ax::Rect(0, 0, 500, 500));
 

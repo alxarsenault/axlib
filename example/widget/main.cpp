@@ -3,6 +3,10 @@
 
 int main(int arc, char* argv[])
 {
+	ax::Xml xml;
+	ax::Xml::Node layout = xml.CreateNode("Layout");
+	xml.AddMainNode(layout);
+	xml.Save("/Users/alexarse/Desktop/potatoj.xml");
 	// Get app instance.
 	ax::App& app(ax::App::GetInstance());
 
@@ -20,7 +24,13 @@ int main(int arc, char* argv[])
 
 		// Add button.
 		auto btn = std::make_shared<ax::Button>(ax::Rect(20, 20, 60, 25),
-			ax::Button::Events([](ax::event::Msg* msg) { ax::util::console::Print("Button click"); }),
+			ax::Button::Events([](ax::event::Msg* msg) { ax::util::console::Print("Button click");
+			std::string file = ax::App::GetInstance().OpenFileDialog();
+			ax::console::Print("File :", file);
+//			ax::App::GetInstance().SetFrameSize(ax::Size(200, 200));
+//			ax::App::GetInstance().SetTitleBar(false);
+}
+			),
 			ax::Button::Info(), "", "Button");
 
 		win->node.Add(btn);
@@ -29,7 +39,7 @@ int main(int arc, char* argv[])
 
 		ax::Button::Builder btn_builder;
 		auto btn2 = btn_builder.Create(
-			next_pos_right, "/Volumes/Alex/Projects/axlib/example/widget/ButtonText.json");
+			next_pos_right, "/Users/alexarse/Desktop/Projects/axlib/example/widget/ButtonText.json");
 
 		//		auto btn = std::make_shared<ax::Button>( );
 		//

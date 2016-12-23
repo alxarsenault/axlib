@@ -77,11 +77,11 @@ namespace core {
 		_core->Init(frame_size);
 		_core->SetGlobalSize(frame_size);
 #else
-		//		ax::Print("Facade _core = new axCoreMac");
 		_core = new CoreMac();
-		_core->SetGlobalSize(frame_size);
+		_core->Init(frame_size);
+//		_core->SetGlobalSize(frame_size);
 //_core->Init(frame_size);
-#endif // _AX_VST_APP_
+#endif
 
 #endif // __APPLE__
 	}
@@ -135,7 +135,7 @@ namespace core {
 
 	ax::Size Facade::GetFrameSize() const
 	{
-		return _core->GetGlobalSize();
+		return _core->GetFrameSize();
 	}
 
 	void Facade::SetFrameSize(const ax::Size& size)

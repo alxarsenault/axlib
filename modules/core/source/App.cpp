@@ -70,19 +70,19 @@ void ax::App::CloseApplication()
 	ax::App::_instance.reset();
 }
 
-void ax::App::CallMainEntryFunction()
-{
-	if (_mainEntryFunction) {
-		_mainEntryFunction();
-	}
-}
-
-void ax::App::CallAfterGUILoadFunction()
-{
-	if (_afterGuiLoadFunction) {
-		_afterGuiLoadFunction();
-	}
-}
+// void ax::App::CallMainEntryFunction()
+//{
+//	if (_mainEntryFunction) {
+//		_mainEntryFunction();
+//	}
+//}
+//
+// void ax::App::CallAfterGUILoadFunction()
+//{
+//	if (_afterGuiLoadFunction) {
+//		_afterGuiLoadFunction();
+//	}
+//}
 
 void ax::App::AddTopLevel(std::shared_ptr<ax::Window> win)
 {
@@ -278,7 +278,7 @@ std::shared_ptr<ax::Window> ax::App::GetTopLevel()
 
 ax::App::App()
 	: ax::core::Facade(_frameSize)
-	, _evtManager(new ax::event::Manager([&] { PushEventOnSystemQueue(); }))
+	//	, _evtManager(new ax::event::Manager([&] { PushEventOnSystemQueue(); }))
 	, _resourceManager(new ax::util::ResourceStorage())
 {
 	//	ax::Print("new ax::App::_evtManager");
@@ -287,7 +287,7 @@ ax::App::App()
 
 ax::App::App(core::Core* core)
 	: ax::core::Facade(_frameSize, core)
-	, _evtManager(new ax::event::Manager([&] { PushEventOnSystemQueue(); }))
+	//	, _evtManager(new ax::event::Manager([&] { PushEventOnSystemQueue(); }))
 	, _resourceManager(new ax::util::ResourceStorage())
 {
 	//	ax::Print("new ax::App::_evtManager");

@@ -93,11 +93,11 @@ void ScrollBar::UpdateWindowSize(const ax::Size& size)
 double ScrollBar::GetZeroToOneValue() const
 {
 	double d = win->dimension.GetRect().size.h - _sliderHeight - 1.0;
-	
-	if(d <= 0.0) {
+
+	if (d <= 0.0) {
 		return 0.0;
 	}
-	
+
 	return _sliderPos / d;
 }
 

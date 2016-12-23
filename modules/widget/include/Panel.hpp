@@ -71,11 +71,10 @@ public:
 		virtual std::vector<std::string> GetParamNameList() const;
 		virtual std::string GetAttributeValue(const std::string& name);
 		virtual void SetAttribute(const std::pair<std::string, std::string>& attribute);
-		
+
 		virtual std::vector<widget::ParamInfo> GetParametersInfo() const
 		{
-			return {
-				widget::ParamInfo(widget::ParamType::COLOR, "background"),
+			return { widget::ParamInfo(widget::ParamType::COLOR, "background"),
 				widget::ParamInfo(widget::ParamType::COLOR, "contour"),
 				widget::ParamInfo(widget::ParamType::INTEGER, "round_corner_radius") };
 		}
@@ -98,7 +97,7 @@ public:
 		{
 			_save_child_callback = fct;
 		}
-		
+
 		std::string GetBuilderName() const
 		{
 			return "Panel";
@@ -108,7 +107,7 @@ public:
 		std::vector<ax::widget::ParamInfo> GetBuilderAttributesInfo() const;
 
 		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);
-		
+
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void ReloadInfo();
 

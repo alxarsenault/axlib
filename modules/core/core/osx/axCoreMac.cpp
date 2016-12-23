@@ -20,10 +20,9 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 #include "axCoreMac.hpp"
-
-/// @todo Put in axLib core lib.
-#include "axCocoaInterfaceMac.h"
+#include "CocoaInterface.h"
 #include <unistd.h>
+#include <fst/print.h>
 
 namespace ax {
 namespace core {
@@ -33,42 +32,38 @@ namespace core {
 
 	void CoreMac::MainLoop()
 	{
-		//	std::cout << "MainLoop" << std::endl;
-		axCallNSApplicationMain();
+		fst::print(ptrace);
+		_cocoa_app.run();
 	}
 
 	void CoreMac::Init(const ax::Size& frame_size)
 	{
-		//		std::cout << "Init axCoreMac." << std::endl;
 		InitManagers();
-		InitGL();
-		ResizeFrame(frame_size);
-		//    _size = frame_size;
+
+		// This will create CocoaAppDelegate.
+		_cocoa_view = std::make_shared<cocoa::OpenGLView>(this, frame_size);
+		_cocoa_app.setDelegate(_cocoa_view->GetDelegate());
+		SetGlobalSize(frame_size);
 	}
 
 	ax::Size CoreMac::GetScreenSize()
 	{
-		return axCocoaGetScreenSize();
+		return cocoa::GetScreenSize();
 	}
 
 	std::string CoreMac::GetAppDirectory()
 	{
-		return std::string(CocoaGetAppDirectory() + std::string("/"));
+		return std::string(cocoa::GetAppDirectory() + std::string("/"));
 	}
 
 	std::string CoreMac::GetAppPath()
 	{
-		return std::string(CocoaGetAppPath() + std::string("/"));
+		return std::string(cocoa::GetAppPath() + std::string("/"));
 	}
-
-	// bool axCoreMac::CreatePopupWindow(const char* title, int width, int height)
-	//{
-	//    return false;
-	//}
 
 	ax::Rect CoreMac::GetScreenRect()
 	{
-		return ax::Rect(0, 0, axCocoaGetScreenSize());
+		return ax::Rect(0, 0, cocoa::GetScreenSize());
 	}
 
 	void CoreMac::KillGLWindow()
@@ -83,63 +78,64 @@ namespace core {
 	void CoreMac::UpdateAll()
 	{
 		Core::UpdateAll();
-		TestFunctionInterface();
+		_cocoa_view->RefreshView();
 	}
 
 	void CoreMac::ResizeFrame(const ax::Size& size)
 	{
-		axCocoaResizeFrame(size);
+		fst::print(ptrace);
+		_cocoa_view->SetFrameSize(size);
 		ResizeGLScene(size);
 	}
 
 	std::string CoreMac::OpenFileDialog()
 	{
-		return axOpenFileDialog();
+		return cocoa::OpenFileDialog();
 	}
 
 	std::string CoreMac::SaveFileDialog()
 	{
-		return axSaveFileDialog();
+		return cocoa::SaveFileDialog();
 	}
 
 	void CoreMac::PushEventOnSystemQueue()
 	{
-		AddEventToDispatchQueue();
+		cocoa::AddEventToDispatchQueue();
 	}
 
 	void CoreMac::HideMouse()
 	{
-		axCocoaHideMouse();
+		cocoa::HideMouse();
 	}
 
 	void CoreMac::ShowMouse()
 	{
-		axCocoaShowMouse();
+		cocoa::ShowMouse();
 	}
 
 	void CoreMac::SetResizable(bool resizable)
 	{
-		axCocoaSetResizable(resizable);
+		_cocoa_view->SetResizable(resizable);
 	}
 
 	void CoreMac::SetTitleBar(bool titlebar)
 	{
-		axCocoaSetTitleBar(titlebar);
+		_cocoa_view->SetTitleBar(titlebar);
 	}
 
 	void CoreMac::SetFocusAndCenter()
 	{
-		axCocoaSetFocusAndCenter();
+		_cocoa_view->SetFocusAndCenter();
 	}
 
 	void CoreMac::SetCoreCursor(const Cursor& cursor_id)
 	{
-		axCocoaChangeMouseCursor(cursor_id);
+		_cocoa_view->SetCursor(cursor_id);
 	}
 
 	std::string CoreMac::GetPasteboardContent()
 	{
-		return axCocoaGetPasteboardContent();
+		return cocoa::GetPasteboardContent();
 	}
 }
 }

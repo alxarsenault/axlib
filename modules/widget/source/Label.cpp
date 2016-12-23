@@ -37,7 +37,8 @@ Label::Info::Info(const std::vector<std::pair<std::string, std::string>>& attrib
 
 std::vector<std::string> Label::Info::GetParamNameList() const
 {
-	return std::vector<std::string>{ "normal", "contour", "font_color", "font_name", "font_size", "alignement" };
+	return std::vector<std::string>{ "normal", "contour", "font_color", "font_name", "font_size",
+		"alignement" };
 }
 
 std::vector<widget::ParamInfo> Label::Info::GetParametersInfo() const
@@ -188,7 +189,8 @@ std::vector<std::pair<std::string, std::string>> Label::Component::GetBuilderAtt
 	return atts;
 }
 
-void Label::Component::SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes)
+void Label::Component::SetBuilderAttributes(
+	const std::vector<std::pair<std::string, std::string>>& attributes)
 {
 	for (auto& n : attributes) {
 		if (n.first == "position") {
@@ -259,10 +261,14 @@ std::shared_ptr<ax::Window::Backbone> Label::Builder::Create(
 	ax::Label::Info l_info;
 	l_info.SetAttribute(std::pair<std::string, std::string>("normal", info_node.GetAttribute("normal")));
 	l_info.SetAttribute(std::pair<std::string, std::string>("contour", info_node.GetAttribute("contour")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("font_color", info_node.GetAttribute("font_color")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("font_size", info_node.GetAttribute("font_size")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("font_name", info_node.GetAttribute("font_name")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("alignement", info_node.GetAttribute("alignement")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("font_color", info_node.GetAttribute("font_color")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("font_size", info_node.GetAttribute("font_size")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("font_name", info_node.GetAttribute("font_name")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("alignement", info_node.GetAttribute("alignement")));
 
 	auto l = ax::shared<ax::Label>(ax::Rect(pos, size), l_info, label);
 	return l;
@@ -278,10 +284,14 @@ std::shared_ptr<ax::Window::Backbone> Label::Builder::Create(ax::Xml::Node& node
 	ax::Label::Info l_info;
 	l_info.SetAttribute(std::pair<std::string, std::string>("normal", info_node.GetAttribute("normal")));
 	l_info.SetAttribute(std::pair<std::string, std::string>("contour", info_node.GetAttribute("contour")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("font_color", info_node.GetAttribute("font_color")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("font_size", info_node.GetAttribute("font_size")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("font_name", info_node.GetAttribute("font_name")));
-	l_info.SetAttribute(std::pair<std::string, std::string>("alignement", info_node.GetAttribute("alignement")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("font_color", info_node.GetAttribute("font_color")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("font_size", info_node.GetAttribute("font_size")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("font_name", info_node.GetAttribute("font_name")));
+	l_info.SetAttribute(
+		std::pair<std::string, std::string>("alignement", info_node.GetAttribute("alignement")));
 
 	auto l = ax::shared<ax::Label>(ax::Rect(pos, size), l_info, label);
 	return l;

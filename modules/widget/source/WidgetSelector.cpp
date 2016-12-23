@@ -24,22 +24,22 @@
 ///*
 // * axWidgetSelector::Info.
 // */
-//axWidgetSelector::Info::Info()
+// axWidgetSelector::Info::Info()
 //{
-//    
+//
 //}
 //
-//axWidgetSelector::Info::Info(const ax::Color& color):
+// axWidgetSelector::Info::Info(const ax::Color& color):
 //_color(color)
 //{
-//    
+//
 //}
 //
 ///*
 // * axWidgetSelector.
 // */
-//axWidgetSelector::axWidgetSelector(ax::App* app):
-//axPanel(3, app, ax::Rect(0, 0, 20, 20)),
+// axWidgetSelector::axWidgetSelector(ax::App* app):
+// axPanel(3, app, ax::Rect(0, 0, 20, 20)),
 //_info(ax::Color(1.0, 0.33, 0.0)),
 //_selectedWidget(nullptr)
 //{
@@ -50,43 +50,43 @@
 //    Hide();
 //}
 //
-//void axWidgetSelector::SetSelectedWidget(ax::Window* win)
+// void axWidgetSelector::SetSelectedWidget(ax::Window* win)
 //{
 //    _selectedWidget = win;
 //    ax::Rect rect = win->GetAbsoluteRect();
-//    
+//
 //    SetPosition(ax::Point(rect.position.x - 3, rect.position.y - 3));
 //    SetSize(ax::Size(rect.size.x + 6, rect.size.y + 6));
-//    
+//
 //    Show();
 //}
 //
-//ax::Window* axWidgetSelector::GetSelectedWidget()
+// ax::Window* axWidgetSelector::GetSelectedWidget()
 //{
 //    return _selectedWidget;
 //}
 //
-//void axWidgetSelector::OnPaint()
+// void axWidgetSelector::OnPaint()
 //{
 //    if(_selectedWidget != nullptr && _selectedWidget->IsShown())
 //    {
 //        ax::Rect sel_rect = _selectedWidget->GetAbsoluteRect();
-//        
+//
 //        SetPosition(ax::Point(sel_rect.position.x - 3, sel_rect.position.y - 3));
 //        SetSize(ax::Size(sel_rect.size.x + 6, sel_rect.size.y + 6));
-//        
+//
 //        ax::GC gc;
 //        ax::Rect rect(GetDrawingRect());
-//        
+//
 //        gc.SetColor(_info._color, 0.1);
 //        gc.DrawRectangleContour(rect);
-//        
+//
 //        gc.SetColor(_info._color, 0.2);
 //        gc.DrawRectangleContour(rect.GetInteriorRect(ax::Point(0, 0)));
-//        
+//
 //        gc.SetColor(_info._color, 0.4);
 //        gc.DrawRectangleContour(rect.GetInteriorRect(ax::Point(1, 1)));
-//        
+//
 //        gc.SetColor(_info._color, 0.5);
 //        gc.DrawRectangleContour(rect.GetInteriorRect(ax::Point(2, 2)));
 //    }

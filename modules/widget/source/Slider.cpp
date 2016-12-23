@@ -44,9 +44,7 @@ Slider::Info::Info(const std::vector<std::pair<std::string, std::string>>& attri
 }
 
 Slider::Info::Info()
-	: img_path("")
-	, btn_size(0, 0)
-	, bgColorNormal(0.9)
+	: bgColorNormal(0.9)
 	, bgColorHover(0.92)
 	, bgColorClicked(0.91)
 	, sliderColorNormal(220, 0, 0)
@@ -56,6 +54,8 @@ Slider::Info::Info()
 	, contourColor(0.0)
 	, backSliderColor(0.5)
 	, backSliderContourColor(0.6)
+	, img_path("")
+	, btn_size(0, 0)
 	, slider_width(8)
 	, contour_round_radius(0)
 {
@@ -324,8 +324,10 @@ std::vector<std::pair<std::string, std::string>> Slider::Component::GetBuilderAt
 		}
 	}
 
-	return std::vector<std::pair<std::string, std::string>>{ { "position", std::to_string(_win->dimension.GetRect().position) },
-		{ "size", std::to_string(_win->dimension.GetSize()) }, { "flags", flags_str } };
+	return std::vector<std::pair<std::string, std::string>>{
+		{ "position", std::to_string(_win->dimension.GetRect().position) },
+		{ "size", std::to_string(_win->dimension.GetSize()) }, { "flags", flags_str }
+	};
 }
 
 std::vector<ax::widget::ParamInfo> ax::Slider::Component::GetBuilderAttributesInfo() const
@@ -340,7 +342,8 @@ void Slider::Component::SetInfo(const std::vector<std::pair<std::string, std::st
 	_info->SetAttributes(attributes);
 }
 
-void Slider::Component::SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes)
+void Slider::Component::SetBuilderAttributes(
+	const std::vector<std::pair<std::string, std::string>>& attributes)
 {
 	ax::Slider* sld = static_cast<ax::Slider*>(GetWindow()->backbone.get());
 
@@ -362,8 +365,8 @@ void Slider::Component::ReloadInfo()
 {
 	Slider* sld = static_cast<Slider*>(_win->backbone.get());
 	Slider::Info* info = static_cast<Slider::Info*>(_info);
-	
-	if(info->img_path != sld->_btnImg->GetImagePath()) {
+
+	if (info->img_path != sld->_btnImg->GetImagePath()) {
 		sld->_btnImg.reset(new ax::Image(info->img_path));
 	}
 
@@ -377,7 +380,7 @@ void Slider::Component::ReloadInfo()
 		sld->_sliderYPos = (rect.size.h - info->slider_width) * 0.5;
 		sld->_btnYPos = (rect.size.h - info->btn_size.h) * 0.5;
 	}
-	
+
 	_win->Update();
 	//
 
@@ -600,18 +603,18 @@ std::shared_ptr<ax::Window::Backbone> Slider::Builder::Create(ax::Xml::Node& con
 }
 }
 
-ax::Slider::Slider(
-	const ax::Rect& rect, const ax::Slider::Events& events, const ax::Slider::Info& info, ax::util::Flag flags)
+ax::Slider::Slider(const ax::Rect& rect, const ax::Slider::Events& events, const ax::Slider::Info& info,
+	ax::util::Flag flags)
 	// Members.
 	: _events(events),
 	  //	  _info(info),
 	  _currentBgColor(info.bgColorNormal),
 	  _currentSliderColor(info.sliderColorNormal),
-
+	  _flags(flags),
 	  _nCurrentImg(axBTN_NORMAL),
 	  _delta_click(0),
-	  _sliderValue(0.0),
-	  _flags(flags)
+
+	  _sliderValue(0.0)
 //	  _bg_alpha(1.0)
 {
 

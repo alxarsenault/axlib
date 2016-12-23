@@ -41,11 +41,11 @@ public:
 		Info(const std::vector<std::pair<std::string, std::string>>& attributes);
 
 		virtual std::vector<std::string> GetParamNameList() const;
-		
+
 		virtual std::string GetAttributeValue(const std::string& name);
-		
+
 		virtual void SetAttribute(const std::pair<std::string, std::string>& attribute);
-		
+
 		virtual std::vector<widget::ParamInfo> GetParametersInfo() const;
 
 		ax::Color normal;
@@ -70,8 +70,7 @@ public:
 		}
 
 		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);
-		
-		
+
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void ReloadInfo();
 	};

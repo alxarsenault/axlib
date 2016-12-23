@@ -25,6 +25,8 @@
 #include "RenderMath.hpp"
 #include "GC.hpp"
 
+#include <fst/print.h>
+
 // #ifdef ANDROID
 // #include <EGL/egl.h> // requires ndk r5 or newer
 // #include <EGL/eglext.h>
@@ -153,7 +155,8 @@ namespace GL {
 		GLenum err = GL_NO_ERROR;
 		while((err = glGetError()) != GL_NO_ERROR)
 		{
-		  ax::console::Error("GL :", err);
+		  //ax::console::Error("GL :", err);
+		  fst::errprint(ptrace, "GL :", err);
 		}
 	}
 

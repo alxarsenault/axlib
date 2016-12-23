@@ -40,10 +40,10 @@ namespace util {
 		Component()
 		{
 		}
-		
+
 		virtual ~Component()
 		{
-//			std::cout << "Delete componetn." << std::endl;
+			//			std::cout << "Delete componetn." << std::endl;
 		}
 	};
 
@@ -52,10 +52,10 @@ namespace util {
 		ComponentMap()
 		{
 		}
-		
+
 		~ComponentMap()
 		{
-//			std::cout << "Delete componetn map." << std::endl;
+			//			std::cout << "Delete componetn map." << std::endl;
 		}
 
 		void Add(const std::string& name, Component::Ptr component)

@@ -41,13 +41,13 @@
 ///*
 // * axRadio.
 // */
-//class axRadio : public axToggle
+// class axRadio : public axToggle
 //{
-//public:
-//    
+// public:
+//
 //    typedef axToggle::Info Info;
 //    typedef axToggle::Events Events;
-//    
+//
 //    /*
 //     * axRadio::axRadio.
 //     */
@@ -59,11 +59,11 @@
 //            std::string label = "",
 //            ax::util::Flag flags = 0,
 //            std::string msg = "");
-//    
+//
 //    void SetMsg(const std::string& msg);
 //    void SetSelected(const bool& selected);
 //
-//private:
+// private:
 //    // Events.
 //	virtual void OnPaint();
 ////	virtual void OnMouseLeftDown(const ax::Point& pos);

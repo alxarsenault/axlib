@@ -19,14 +19,16 @@
  * To release a closed-source product which uses axFrameworks, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
-#ifndef test_axCore_h
-#define test_axCore_h
 
-#ifdef __APPLE__
+#pragma once
+
+//#ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/glu.h>
 
 #include "Core.hpp"
+#include "CocoaApplication.h"
+#include "CocoaOpenGLView.h"
 
 namespace ax {
 namespace core {
@@ -73,10 +75,12 @@ namespace core {
 		virtual void SetFocusAndCenter();
 
 		virtual std::string GetPasteboardContent();
+
+	private:
+		cocoa::Application _cocoa_app;
+		std::shared_ptr<cocoa::OpenGLView> _cocoa_view;
 	};
-}
-}
+} // ax.
+} // core.
 
-#endif // __APPLE__
-
-#endif
+//#endif // __APPLE__

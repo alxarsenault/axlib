@@ -30,9 +30,9 @@
 ///*
 // * axLabel.
 // */
-//class axWidgetSelector: public axPanel
+// class axWidgetSelector: public axPanel
 //{
-//public:
+// public:
 //    /*
 //     * axWidgetSelector::Info.
 //     */
@@ -40,10 +40,10 @@
 //    {
 //    public:
 //        Info();
-//        
+//
 //        Info(const ax::Color& color);
 //
-//        
+//
 //        ax::Color _color;
 //    };
 //
@@ -51,15 +51,15 @@
 //     * axWidgetSelector::axWidgetSelector.
 //     */
 //    axWidgetSelector(ax::App* app);
-//    
+//
 //    void SetSelectedWidget(ax::Window* win);
-//    
+//
 //    ax::Window* GetSelectedWidget();
 //
-//private:
+// private:
 //    ax::Window* _selectedWidget;
 //    Info _info;
-//    
+//
 //    // Events.
 //    virtual void OnPaint();
 //};
