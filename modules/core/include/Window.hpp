@@ -20,8 +20,7 @@
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
 
-#ifndef __AX_WINDOW__
-#define __AX_WINDOW__
+#pragma once
 
 /// @defgroup Core
 /// @{
@@ -377,6 +376,16 @@ public:
 		_windowManager = wm;
 		event.SetWindowManager(wm);
 	}
+	
+	template<typename T>
+	T* GetBackbone()
+	{
+		if(!backbone) {
+			return nullptr;
+		}
+
+		return static_cast<T*>(backbone.get());
+	}
 
 protected:
 	Window(const ax::Rect& rect);
@@ -568,4 +577,3 @@ inline ax::Window* Window::Node::GetWindow()
 }
 
 /// @}
-#endif //__AX_WINDOW__

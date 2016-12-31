@@ -24,6 +24,8 @@ typedef cocoa::OpenGLView CppView;
 
 - (id)initWithRect:(NSRect)contentSize core:(ax::core::CoreMac*)core cpp_view:(CppView*)cpp_view;
 
+//- (id)initWithRect:(NSRect)contentSize core:(ax::core::CoreMac*)core cpp_view:(CppView*)cpp_view;
+
 - (void)RefreshView;
 
 - (void)installRunLoopObserver;

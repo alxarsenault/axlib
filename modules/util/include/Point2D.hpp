@@ -170,6 +170,11 @@ namespace util {
 			y = Y;
 			return *this;
 		}
+		
+		std::string ToString() const
+		{
+			return std::to_string(x) + ", " + std::to_string(y);
+		}
 
 		friend std::ostream& operator<<(std::ostream& stream, const Point2D& point)
 		{

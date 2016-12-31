@@ -1,13 +1,7 @@
 #pragma once
 
 #include "CocoaType.h"
-//#include <OpenGL/OpenGL.h>
-//#include <OpenGL/glu.h>
-//#include <OpenGL/gl3.h>
-
 #include "Util.hpp"
-
-//#include "axCoreMac.hpp"
 
 namespace ax {
 	namespace core {
@@ -22,7 +16,6 @@ namespace cocoa {
 	
 	class OpenGLView {
 	public:
-//		OpenGLView();
 		OpenGLView(ax::core::CoreMac* core, const ax::Size& size);
 		
 		void OnInit();
@@ -45,7 +38,5 @@ namespace cocoa {
 	private:
 		type::AppDelegate* _app_delegate;
 		ax::core::CoreMac* _core = nullptr;
-//		ax::Size _size;
 	};
-	
 }

@@ -170,6 +170,11 @@ namespace util {
 			h = H;
 			return *this;
 		}
+		
+		std::string ToString() const
+		{
+			return std::to_string(w) + ", " + std::to_string(h);
+		}
 
 		friend std::ostream& operator<<(std::ostream& stream, const Size2D& size)
 		{

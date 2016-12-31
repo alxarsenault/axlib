@@ -20,8 +20,7 @@
  * licenses are available, email ax.frameworks@gmail.com for more information.
  */
 
-#ifndef __AX_NUMBER_BOX__
-#define __AX_NUMBER_BOX__
+#pragma once
 
 /*
  * @file    axNumberBox.h
@@ -141,6 +140,35 @@ public:
 		std::string img;
 		bool single_img;
 	};
+	
+	class Component : public ax::widget::Component {
+	public:
+		Component(ax::Window* win, Info* info);
+		
+		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
+		
+		std::string GetBuilderName() const
+		{
+			return "NumberBox";
+		}
+		
+		virtual std::vector<std::pair<std::string, std::string>> GetBuilderAttributes();
+		virtual std::vector<ax::widget::ParamInfo> GetBuilderAttributesInfo() const;
+		
+		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);
+		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
+		virtual void ReloadInfo();
+	};
+	
+	class Builder : public ax::widget::Builder {
+	public:
+		Builder();
+		
+		virtual std::shared_ptr<ax::Window::Backbone> Create(
+			const ax::Point& pos, const std::string& file_path);
+		
+		std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node);
+	};
 
 	/*
 	 * ax::NumberBox::axNumberBox.
@@ -183,6 +211,18 @@ public:
 		_value = value;
 		win->Update();
 	}
+	
+	ax::util::Flag GetFlags() const
+	{
+		return _flags;
+	}
+	
+	ax::util::Range2D<double> GetRange() const
+	{
+		return _range;
+	}
+	
+	void SetRange(const ax::util::Range2D<double>& range);
 
 private:
 	ax::NumberBox::Events _events;
@@ -217,4 +257,3 @@ private:
 
 /// @}
 /// @}
-#endif // __AX_NUMBER_BOX__

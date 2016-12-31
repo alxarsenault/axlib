@@ -102,6 +102,11 @@ namespace widget {
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 
 		ax::widget::Info* GetInfo();
+		
+		template<typename T>
+		T* GetInfo() {
+			return static_cast<T*>(_info);
+		}
 
 		virtual std::string GetBuilderName() const
 		{
