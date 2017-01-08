@@ -145,7 +145,7 @@ public:
 	public:
 		Component(ax::Window* win, Info* info);
 		
-		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
+		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node);
 		
 		std::string GetBuilderName() const
 		{
@@ -223,6 +223,12 @@ public:
 	}
 	
 	void SetRange(const ax::util::Range2D<double>& range);
+	
+	ax::util::Control::Type GetControlType() const {
+		return _type;
+	}
+	
+	void SetControlType(ax::util::Control::Type type);
 
 private:
 	ax::NumberBox::Events _events;

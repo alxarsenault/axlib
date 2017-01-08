@@ -62,6 +62,8 @@ public:
 		std::string GetValue();
 
 		std::string GetChildNodeValue(const std::string& name);
+		
+		void RemoveChildNode(const std::string& name);
 
 		std::vector<std::pair<std::string, std::string>> GetAtributes();
 

@@ -122,21 +122,16 @@ Knob::Component::Component(Window* win, Info* info)
 {
 }
 
-ax::Xml::Node Knob::Component::Save(Xml& xml, Xml::Node& node)
+void Knob::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
-	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
-	ax::Knob* knob = static_cast<ax::Knob*>(bbone.get());
+	ax::Knob* knob = win->GetBackbone<ax::Knob>();
+	ax::Knob::Component::Ptr widget_comp = win->component.Get<ax::Knob::Component>("Widget");
+	ax::Knob::Info* info = widget_comp->GetInfo<ax::Knob::Info>();
 
-	ax::Knob::Component* widget_comp = static_cast<ax::Knob::Component*>(win->component.Get("Widget").get());
-
-	ax::Knob::Info* info = static_cast<ax::Knob::Info*>(widget_comp->GetInfo());
-
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
 	widget_node.AddAttribute("builder", "Knob");
 
-	ax::Rect rect = win->dimension.GetRect();
+	const ax::Rect rect = win->dimension.GetRect();
 
 	widget_node.AddNode(xml.CreateNode("position", std::to_string(rect.position)));
 	widget_node.AddNode(xml.CreateNode("size", std::to_string(rect.size)));
@@ -154,8 +149,6 @@ ax::Xml::Node Knob::Component::Save(Xml& xml, Xml::Node& node)
 
 	widget_node.AddNode(xml.CreateNode("msg", knob->GetMsg()));
 	widget_node.AddNode(xml.CreateNode("flags", std::to_string(knob->GetFlags())));
-
-	return widget_node;
 }
 
 std::vector<std::pair<std::string, std::string>> Knob::Component::GetBuilderAttributes()

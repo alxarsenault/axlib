@@ -134,32 +134,32 @@ namespace util {
 			return *this;
 		}
 
-		bool operator==(const Point2D& pt)
+		bool operator==(const Point2D& pt) const
 		{
 			return (x == pt.x && y == pt.y);
 		}
 
-		bool operator!=(const Point2D& pt)
+		bool operator!=(const Point2D& pt) const
 		{
 			return !(x == pt.x && y == pt.y);
 		}
 
-		bool operator<(const Point2D& pt)
+		bool operator<(const Point2D& pt) const
 		{
 			return (x < pt.x && y < pt.y);
 		}
 
-		bool operator<=(const Point2D& pt)
+		bool operator<=(const Point2D& pt) const
 		{
 			return (x <= pt.x && y <= pt.y);
 		}
 
-		bool operator>(const Point2D& pt)
+		bool operator>(const Point2D& pt) const
 		{
 			return (x > pt.x && y > pt.y);
 		}
 
-		bool operator>=(const Point2D& pt)
+		bool operator>=(const Point2D& pt) const
 		{
 			return (x >= pt.x && y >= pt.y);
 		}

@@ -16,6 +16,8 @@ namespace cocoa {
 	
 	std::string GetPasteboardContent();
 	
+	void SetPasteboardContent(const std::string& str);
+	
 	std::string GetAppPath();
 	std::string GetAppDirectory();
 	

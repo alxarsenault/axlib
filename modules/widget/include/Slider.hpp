@@ -143,7 +143,7 @@ public:
 	public:
 		Component(ax::Window* win, Info* info);
 
-		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
+		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node);
 		virtual std::vector<std::pair<std::string, std::string>> GetBuilderAttributes();
 		virtual std::vector<ax::widget::ParamInfo> GetBuilderAttributesInfo() const;
 		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);

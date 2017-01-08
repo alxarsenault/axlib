@@ -189,7 +189,7 @@ Slider::Component::Component(ax::Window* win, Info* info)
 {
 }
 
-ax::Xml::Node Slider::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
+void Slider::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
 	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
@@ -199,9 +199,6 @@ ax::Xml::Node Slider::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 		= static_cast<ax::Slider::Component*>(win->component.Get("Widget").get());
 
 	ax::Slider::Info* info = static_cast<ax::Slider::Info*>(widget_comp->GetInfo());
-
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
 	widget_node.AddAttribute("builder", "Slider");
 
 	ax::Rect rect = win->dimension.GetRect();
@@ -271,10 +268,6 @@ ax::Xml::Node Slider::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 	}
 
 	widget_node.AddNode(xml.CreateNode("flags", value_str));
-	//	widget_node.AddNode(xml.CreateNode("msg", btn->GetMsg()));
-
-	return widget_node;
-	//	return node;
 }
 
 std::vector<std::pair<std::string, std::string>> Slider::Component::GetBuilderAttributes()

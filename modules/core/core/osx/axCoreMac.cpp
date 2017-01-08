@@ -19,6 +19,7 @@
  * To release a closed-source product which uses axFrameworks, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
+
 #include "axCoreMac.hpp"
 #include "CocoaInterface.h"
 #include <unistd.h>
@@ -136,6 +137,11 @@ namespace core {
 	std::string CoreMac::GetPasteboardContent()
 	{
 		return cocoa::GetPasteboardContent();
+	}
+	
+	void CoreMac::SetPasteboardContent(const std::string& str)
+	{
+		cocoa::SetPasteboardContent(str);
 	}
 }
 }

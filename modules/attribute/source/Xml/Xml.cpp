@@ -117,6 +117,7 @@ std::string Xml::Node::GetAttribute(const std::string& att_name)
 
 std::string Xml::Node::GetValue()
 {
+//	_node->remove_node(<#xml_node<char> *where#>)
 	return std::string(_node->value(), _node->value_size());
 }
 
@@ -129,6 +130,15 @@ std::string Xml::Node::GetChildNodeValue(const std::string& name)
 		return "";
 	}
 	return std::string(node->value(), node->value_size());
+}
+
+void Xml::Node::RemoveChildNode(const std::string& name)
+{
+	rapidxml::xml_node<>* node = _node->first_node(name.c_str());
+	
+	if (node) {
+		_node->remove_node(node);
+	}
 }
 
 std::vector<std::pair<std::string, std::string>> Xml::Node::GetAtributes()

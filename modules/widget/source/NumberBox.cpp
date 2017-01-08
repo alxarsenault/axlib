@@ -145,15 +145,13 @@ ax::NumberBox::Component::Component(ax::Window* win, Info* info)
 {
 }
 
-ax::Xml::Node ax::NumberBox::Component::Save(Xml& xml, Xml::Node& node)
+void ax::NumberBox::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
 	ax::NumberBox* number_box(win->GetBackbone<ax::NumberBox>());
 	ax::NumberBox::Component* widget_comp = static_cast<ax::NumberBox::Component*>(win->component.Get("Widget").get());
 	ax::NumberBox::Info* info = static_cast<ax::NumberBox::Info*>(widget_comp->GetInfo());
-	
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
+
 	widget_node.AddAttribute("builder", "NumberBox");
 	
 	ax::Rect rect = win->dimension.GetRect();
@@ -175,7 +173,7 @@ ax::Xml::Node ax::NumberBox::Component::Save(Xml& xml, Xml::Node& node)
 
 	widget_node.AddNode(xml.CreateNode("flags", std::to_string(number_box->GetFlags())));
 	widget_node.AddNode(xml.CreateNode("range", number_box->GetRange().ToString()));
-	return widget_node;
+	widget_node.AddNode(xml.CreateNode("type", std::to_string(int(number_box->GetControlType()))));
 }
 
 std::vector<std::pair<std::string, std::string>> ax::NumberBox::Component::GetBuilderAttributes()
@@ -188,6 +186,7 @@ std::vector<std::pair<std::string, std::string>> ax::NumberBox::Component::GetBu
 	atts.push_back(std::pair<std::string, std::string>("size", win->dimension.GetSize().ToString()));
 	atts.push_back(std::pair<std::string, std::string>("flags", std::to_string(number_box->GetFlags())));
 	atts.push_back(std::pair<std::string, std::string>("range", number_box->GetRange().ToString()));
+	atts.push_back(std::pair<std::string, std::string>("type", std::to_string(int(number_box->GetControlType()))));
 	return atts;
 }
 
@@ -196,7 +195,8 @@ std::vector<ax::widget::ParamInfo> ax::NumberBox::Component::GetBuilderAttribute
 	return { ax::widget::ParamInfo(ax::widget::ParamType::POINT, "position"),
 		ax::widget::ParamInfo(ax::widget::ParamType::SIZE, "size"),
 		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "flags"),
-		ax::widget::ParamInfo(ax::widget::ParamType::RANGE, "range")};
+		ax::widget::ParamInfo(ax::widget::ParamType::RANGE, "range"),
+		ax::widget::ParamInfo(ax::widget::ParamType::INTEGER, "type")};
 }
 
 void ax::NumberBox::Component::SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes)
@@ -214,6 +214,9 @@ void ax::NumberBox::Component::SetBuilderAttributes(const std::vector<std::pair<
 		}
 		else if (n.first == "range") {
 			number_box->SetRange(ax::util::Range2D<double>(n.second));
+		}
+		else if (n.first == "type") {
+			number_box->SetControlType(ax::util::Control::Type(static_cast<ax::util::Control::Type>(std::stoi(n.second))));
 		}
 	}
 }
@@ -258,7 +261,8 @@ std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(const Point
 	const ax::Size size(control.GetChildNodeValue("size"));
 	const ax::util::Flag flags = std::stoi(control.GetChildNodeValue("flags"));
 	const ax::util::Range2D<double> range(control.GetChildNodeValue("range"));
-
+	const ax::util::Control::Type type(static_cast<ax::util::Control::Type>(std::stoi(control.GetChildNodeValue("type"))));
+	
 	ax::Xml::Node info_node = control.GetNode("info");
 	ax::NumberBox::Info k_info;
 	k_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
@@ -271,21 +275,21 @@ std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(const Point
 	k_info.img = info_node.GetAttribute("img");
 	k_info.single_img = (bool)std::stoi(info_node.GetAttribute("single_img"));
 	
-	return ax::shared<ax::NumberBox>(ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range);
+	return ax::shared<ax::NumberBox>(ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range, type);
 }
 
 std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(Xml::Node& node)
 {
 	ax::Xml::Node control(node);
 	std::string builder_name = control.GetAttribute("builder");
-	std::string obj_name = control.GetAttribute("name");
-	
+
 	const ax::Point pos(control.GetChildNodeValue("position"));
 	const ax::Size size(control.GetChildNodeValue("size"));
 
 	const ax::util::Flag flags = std::stoi(control.GetChildNodeValue("flags"));
 	const ax::util::Range2D<double> range(control.GetChildNodeValue("range"));
-
+	const ax::util::Control::Type type(static_cast<ax::util::Control::Type>(std::stoi(control.GetChildNodeValue("type"))));
+	
 	ax::Xml::Node info_node = control.GetNode("info");
 	
 	ax::NumberBox::Info k_info;
@@ -299,7 +303,7 @@ std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(Xml::Node& 
 	k_info.img = info_node.GetAttribute("img");
 	k_info.single_img = (bool)std::stoi(info_node.GetAttribute("single_img"));
 	
-	return ax::shared<ax::NumberBox>(ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range);
+	return ax::shared<ax::NumberBox>(ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range, type);
 }
 
 /*
@@ -411,6 +415,12 @@ void ax::NumberBox::SetRange(const ax::util::Range2D<double>& range)
 	_range = range;
 	_value = ax::util::Clamp<double>(_value, _range.left, _range.right);
 	_zeroToOneValue = _range.GetZeroToOneValue(_value);
+	win->Update();
+}
+
+void ax::NumberBox::SetControlType(ax::util::Control::Type type)
+{
+	_type = type;
 	win->Update();
 }
 

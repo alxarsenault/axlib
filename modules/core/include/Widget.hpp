@@ -133,7 +133,25 @@ namespace widget {
 
 		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node)
 		{
-			return node;
+			ax::Xml::Node widget_node = xml.CreateNode("Widget");
+			node.AddNode(widget_node);
+			SaveFromWidgetNode(xml, widget_node);
+			return widget_node;
+		}
+		
+		virtual bool Save(const std::string file_path)
+		{
+			ax::Xml xml;
+			ax::Xml::Node widget_node = xml.CreateNode("Widget");
+			xml.AddMainNode(widget_node);
+			SaveFromWidgetNode(xml, widget_node);
+			xml.Save(file_path);
+			return false;
+		}
+		
+		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
+		{
+			
 		}
 
 		virtual void SetSaveChildCallback(std::function<void(ax::Xml&, ax::Xml::Node&, ax::Window*)> fct)

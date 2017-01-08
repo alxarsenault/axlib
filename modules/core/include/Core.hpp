@@ -138,6 +138,10 @@ namespace core {
 		{
 			return "";
 		}
+		
+		virtual void SetPasteboardContent(const std::string& str)
+		{
+		}
 
 		virtual int DrawGLScene();
 

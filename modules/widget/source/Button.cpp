@@ -160,35 +160,29 @@ Button::Component::Component(ax::Window* win, Info* info)
 {
 }
 
-ax::Xml::Node Button::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
+void Button::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
-	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
-	ax::Button* btn = static_cast<ax::Button*>(bbone.get());
-
-	ax::Button::Component* widget_comp
-		= static_cast<ax::Button::Component*>(win->component.Get("Widget").get());
-
-	ax::Button::Info* info = static_cast<ax::Button::Info*>(widget_comp->GetInfo());
-
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
+	ax::Button* btn = win->GetBackbone<ax::Button>();
+	ax::Button::Component::Ptr widget_comp = win->component.Get<ax::Button::Component>("Widget");
+	ax::Button::Info* info = widget_comp->GetInfo<ax::Button::Info>();
+	
 	widget_node.AddAttribute("builder", "Button");
-
-	ax::Rect rect = win->dimension.GetRect();
-
+	
+	const ax::Rect rect = win->dimension.GetRect();
+	
 	// Position.
 	{
 		std::string value_str(std::to_string(rect.position.x) + ", " + std::to_string(rect.position.y));
 		widget_node.AddNode(xml.CreateNode("position", value_str));
 	}
-
+	
 	// Size.
 	{
 		std::string value_str(std::to_string(rect.size.w) + ", " + std::to_string(rect.size.h));
 		widget_node.AddNode(xml.CreateNode("size", value_str));
 	}
-
+	
 	ax::Xml::Node info_node = xml.CreateNode("info");
 	widget_node.AddNode(info_node);
 	info_node.AddAttribute("normal", info->normal.ToString());
@@ -198,27 +192,27 @@ ax::Xml::Node Button::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 	info_node.AddAttribute("contour", info->contour.ToString());
 	info_node.AddAttribute("font_color", info->font_color.ToString());
 	info_node.AddAttribute("corner_radius", std::to_string(info->corner_radius));
-
+	
 	widget_node.AddNode(xml.CreateNode("img_path", btn->GetImagePath()));
 	widget_node.AddNode(xml.CreateNode("label", btn->GetLabel()));
-
+	
 	ax::util::Flag flags = btn->GetFlags();
 	std::vector<std::string> atts;
-
+	
 	if (ax::util::HasFlag(ax::Button::Flags::SINGLE_IMG, flags)) {
 		atts.push_back("SINGLE_IMG");
 	}
-
+	
 	if (ax::util::HasFlag(ax::Button::Flags::IMG_RESIZE, flags)) {
 		atts.push_back("IMG_RESIZE");
 	}
-
+	
 	if (ax::util::HasFlag(ax::Button::Flags::CAN_SELECTED, flags)) {
 		atts.push_back("CAN_SELECTED");
 	}
-
+	
 	std::string value_str;
-
+	
 	if (atts.empty()) {
 	}
 	else {
@@ -228,11 +222,9 @@ ax::Xml::Node Button::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 			value_str += atts[i];
 		}
 	}
-
+	
 	widget_node.AddNode(xml.CreateNode("flags", value_str));
 	widget_node.AddNode(xml.CreateNode("msg", btn->GetMsg()));
-
-	return widget_node;
 }
 
 std::vector<std::pair<std::string, std::string>> Button::Component::GetBuilderAttributes()

@@ -71,15 +71,13 @@ Sprite::Component::Component(Window* win, Info* info)
 {
 }
 
-ax::Xml::Node Sprite::Component::Save(Xml& xml, Xml::Node& node)
+void Sprite::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
 	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
 	ax::Sprite::Component* widget_comp = static_cast<ax::Sprite::Component*>(win->component.Get("Widget").get());
 	ax::Sprite::Info* info = static_cast<ax::Sprite::Info*>(widget_comp->GetInfo());
 
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
 	widget_node.AddAttribute("builder", "Sprite");
 
 	ax::Rect rect = win->dimension.GetRect();
@@ -91,8 +89,6 @@ ax::Xml::Node Sprite::Component::Save(Xml& xml, Xml::Node& node)
 	info_node.AddAttribute("img_path", info->img_path);
 	info_node.AddAttribute("sprite_size", info->sprite_size.ToString());
 	info_node.AddAttribute("n_sprite", std::to_string(info->n_sprite));
-
-	return widget_node;
 }
 
 std::vector<std::pair<std::string, std::string>> Sprite::Component::GetBuilderAttributes()

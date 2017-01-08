@@ -183,7 +183,7 @@ ax::Toggle::Component::Component(ax::Window* win, Info* info)
 {
 }
 
-ax::Xml::Node ax::Toggle::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
+void ax::Toggle::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
 	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
@@ -194,8 +194,6 @@ ax::Xml::Node ax::Toggle::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 
 	ax::Toggle::Info* info = static_cast<ax::Toggle::Info*>(widget_comp->GetInfo());
 
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
 	widget_node.AddAttribute("builder", "Toggle");
 
 	ax::Rect rect = win->dimension.GetRect();
@@ -269,8 +267,6 @@ ax::Xml::Node ax::Toggle::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 
 	widget_node.AddNode(xml.CreateNode("flags", value_str));
 	widget_node.AddNode(xml.CreateNode("msg", tog->GetMsg()));
-
-	return widget_node;
 }
 
 std::vector<std::pair<std::string, std::string>> ax::Toggle::Component::GetBuilderAttributes()

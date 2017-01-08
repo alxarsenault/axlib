@@ -118,7 +118,7 @@ Label::Component::Component(ax::Window* win, Info* info)
 {
 }
 
-ax::Xml::Node Label::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
+void Label::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
 	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
@@ -129,8 +129,6 @@ ax::Xml::Node Label::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 
 	ax::Label::Info* info = static_cast<ax::Label::Info*>(widget_comp->GetInfo());
 
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
 	widget_node.AddAttribute("builder", "Label");
 
 	ax::Rect rect = win->dimension.GetRect();
@@ -165,7 +163,6 @@ ax::Xml::Node Label::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 	info_node.AddAttribute("alignement", align_str);
 
 	widget_node.AddNode(xml.CreateNode("label", label->GetLabel()));
-	return widget_node;
 }
 
 std::vector<std::pair<std::string, std::string>> Label::Component::GetBuilderAttributes()

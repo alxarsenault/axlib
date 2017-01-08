@@ -118,7 +118,7 @@ public:
 	public:
 		Component(ax::Window* win, Info* info);
 
-		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
+		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node);
 
 		std::string GetBuilderName() const
 		{

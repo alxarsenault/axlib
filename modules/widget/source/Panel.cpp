@@ -105,7 +105,7 @@ std::vector<std::pair<std::string, std::string>> Panel::Component::GetBuilderAtt
 	return atts;
 }
 
-ax::Xml::Node Panel::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
+void Panel::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 {
 	ax::Window* win = GetWindow();
 	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
@@ -116,8 +116,6 @@ ax::Xml::Node Panel::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 
 	ax::Panel::Info* info = static_cast<ax::Panel::Info*>(widget_comp->GetInfo());
 
-	ax::Xml::Node widget_node = xml.CreateNode("Widget");
-	node.AddNode(widget_node);
 	widget_node.AddAttribute("builder", "Panel");
 	widget_node.AddAttribute("name", btn->GetName());
 	ax::Rect rect = win->dimension.GetRect();
@@ -171,13 +169,13 @@ ax::Xml::Node Panel::Component::Save(ax::Xml& xml, ax::Xml::Node& node)
 			//			}
 		}
 	}
-
-	return widget_node;
 }
 
 void Panel::Component::SetBuilderAttributes(
 	const std::vector<std::pair<std::string, std::string>>& attributes)
 {
+	Panel* panel = static_cast<Panel*>(_win->backbone.get());
+	
 	for (auto& n : attributes) {
 		if (n.first == "position") {
 			ax::Point pos(n.second);
@@ -187,19 +185,20 @@ void Panel::Component::SetBuilderAttributes(
 			ax::Size size(n.second);
 			GetWindow()->dimension.SetSize(size);
 		}
+//		else if (n.first == "bg_img") {
+//			Panel* panel = static_cast<Panel*>(_win->backbone.get());
+//
+//			if (panel->_bg_img) {
+//				if (panel->_bg_img->GetImagePath() != n.second) {
+//					panel->_bg_img.reset(new ax::Image(n.second));
+//				}
+//			}
+//			else {
+//				panel->_bg_img.reset(new ax::Image(n.second));
+//			}
+//		}
 		else if (n.first == "bg_img") {
-			// ax::Print("ax::Panel SetBuilderAttributes bg_img -> Not implemented yet.");
-
-			Panel* panel = static_cast<Panel*>(_win->backbone.get());
-
-			if (panel->_bg_img) {
-				if (panel->_bg_img->GetImagePath() != n.second) {
-					panel->_bg_img.reset(new ax::Image(n.second));
-				}
-			}
-			else {
-				panel->_bg_img.reset(new ax::Image(n.second));
-			}
+			panel->_bg_img.reset(new Image(n.second));
 		}
 	}
 
@@ -245,7 +244,6 @@ std::shared_ptr<ax::Window::Backbone> Panel::Builder::Create(
 	//	ax::Print(builder_name, obj_name);
 
 	ax::Size size(control.GetChildNodeValue("size"));
-
 	std::string bg_img_path = control.GetChildNodeValue("bg_img");
 
 	std::vector<std::string> flags_strs = ax::util::String::Split(control.GetChildNodeValue("flags"), ",");
@@ -269,9 +267,7 @@ std::shared_ptr<ax::Window::Backbone> Panel::Builder::Create(
 std::shared_ptr<ax::Window::Backbone> Panel::Builder::Create(ax::Xml::Node& node)
 {
 	std::string builder_name = node.GetAttribute("builder");
-	//	ax::Print("Attribute name");
 	std::string name = node.GetAttribute("name");
-	//	ax::Print(builder_name, name);
 
 	ax::Point pos(node.GetChildNodeValue("position"));
 	ax::Size size(node.GetChildNodeValue("size"));
@@ -309,7 +305,6 @@ void Panel::Builder::CreateChildren(ax::Xml::Node& node, ax::Panel* panel)
 
 			if (child_node_name == "Widget") {
 				std::string buider_name = child.GetAttribute("builder");
-				//				std::string name = child.GetAttribute("name");
 
 				ax::widget::Builder* builder = loader->GetBuilder(buider_name);
 				if (builder == nullptr) {
@@ -337,7 +332,6 @@ void Panel::Builder::CreateChildren(ax::Xml::Node& node, ax::Panel* panel)
 Panel::Panel(const Rect& rect, const Panel::Info& info, const std::string& bg_img, const std::string& name,
 	ax::util::Flag flags)
 	: _flags(flags)
-	, _bg_img_path(bg_img)
 	, _name(name)
 {
 	win = Window::Create(rect);
@@ -350,12 +344,14 @@ Panel::Panel(const Rect& rect, const Panel::Info& info, const std::string& bg_im
 	win->property.AddProperty("Editable");
 	win->property.AddProperty("AcceptWidget");
 
-	if (!_bg_img_path.empty()) {
-		_bg_img = ax::shared<ax::Image>(_bg_img_path);
-	}
-	else {
-		_bg_img = nullptr;
-	}
+	_bg_img = std::unique_ptr<ax::Image>(new Image(bg_img));
+
+//	if (!_bg_img_path.empty()) {
+//		_bg_img = ax::shared<ax::Image>(_bg_img_path);
+//	}
+//	else {
+//		_bg_img = nullptr;
+//	}
 	//	win->property.AddProperty("BlockDrawing");
 }
 

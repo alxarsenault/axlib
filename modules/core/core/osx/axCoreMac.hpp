@@ -75,6 +75,8 @@ namespace core {
 		virtual void SetFocusAndCenter();
 
 		virtual std::string GetPasteboardContent();
+		
+		virtual void SetPasteboardContent(const std::string& str);
 
 	private:
 		cocoa::Application _cocoa_app;

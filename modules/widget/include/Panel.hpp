@@ -20,8 +20,7 @@
  * licenses are available, email ax.frameworks@gmail.com for more information.
  */
 
-#ifndef __AX_PANEL_H__
-#define __AX_PANEL_H__
+#pragma once
 
 /*
  * @file    axPanel.h
@@ -91,7 +90,7 @@ public:
 	public:
 		Component(ax::Window* win, Info* info);
 
-		virtual ax::Xml::Node Save(ax::Xml& xml, ax::Xml::Node& node);
+		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node);
 
 		virtual void SetSaveChildCallback(std::function<void(ax::Xml&, ax::Xml::Node&, ax::Window*)> fct)
 		{
@@ -163,14 +162,22 @@ public:
 
 	std::string GetBackgroundImagePath() const
 	{
-		return _bg_img_path;
+		if(!_bg_img) {
+			return "";
+		}
+		
+		if(!_bg_img->IsImageReady()) {
+			return "";
+		}
+		
+		return _bg_img->GetImagePath();
 	}
 
 protected:
 	ax::util::Flag _flags;
 	std::string _bg_img_path;
 	std::string _name;
-	std::shared_ptr<ax::Image> _bg_img;
+	std::unique_ptr<ax::Image> _bg_img;
 
 	void OnPaint(ax::GC gc);
 };
@@ -178,4 +185,3 @@ protected:
 
 /// @}
 /// @}
-#endif //__AX_BUTTON__

@@ -153,6 +153,13 @@ namespace cocoa {
 		return std::string([myString UTF8String]);
 	}
 	
+	void SetPasteboardContent(const std::string& str)
+	{
+		NSPasteboard* pb = [NSPasteboard generalPasteboard];
+		[pb declareTypes:[NSArray arrayWithObject:NSStringPboardType] owner:nil];
+		[pb setString:[NSString stringWithUTF8String:str.c_str()] forType:NSStringPboardType];
+	}
+	
 	std::string GetAppPath()
 	{
 		NSString* curDir = [[NSBundle mainBundle] executablePath];

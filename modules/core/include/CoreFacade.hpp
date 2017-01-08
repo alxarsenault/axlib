@@ -85,6 +85,10 @@ namespace core {
 		void SetFocusAndCenter();
 
 		std::string GetPasteboardConent();
+		
+		inline void SetPasteboardContent(const std::string& str) {
+			_core->SetPasteboardContent(str);
+		}
 
 		/// Add a GUI init main entry callback function.
 		/// This function will be call when the ax::Core is done initializing.
