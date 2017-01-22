@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.1)
+cmake_minimum_required(VERSION 3.5.0)
 
 # Prevent from running cmake in root folder.
 if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -30,12 +30,10 @@ set_target_properties(axOS PROPERTIES LINKER_LANGUAGE CXX)
 set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 
 # Include directory.
-target_include_directories(axOS PUBLIC 
-		${OS_INCLUDE_DIRECTORY} 
+target_include_directories(axOS PUBLIC
+		${OS_INCLUDE_DIRECTORY}
 		${CMAKE_CURRENT_SOURCE_DIR}/../util/include
 		${CMAKE_CURRENT_SOURCE_DIR}/../event/include)
-
-message("UTIL DIRDEJHDA" ${UTIL_INCLUDE_DIRECTORY})
 
 # Generate empty cpp file when generating Xcode projects.
 # Xcode won't build properly without an actual source file in the cmake add_library command.

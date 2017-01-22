@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.1)
+cmake_minimum_required(VERSION 3.5.0)
 
 # Prevent from running cmake in root folder.
 if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -6,11 +6,11 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif ()
 
 project(Graphic)
-# 
+
 set(CMAKE_PREFIX_PATH cmake)
-# find_package(cmake/FindFreetype2.cmake)
-include(../../cmake/FindFreetype2.cmake)
-include(../../cmake/FindPng.cmake)
+
+find_package(fst REQUIRED)
+include_directories(${FST_INCLUDE_DIRS})
 
 # Use folder.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -37,7 +37,7 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 # Include directory.
 target_include_directories(axGraphic PUBLIC ${GRAPHIC_INCLUDE_DIRECTORY})
 target_include_directories(axGraphic PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../util/include)
-target_include_directories(axGraphic PUBLIC ${FREETYPE2_INCLUDE_DIRS})
+target_include_directories(axGraphic PUBLIC ${FREETYPE_INCLUDE_DIRS})
 target_include_directories(axGraphic PUBLIC ${PNG_INCLUDE_DIRS})
 
 # Generate empty cpp file when generating Xcode projects.
@@ -56,7 +56,7 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 
 # Include directory.
 target_include_directories(libaxGraphic PUBLIC ${GRAPHIC_INCLUDE_DIRECTORY})
-target_include_directories(libaxGraphic PUBLIC ${FREETYPE2_INCLUDE_DIRS})
+target_include_directories(libaxGraphic PUBLIC ${FREETYPE_INCLUDE_DIRS})
 
 set_target_properties(libaxGraphic PROPERTIES FOLDER axGraphic)
 set_target_properties(libaxGraphic PROPERTIES OUTPUT_NAME axGraphic)

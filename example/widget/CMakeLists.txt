@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.1)
+cmake_minimum_required(VERSION 3.5.0)
 
 # Prevent from running cmake in root folder.
 if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -6,9 +6,6 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif ()
 
 project(Widget)
-
-include(../../cmake/FindFreetype2.cmake)
-include(../../cmake/FindPng.cmake)
 
 # Use folder.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -55,11 +52,10 @@ target_include_directories(Widget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../modul
 target_include_directories(Widget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../modules/attribute/include)
 target_include_directories(Widget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../modules/graphic/include)
 target_include_directories(Widget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../modules/widget/include)
-target_include_directories(Widget PUBLIC ${FREETYPE2_INCLUDE_DIRS})
 target_include_directories(Widget PUBLIC ${PNG_INCLUDE_DIRS})
 
 target_link_libraries(Widget axlib)
-target_link_libraries(Widget ${PNG_LIBRARY} ${FREETYPE2_LIBRARY})
+target_link_libraries(Widget ${PNG_LIBRARY} ${FREETYPE_LIBRARY})
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework Cocoa")
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -framework OpenGL")
 

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.1)
+cmake_minimum_required(VERSION 3.5.0)
 
 # Prevent from running cmake in root directory.
 if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -19,8 +19,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYS
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYSTEM_PROCESSOR}/Release)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_SOURCE_DIR}/build/${CMAKE_SYSTEM_PROCESSOR}/Release)
 
-# message("FOLDER :" ${PROJECT_SOURCE_DIR})
-# message("FOLDER :" ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY_DEBUG})
+# Dependencies
+find_package(PNG REQUIRED)
+include_directories(${PNG_INCLUDE_DIRS})
+find_package(Freetype REQUIRED)
+include_directories(${FREETYPE_INCLUDE_DIRS})
+find_package(glm REQUIRED)
+include_directories(${GLM_INCLUDE_DIRS})
 
 # Modules.
 add_subdirectory(modules/util)
@@ -39,7 +44,7 @@ if(${CMAKE_GENERATOR} STREQUAL Xcode)
 endif()
 
 # Create static library.
-add_library(${PROJECT_NAME} STATIC 
+add_library(${PROJECT_NAME} STATIC
 	        ${EMPTY_FILE}
 	        $<TARGET_OBJECTS:axUtil>
 	        $<TARGET_OBJECTS:axEvent>
@@ -68,7 +73,9 @@ set(CMAKE_CXX_FLAGS "-fPIC -std=c++14 ${CMAKE_CXX_FLAGS}")
 
 set_target_properties(axLibDyn PROPERTIES OUTPUT_NAME axlib)
 
-target_link_libraries(axLibDyn ${PNG_LIBRARY} ${FREETYPE2_LIBRARY})
+# Link Dependencies
+target_link_libraries(axLibDyn ${PNG_LIBRARY})
+target_link_libraries(axLibDyn  ${FREETYPE_LIBRARY})
 target_link_libraries(axLibDyn "-framework Cocoa")
 target_link_libraries(axLibDyn "-framework OpenGL")
 

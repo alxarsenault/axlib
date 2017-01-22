@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.1)
+cmake_minimum_required(VERSION 3.5.0)
 
 # Prevent from running cmake in root folder.
 if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)

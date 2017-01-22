@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2.1)
+cmake_minimum_required(VERSION 3.5.0)
 
 # Prevent from running cmake in root folder.
 if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
@@ -6,9 +6,6 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif ()
 
 project(Widget)
-
-include(../../cmake/FindFreetype2.cmake)
-include(../../cmake/FindPng.cmake)
 
 # Use folder.
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -42,7 +39,6 @@ target_include_directories(axWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../event/
 target_include_directories(axWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../os/include)
 target_include_directories(axWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../attribute/include)
 target_include_directories(axWidget PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../graphic/include)
-target_include_directories(axWidget PUBLIC ${FREETYPE2_INCLUDE_DIRS})
 target_include_directories(axWidget PUBLIC ${PNG_INCLUDE_DIRS})
 
 # Generate empty cpp file when generating Xcode projects.
