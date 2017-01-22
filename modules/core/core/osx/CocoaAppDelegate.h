@@ -47,6 +47,8 @@ typedef cocoa::OpenGLView CppView;
 - (void)SetResizable;
 - (void)SetNoTitleBar;
 - (void)SetTitleBar;
+- (void)SetBorderLess;
+- (void)SetDefaultBorder;
 
 - (void)SetFocusAndCenter;
 

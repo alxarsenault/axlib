@@ -68,27 +68,16 @@
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification {
 	std::cout << "applicationWillFinishLaunching\n";
-	// attach the view to the window
+	// Attach the view to the window
 	[_ns_window setContentView:self];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)notification {
 	std::cout << "applicationDidFinishLaunching\n";
-	// make the window visible.
+	
+	// Make the window visible.
 	[_ns_window makeKeyAndOrderFront:self];
-	//	[window setLevel: NSMainMenuWindowLevel];
-	//	[window SetFocusAndCenter];
-	
-	
-	//	NSApplication* myApp = [NSApplication sharedApplication];
-	//	[myApp activateIgnoringOtherApps:YES];
-	
-	
 	[_ns_window center];
-	
-	//	[[NSRunningApplication currentApplication]
-	//		activateWithOptions:(NSApplicationActivateAllWindows | NSApplicationActivateIgnoringOtherApps)];
-	
 	[_ns_window orderFrontRegardless];
 }
 
@@ -223,11 +212,20 @@ void RunLoopObserverCallback(CFRunLoopObserverRef observer, CFRunLoopActivity ac
 	[[self window] setStyleMask:[[self window] styleMask] | NSWindowStyleMaskTitled];
 }
 
+- (void)SetBorderLess
+{
+	[[self window] setStyleMask:NSWindowStyleMaskBorderless];
+}
+
+- (void)SetDefaultBorder
+{
+	[[self window] setStyleMask:[[self window] styleMask] | NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable];
+}
+
 - (void)SetFocusAndCenter
 {
 	NSApplication* myApp = [NSApplication sharedApplication];
 	[myApp activateIgnoringOtherApps:YES];
-	
 	
 	[[self window] center];
 	

@@ -129,6 +129,15 @@ namespace core {
 		virtual void SetTitleBar(bool titlebar)
 		{
 		}
+		
+		virtual void SetBorderLess()
+		{
+		}
+		
+		virtual void SetDefaultBorder()
+		{
+			
+		}
 
 		virtual void SetFocusAndCenter()
 		{

@@ -19,8 +19,8 @@
  * To release a closed-source product which uses axLibrary, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
-#ifndef __AX_GC__
-#define __AX_GC__
+
+#pragma once
 
 /// @defgroup Graphic
 /// @{
@@ -162,4 +162,3 @@ private:
 }
 
 /// @}
-#endif //__AX_GC__

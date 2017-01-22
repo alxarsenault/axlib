@@ -195,36 +195,19 @@ void Button::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_n
 	
 	widget_node.AddNode(xml.CreateNode("img_path", btn->GetImagePath()));
 	widget_node.AddNode(xml.CreateNode("label", btn->GetLabel()));
+	widget_node.AddNode(xml.CreateNode("msg", btn->GetMsg()));
+	
+	ax::Xml::Node flag_node = xml.CreateNode("flags");
+	widget_node.AddNode(flag_node);
 	
 	ax::util::Flag flags = btn->GetFlags();
-	std::vector<std::string> atts;
+	const bool v_single_img = ax::util::HasFlag(Button::Flags::SINGLE_IMG, flags);
+	const bool v_img_resize = ax::util::HasFlag(Button::Flags::IMG_RESIZE, flags);
+	const bool v_can_selected = ax::util::HasFlag(Button::Flags::CAN_SELECTED, flags);
 	
-	if (ax::util::HasFlag(ax::Button::Flags::SINGLE_IMG, flags)) {
-		atts.push_back("SINGLE_IMG");
-	}
-	
-	if (ax::util::HasFlag(ax::Button::Flags::IMG_RESIZE, flags)) {
-		atts.push_back("IMG_RESIZE");
-	}
-	
-	if (ax::util::HasFlag(ax::Button::Flags::CAN_SELECTED, flags)) {
-		atts.push_back("CAN_SELECTED");
-	}
-	
-	std::string value_str;
-	
-	if (atts.empty()) {
-	}
-	else {
-		value_str = atts[0];
-		for (int i = 1; i < atts.size(); i++) {
-			value_str += ",";
-			value_str += atts[i];
-		}
-	}
-	
-	widget_node.AddNode(xml.CreateNode("flags", value_str));
-	widget_node.AddNode(xml.CreateNode("msg", btn->GetMsg()));
+	flag_node.AddNode(xml.CreateNode("single_img", std::to_string((int)v_single_img)));
+	flag_node.AddNode(xml.CreateNode("img_resize", std::to_string((int)v_img_resize)));
+	flag_node.AddNode(xml.CreateNode("can_selected", std::to_string((int)v_can_selected)));
 }
 
 std::vector<std::pair<std::string, std::string>> Button::Component::GetBuilderAttributes()
@@ -247,6 +230,16 @@ std::vector<std::pair<std::string, std::string>> Button::Component::GetBuilderAt
 	atts.push_back(std::pair<std::string, std::string>("label", btn->GetLabel()));
 	atts.push_back(std::pair<std::string, std::string>("msg", btn->GetMsg()));
 
+	ax::util::Flag flags = btn->GetFlags();
+	atts.push_back(std::pair<std::string, std::string>("single_img",
+		std::to_string((int)ax::util::HasFlag(Button::Flags::SINGLE_IMG, flags))));
+	
+	atts.push_back(std::pair<std::string, std::string>("img_resize",
+		std::to_string((int)ax::util::HasFlag(Button::Flags::IMG_RESIZE, flags))));
+	
+	atts.push_back(std::pair<std::string, std::string>("can_selected",
+		std::to_string((int)ax::util::HasFlag(Button::Flags::CAN_SELECTED, flags))));
+
 	return atts;
 }
 
@@ -256,7 +249,11 @@ std::vector<ax::widget::ParamInfo> Button::Component::GetBuilderAttributesInfo()
 		ax::widget::ParamInfo(ax::widget::ParamType::SIZE, "size"),
 		ax::widget::ParamInfo(ax::widget::ParamType::FILEPATH, "img_path"),
 		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "label"),
-		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "msg") };
+//		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "flags"),
+		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "msg"),
+		ax::widget::ParamInfo(ax::widget::ParamType::BOOLEAN, "single_img"),
+		ax::widget::ParamInfo(ax::widget::ParamType::BOOLEAN, "img_resize"),
+		ax::widget::ParamInfo(ax::widget::ParamType::BOOLEAN, "can_selected") };
 }
 
 void Button::Component::SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes)
@@ -310,6 +307,24 @@ void Button::Component::SetBuilderAttributes(
 		else if (n.first == "msg") {
 			btn->SetMsg(n.second);
 		}
+		else if (n.first == "single_img") {
+			bool f_value = (bool)std::stoi(n.second);
+			ax::util::Flag flags = btn->GetFlags();
+			ax::util::SetFlag(Button::Flags::SINGLE_IMG, f_value, flags);
+			btn->SetFlags(flags);
+		}
+		else if (n.first == "img_resize") {
+			bool f_value = (bool)std::stoi(n.second);
+			ax::util::Flag flags = btn->GetFlags();
+			ax::util::SetFlag(Button::Flags::IMG_RESIZE, f_value, flags);
+			btn->SetFlags(flags);
+		}
+		else if (n.first == "can_selected") {
+			bool f_value = (bool)std::stoi(n.second);
+			ax::util::Flag flags = btn->GetFlags();
+			ax::util::SetFlag(Button::Flags::CAN_SELECTED, f_value, flags);
+			btn->SetFlags(flags);
+		}
 	}
 
 	_win->Update();
@@ -322,75 +337,6 @@ Button::Builder::Builder()
 std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(
 	const ax::Point& pos, const std::string& file_path)
 {
-	//	ax::AttributeDocument doc(file_path, ax::AttributeDocument::Type::JSON);
-	//
-	//	if (!doc.IsValid()) {
-	//		const std::pair<int, int> error_index(doc.GetErrorLineCharOffset());
-	//		ax::util::console::Error("Parsing Button::Builder :", file_path, "line :", error_index.first,
-	//			"char :", error_index.second);
-	//
-	//		return nullptr;
-	//	}
-	//
-	//	const ax::Attribute& widget(doc.GetRootAttribute()["Widget"]);
-	//
-	//	if (!widget.IsValid()) {
-	//		ax::util::console::Error("Parsing Button::Builder :", file_path);
-	//		return nullptr;
-	//	}
-	//
-	//	const std::string builder_name = widget["builder"].GetValue<std::string>();
-	//	const std::string obj_name = widget["name"].GetValue<std::string>();
-	//
-	//	const ax::Size size(widget["size"].GetValue<std::string>());
-	//	ax::console::Print("SIZE :", size);
-	//
-	//	const std::string img_path = widget["img_path"].GetValue<std::string>();
-	//	const std::string label = widget["label"].GetValue<std::string>();
-	//
-	//	std::vector<std::string> flags_strs
-	//		= ax::util::String::Split(widget["flags"].GetValue<std::string>(), ",");
-	//
-	//	ax::util::Flag flags = 0;
-	//
-	//	for (auto& n : flags_strs) {
-	//
-	//		if (n == "SINGLE_IMG") {
-	//			//			ax::Print("OPT : ", n);
-	//			flags |= ax::Button::Flags::SINGLE_IMG;
-	//		}
-	//		else if (n == "IMG_RESIZE") {
-	//			flags |= ax::Button::Flags::IMG_RESIZE;
-	//		}
-	//		else if (n == "CAN_SELECTED") {
-	//			flags |= ax::Button::Flags::CAN_SELECTED;
-	//		}
-	//	}
-	//
-	//	const std::string msg = widget["mag"].GetValue<std::string>();
-	//
-	//	const ax::Attribute& info(widget["info"]);
-	//	ax::Button::Info btn_info;
-	//	btn_info.normal = ax::Color::FromString(info["normal"].GetValue<std::string>());
-	//	btn_info.hover = ax::Color::FromString(info["hover"].GetValue<std::string>());
-	//	btn_info.clicking = ax::Color::FromString(info["clicking"].GetValue<std::string>());
-	//	btn_info.selected = ax::Color::FromString(info["selected"].GetValue<std::string>());
-	//	btn_info.contour = ax::Color::FromString(info["contour"].GetValue<std::string>());
-	//	btn_info.font_color = ax::Color::FromString(info["font_color"].GetValue<std::string>());
-	//	btn_info.corner_radius = info["corner_radius"].GetValue<int>();
-	//
-	//	return std::make_shared<ax::Button>(
-	//		ax::Rect(pos, size), ax::Button::Events(), btn_info, img_path, label, flags, msg);
-
-	//	btn_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
-	//	btn_info.hover = ax::Color::FromString(info_node.GetAttribute("hover"));
-	//	btn_info.clicking = ax::Color::FromString(info_node.GetAttribute("clicking"));
-	//	btn_info.selected = ax::Color::FromString(info_node.GetAttribute("selected"));
-	//	btn_info.contour = ax::Color::FromString(info_node.GetAttribute("contour"));
-	//	btn_info.font_color = ax::Color::FromString(info_node.GetAttribute("font_color"));
-	//	btn_info.corner_radius = std::stoi(info_node.GetAttribute("corner_radius"));
-
-	//",");
 	ax::Xml xml(file_path);
 
 	if (!xml.Parse()) {
@@ -399,87 +345,47 @@ std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(
 	}
 
 	ax::Xml::Node control = xml.GetNode("Widget");
-
 	std::string builder_name = control.GetAttribute("builder");
 	std::string obj_name = control.GetAttribute("name");
-
-	//	ax::Print(builder_name, obj_name);
-
-	ax::Size size(control.GetChildNodeValue("size"));
-	std::string img_path = control.GetChildNodeValue("img_path");
-	std::string label = control.GetChildNodeValue("label");
-
-	std::vector<std::string> flags_strs = ax::util::String::Split(control.GetChildNodeValue("flags"), ",");
-
-	ax::util::Flag flags = 0;
-
-	for (auto& n : flags_strs) {
-
-		if (n == "SINGLE_IMG") {
-			//			ax::Print("OPT : ", n);
-			flags |= ax::Button::Flags::SINGLE_IMG;
-		}
-		else if (n == "IMG_RESIZE") {
-			flags |= ax::Button::Flags::IMG_RESIZE;
-		}
-		else if (n == "CAN_SELECTED") {
-			flags |= ax::Button::Flags::CAN_SELECTED;
-		}
-	}
-
-	std::string msg = control.GetChildNodeValue("msg");
-
-	//	ax::Print(size.x, size.y);
-
-	ax::Xml::Node info_node = control.GetNode("info");
-
-	ax::Button::Info btn_info;
-	btn_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
-	btn_info.hover = ax::Color::FromString(info_node.GetAttribute("hover"));
-	btn_info.clicking = ax::Color::FromString(info_node.GetAttribute("clicking"));
-	btn_info.selected = ax::Color::FromString(info_node.GetAttribute("selected"));
-	btn_info.contour = ax::Color::FromString(info_node.GetAttribute("contour"));
-	btn_info.font_color = ax::Color::FromString(info_node.GetAttribute("font_color"));
-	btn_info.corner_radius = std::stoi(info_node.GetAttribute("corner_radius"));
-
-	auto btn = ax::shared<ax::Button>(
-		ax::Rect(pos, size), ax::Button::Events(), btn_info, img_path, label, flags, msg);
-
-	return btn;
-	//	return nullptr;
+	return CreateFromNodePosition(control, pos);
 }
 
 std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(ax::Xml::Node& node)
 {
 	ax::Point pos(node.GetChildNodeValue("position"));
+	return CreateFromNodePosition(node, pos);
+}
+
+std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(ax::Attribute& node)
+{
+	return nullptr;
+}
+
+std::shared_ptr<ax::Window::Backbone> Button::Builder::CreateFromNodePosition(ax::Xml::Node& node, const ax::Point& pos)
+{
 	ax::Size size(node.GetChildNodeValue("size"));
 	std::string img_path = node.GetChildNodeValue("img_path");
 	std::string label = node.GetChildNodeValue("label");
-
-	std::vector<std::string> flags_strs = ax::util::String::Split(node.GetChildNodeValue("flags"), ",");
-
+	
+	
+	ax::Xml::Node flags_node = node.GetNode("flags");
+	const std::string f_single_img = flags_node.GetChildNodeValue("single_img");
+	const std::string f_img_resize = flags_node.GetChildNodeValue("img_resize");
+	const std::string f_can_selected = flags_node.GetChildNodeValue("can_selected");
+	
+	bool v_single_img = (bool)std::stoi(f_single_img);
+	bool v_img_resize = (bool)std::stoi(f_img_resize);
+	bool v_can_selected = (bool)std::stoi(f_can_selected);
+	
 	ax::util::Flag flags = 0;
-
-	for (auto& n : flags_strs) {
-
-		if (n == "SINGLE_IMG") {
-			//			ax::Print("OPT : ", n);
-			flags |= ax::Button::Flags::SINGLE_IMG;
-		}
-		else if (n == "IMG_RESIZE") {
-			flags |= ax::Button::Flags::IMG_RESIZE;
-		}
-		else if (n == "CAN_SELECTED") {
-			flags |= ax::Button::Flags::CAN_SELECTED;
-		}
-	}
-
+	ax::util::SetFlag(Flags::SINGLE_IMG, v_single_img, flags);
+	ax::util::SetFlag(Flags::IMG_RESIZE, v_img_resize, flags);
+	ax::util::SetFlag(Flags::CAN_SELECTED, v_can_selected, flags);
+	
 	std::string msg = node.GetChildNodeValue("msg");
-
-	//	ax::Print(size.x, size.y);
-
+	
 	ax::Xml::Node info_node = node.GetNode("info");
-
+	
 	ax::Button::Info btn_info;
 	btn_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
 	btn_info.hover = ax::Color::FromString(info_node.GetAttribute("hover"));
@@ -488,58 +394,11 @@ std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(ax::Xml::Node& nod
 	btn_info.contour = ax::Color::FromString(info_node.GetAttribute("contour"));
 	btn_info.font_color = ax::Color::FromString(info_node.GetAttribute("font_color"));
 	btn_info.corner_radius = std::stoi(info_node.GetAttribute("corner_radius"));
-
+	
 	auto btn = ax::shared<ax::Button>(
 		ax::Rect(pos, size), ax::Button::Events(), btn_info, img_path, label, flags, msg);
-
+	
 	return btn;
-}
-
-std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(ax::Attribute& node)
-{
-	//	std::string builder_name = node.GetAttribute("builder");
-	//
-	//	ax::Point pos = ax::Xml::StringToSize(node.GetChildNodeValue("position"));
-	//	ax::Size size = ax::Xml::StringToSize(node.GetChildNodeValue("size"));
-	//	std::string img_path = node.GetChildNodeValue("img_path");
-	//	std::string label = node.GetChildNodeValue("label");
-	//
-	//	std::vector<std::string> flags_strs = ax::util::String::Split(node.GetChildNodeValue("flags"), ",");
-	//
-	//	ax::util::Flag flags = 0;
-	//
-	//	for (auto& n : flags_strs) {
-	//
-	//		if (n == "SINGLE_IMG") {
-	//			//			ax::Print("OPT : ", n);
-	//			flags |= ax::Button::Flags::SINGLE_IMG;
-	//		}
-	//		else if (n == "IMG_RESIZE") {
-	//			flags |= ax::Button::Flags::IMG_RESIZE;
-	//		}
-	//		else if (n == "CAN_SELECTED") {
-	//			flags |= ax::Button::Flags::CAN_SELECTED;
-	//		}
-	//	}
-	//
-	//	std::string msg = node.GetChildNodeValue("msg");
-	//
-	//	ax::Xml::Node info_node = node.GetNode("info");
-	//
-	//	ax::Button::Info btn_info;
-	//	btn_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
-	//	btn_info.hover = ax::Color::FromString(info_node.GetAttribute("hover"));
-	//	btn_info.clicking = ax::Color::FromString(info_node.GetAttribute("clicking"));
-	//	btn_info.selected = ax::Color::FromString(info_node.GetAttribute("selected"));
-	//	btn_info.contour = ax::Color::FromString(info_node.GetAttribute("contour"));
-	//	btn_info.font_color = ax::Color::FromString(info_node.GetAttribute("font_color"));
-	//	btn_info.corner_radius = std::stoi(info_node.GetAttribute("corner_radius"));
-	//
-	//	auto btn = ax::shared<ax::Button>(
-	//		ax::Rect(pos, size), ax::Button::Events(), btn_info, img_path, label, flags, msg);
-	//	return btn;
-
-	return nullptr;
 }
 
 /*
@@ -619,6 +478,17 @@ Button::Button(const Point& pos, const Button::Events& events, std::string label
 	if (_events.button_click) {
 		win->AddConnection(Events::BUTTON_CLICK, _events.button_click);
 	}
+}
+
+void Button::SetFlags(ax::util::Flag flags)
+{
+	if(flags == _flags) {
+		// Nothing to do.
+		return;
+	}
+	
+	_flags = flags;
+	win->Update();
 }
 
 void Button::SetMsg(const std::string& msg)

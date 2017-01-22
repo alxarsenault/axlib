@@ -63,7 +63,10 @@ namespace event {
 		void operator()(void)
 		{
 			_fct(_msg);
-			delete _msg;
+
+			if(_msg) {
+				delete _msg;
+			}
 		}
 
 	private:

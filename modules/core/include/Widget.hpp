@@ -43,6 +43,7 @@ namespace widget {
 		POINT,
 		SIZE,
 		BOOLEAN,
+		BOOLEAN_LIST,
 		CUSTOM,
 	};
 

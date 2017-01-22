@@ -123,6 +123,16 @@ namespace core {
 	{
 		_cocoa_view->SetTitleBar(titlebar);
 	}
+	
+	void CoreMac::SetBorderLess()
+	{
+		_cocoa_view->SetBorderLess();
+	}
+	
+	void CoreMac::SetDefaultBorder()
+	{
+		_cocoa_view->SetDefaultBorder();
+	}
 
 	void CoreMac::SetFocusAndCenter()
 	{

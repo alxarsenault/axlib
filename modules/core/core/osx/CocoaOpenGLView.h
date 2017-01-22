@@ -32,6 +32,8 @@ namespace cocoa {
 		void RefreshView();
 		void SetResizable(bool resizable);
 		void SetTitleBar(bool titled);
+		void SetBorderLess();
+		void SetDefaultBorder();
 		
 		void SetCursor(int cursor_id);
 		

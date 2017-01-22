@@ -162,6 +162,9 @@ public:
 		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Attribute& node);
 
 		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node);
+		
+	private:
+		std::shared_ptr<ax::Window::Backbone> CreateFromNodePosition(ax::Xml::Node& node, const ax::Point& pos);
 	};
 
 	/*
@@ -210,6 +213,8 @@ public:
 	{
 		return _flags;
 	}
+	
+	void SetFlags(ax::util::Flag flag);
 
 	std::string GetImagePath() const
 	{

@@ -71,6 +71,10 @@ namespace core {
 		virtual void SetResizable(bool resizable);
 
 		virtual void SetTitleBar(bool titlebar);
+		
+		virtual void SetBorderLess();
+		
+		virtual void SetDefaultBorder();
 
 		virtual void SetFocusAndCenter();
 

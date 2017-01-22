@@ -5,6 +5,8 @@ if (CMAKE_BINARY_DIR STREQUAL CMAKE_SOURCE_DIR)
     message(FATAL_ERROR "Source and build directories cannot be the same.")
 endif ()
 
+option(BUILD_EXAMPLES "Build with examples." ON)
+
 project(axlib)
 
 set(CMAKE_BUILD_TYPE Debug)
@@ -80,9 +82,11 @@ target_link_libraries(axLibDyn "-framework Cocoa")
 target_link_libraries(axLibDyn "-framework OpenGL")
 
 # Examples.
-add_subdirectory(example/example01)
-add_subdirectory(example/blank)
-add_subdirectory(example/widget)
+if (BUILD_EXAMPLES)
+	add_subdirectory(example/example01)
+	add_subdirectory(example/blank)
+	add_subdirectory(example/widget)
+endif()
 
 install(TARGETS ${PROJECT_NAME} DESTINATION /usr/local/lib/)
 install(TARGETS axLibDyn DESTINATION /usr/local/lib/)

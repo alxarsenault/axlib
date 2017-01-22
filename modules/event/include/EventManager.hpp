@@ -19,8 +19,7 @@
  * To release a closed-source product which uses axFrameworks, commercial
  * licenses are available, email alx.arsenault@gmail.com for more information.
  */
-#ifndef __AX_EVENT_MANAGER__
-#define __AX_EVENT_MANAGER__
+#pragma once
 
 /// @defgroup event
 /// @{
@@ -65,8 +64,10 @@ namespace event {
 
 		void RemoveEventConnection(const ID& id, const Id& evtId);
 
-	private:
+	
 		void AddFunction(axBindedEvent fct);
+
+	private:
 
 		typedef std::multimap<Id, Function> Multimap;
 		typedef std::pair<const Id, Function> MultimapPair;
@@ -84,4 +85,3 @@ namespace event {
 }
 
 /// @}
-#endif // __AX_EVENT_MANAGER__

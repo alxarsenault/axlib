@@ -54,6 +54,16 @@ namespace cocoa {
 		}
 	}
 	
+	void OpenGLView::SetBorderLess()
+	{
+		[(CocoaAppDelegate*)_app_delegate SetBorderLess];
+	}
+	
+	void OpenGLView::SetDefaultBorder()
+	{
+		[(CocoaAppDelegate*)_app_delegate SetDefaultBorder];
+	}
+	
 	void OpenGLView::SetCursor(int cursor_id) {
 		[(CocoaAppDelegate*)_app_delegate ChangeMouseCursor:cursor_id];
 	}
