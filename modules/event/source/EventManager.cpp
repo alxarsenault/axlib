@@ -76,7 +76,7 @@ namespace event {
 
 		if (it == _event_fct_map.end()) {
 			manager_mutex.unlock();
-			if(msg) {
+			if (msg) {
 				delete msg;
 			}
 			return;
@@ -87,7 +87,7 @@ namespace event {
 
 		if (range.first == it->second.end()) {
 			manager_mutex.unlock();
-			if(msg) {
+			if (msg) {
 				delete msg;
 			}
 			return;
@@ -108,7 +108,7 @@ namespace event {
 		}
 
 		manager_mutex.unlock();
-		if(msg) {
+		if (msg) {
 			delete msg;
 		}
 	}

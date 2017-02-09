@@ -64,11 +64,9 @@ namespace event {
 
 		void RemoveEventConnection(const ID& id, const Id& evtId);
 
-	
 		void AddFunction(axBindedEvent fct);
 
 	private:
-
 		typedef std::multimap<Id, Function> Multimap;
 		typedef std::pair<const Id, Function> MultimapPair;
 

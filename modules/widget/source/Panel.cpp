@@ -175,7 +175,7 @@ void Panel::Component::SetBuilderAttributes(
 	const std::vector<std::pair<std::string, std::string>>& attributes)
 {
 	Panel* panel = static_cast<Panel*>(_win->backbone.get());
-	
+
 	for (auto& n : attributes) {
 		if (n.first == "position") {
 			ax::Point pos(n.second);
@@ -185,18 +185,18 @@ void Panel::Component::SetBuilderAttributes(
 			ax::Size size(n.second);
 			GetWindow()->dimension.SetSize(size);
 		}
-//		else if (n.first == "bg_img") {
-//			Panel* panel = static_cast<Panel*>(_win->backbone.get());
-//
-//			if (panel->_bg_img) {
-//				if (panel->_bg_img->GetImagePath() != n.second) {
-//					panel->_bg_img.reset(new ax::Image(n.second));
-//				}
-//			}
-//			else {
-//				panel->_bg_img.reset(new ax::Image(n.second));
-//			}
-//		}
+		//		else if (n.first == "bg_img") {
+		//			Panel* panel = static_cast<Panel*>(_win->backbone.get());
+		//
+		//			if (panel->_bg_img) {
+		//				if (panel->_bg_img->GetImagePath() != n.second) {
+		//					panel->_bg_img.reset(new ax::Image(n.second));
+		//				}
+		//			}
+		//			else {
+		//				panel->_bg_img.reset(new ax::Image(n.second));
+		//			}
+		//		}
 		else if (n.first == "bg_img") {
 			panel->_bg_img.reset(new Image(n.second));
 		}
@@ -346,12 +346,12 @@ Panel::Panel(const Rect& rect, const Panel::Info& info, const std::string& bg_im
 
 	_bg_img = std::unique_ptr<ax::Image>(new Image(bg_img));
 
-//	if (!_bg_img_path.empty()) {
-//		_bg_img = ax::shared<ax::Image>(_bg_img_path);
-//	}
-//	else {
-//		_bg_img = nullptr;
-//	}
+	//	if (!_bg_img_path.empty()) {
+	//		_bg_img = ax::shared<ax::Image>(_bg_img_path);
+	//	}
+	//	else {
+	//		_bg_img = nullptr;
+	//	}
 	//	win->property.AddProperty("BlockDrawing");
 }
 

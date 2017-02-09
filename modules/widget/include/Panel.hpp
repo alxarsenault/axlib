@@ -162,14 +162,14 @@ public:
 
 	std::string GetBackgroundImagePath() const
 	{
-		if(!_bg_img) {
+		if (!_bg_img) {
 			return "";
 		}
-		
-		if(!_bg_img->IsImageReady()) {
+
+		if (!_bg_img->IsImageReady()) {
 			return "";
 		}
-		
+
 		return _bg_img->GetImagePath();
 	}
 

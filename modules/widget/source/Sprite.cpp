@@ -75,7 +75,8 @@ void Sprite::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_n
 {
 	ax::Window* win = GetWindow();
 	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
-	ax::Sprite::Component* widget_comp = static_cast<ax::Sprite::Component*>(win->component.Get("Widget").get());
+	ax::Sprite::Component* widget_comp
+		= static_cast<ax::Sprite::Component*>(win->component.Get("Widget").get());
 	ax::Sprite::Info* info = static_cast<ax::Sprite::Info*>(widget_comp->GetInfo());
 
 	widget_node.AddAttribute("builder", "Sprite");
@@ -97,7 +98,8 @@ std::vector<std::pair<std::string, std::string>> Sprite::Component::GetBuilderAt
 	std::shared_ptr<ax::Window::Backbone> bbone = win->backbone;
 
 	std::vector<std::pair<std::string, std::string>> atts;
-	atts.push_back(std::pair<std::string, std::string>("position", win->dimension.GetRect().position.ToString()));
+	atts.push_back(
+		std::pair<std::string, std::string>("position", win->dimension.GetRect().position.ToString()));
 	atts.push_back(std::pair<std::string, std::string>("size", win->dimension.GetSize().ToString()));
 
 	return atts;
@@ -106,10 +108,11 @@ std::vector<std::pair<std::string, std::string>> Sprite::Component::GetBuilderAt
 std::vector<ax::widget::ParamInfo> Sprite::Component::GetBuilderAttributesInfo() const
 {
 	return { ax::widget::ParamInfo(ax::widget::ParamType::POINT, "position"),
-		ax::widget::ParamInfo(ax::widget::ParamType::SIZE, "size")};
+		ax::widget::ParamInfo(ax::widget::ParamType::SIZE, "size") };
 }
 
-void Sprite::Component::SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes)
+void Sprite::Component::SetBuilderAttributes(
+	const std::vector<std::pair<std::string, std::string>>& attributes)
 {
 	for (auto& n : attributes) {
 		if (n.first == "position") {
@@ -167,7 +170,8 @@ std::shared_ptr<Window::Backbone> Sprite::Builder::Create(const Point& pos, cons
 	k_info.sprite_size = ax::Size(info_node.GetAttribute("sprite_size"));
 	k_info.n_sprite = std::stoi(info_node.GetAttribute("n_sprite"));
 
-	return ax::shared<ax::Sprite>(ax::Rect(pos, size), k_info);;
+	return ax::shared<ax::Sprite>(ax::Rect(pos, size), k_info);
+	;
 }
 
 std::shared_ptr<Window::Backbone> Sprite::Builder::Create(Xml::Node& node)
@@ -219,22 +223,23 @@ ax::Window::Backbone* Sprite::GetCopy()
 
 void Sprite::SetCurrentIndex(int index)
 {
-	if(_nCurrentImg != index) {
+	if (_nCurrentImg != index) {
 		/// @todo Do check for index bounds.
 		_nCurrentImg = index;
 		win->Update();
 	}
 }
 
-	int Sprite::GetNumberOfSprite() const {
-		if(!(_spriteImg && _spriteImg->IsImageReady())) {
-			return 0;
-		}
-		
-		widget::Component::Ptr widget = win->component.Get<widget::Component>("Widget");
-		Sprite::Info& info = *static_cast<Sprite::Info*>(widget->GetInfo());
-		return _spriteImg->GetSize().w / info.sprite_size.w;
+int Sprite::GetNumberOfSprite() const
+{
+	if (!(_spriteImg && _spriteImg->IsImageReady())) {
+		return 0;
 	}
+
+	widget::Component::Ptr widget = win->component.Get<widget::Component>("Widget");
+	Sprite::Info& info = *static_cast<Sprite::Info*>(widget->GetInfo());
+	return _spriteImg->GetSize().w / info.sprite_size.w;
+}
 
 void Sprite::OnPaint(GC gc)
 {
@@ -243,8 +248,8 @@ void Sprite::OnPaint(GC gc)
 	Sprite::Info& info = *static_cast<Sprite::Info*>(widget->GetInfo());
 
 	if (_spriteImg) {
-		gc.DrawPartOfImageResize(_spriteImg.get(), Point(_nCurrentImg * info.sprite_size.w, 0), info.sprite_size,
-			ax::Rect(ax::Point(0, 0), rect.size));
+		gc.DrawPartOfImageResize(_spriteImg.get(), Point(_nCurrentImg * info.sprite_size.w, 0),
+			info.sprite_size, ax::Rect(ax::Point(0, 0), rect.size));
 	}
 }
 }

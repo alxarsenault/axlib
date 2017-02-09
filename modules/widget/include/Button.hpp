@@ -134,9 +134,9 @@ public:
 	class Component : public ax::widget::Component {
 	public:
 		Component(ax::Window* win, Info* info);
-		
+
 		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node);
-		
+
 		virtual std::vector<std::pair<std::string, std::string>> GetBuilderAttributes();
 
 		std::string GetBuilderName() const
@@ -162,9 +162,10 @@ public:
 		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Attribute& node);
 
 		virtual std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node);
-		
+
 	private:
-		std::shared_ptr<ax::Window::Backbone> CreateFromNodePosition(ax::Xml::Node& node, const ax::Point& pos);
+		std::shared_ptr<ax::Window::Backbone> CreateFromNodePosition(
+			ax::Xml::Node& node, const ax::Point& pos);
 	};
 
 	/*
@@ -213,7 +214,7 @@ public:
 	{
 		return _flags;
 	}
-	
+
 	void SetFlags(ax::util::Flag flag);
 
 	std::string GetImagePath() const

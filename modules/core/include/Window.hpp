@@ -376,11 +376,10 @@ public:
 		_windowManager = wm;
 		event.SetWindowManager(wm);
 	}
-	
-	template<typename T>
-	T* GetBackbone()
+
+	template <typename T> T* GetBackbone()
 	{
-		if(!backbone) {
+		if (!backbone) {
 			return nullptr;
 		}
 

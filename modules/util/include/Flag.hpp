@@ -32,7 +32,7 @@ namespace util {
 	typedef uint16_t Flag;
 
 	bool HasFlag(const Flag& flag_to_verity, Flag flags);
-	
+
 	void SetFlag(const Flag& flag_to_set, bool value, Flag& flags);
 
 	namespace FlagValue {

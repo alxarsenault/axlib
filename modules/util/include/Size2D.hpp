@@ -170,7 +170,7 @@ namespace util {
 			h = H;
 			return *this;
 		}
-		
+
 		std::string ToString() const
 		{
 			return std::to_string(w) + ", " + std::to_string(h);

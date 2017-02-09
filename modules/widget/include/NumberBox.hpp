@@ -140,33 +140,33 @@ public:
 		std::string img;
 		bool single_img;
 	};
-	
+
 	class Component : public ax::widget::Component {
 	public:
 		Component(ax::Window* win, Info* info);
-		
+
 		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node);
-		
+
 		std::string GetBuilderName() const
 		{
 			return "NumberBox";
 		}
-		
+
 		virtual std::vector<std::pair<std::string, std::string>> GetBuilderAttributes();
 		virtual std::vector<ax::widget::ParamInfo> GetBuilderAttributesInfo() const;
-		
+
 		virtual void SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 		virtual void ReloadInfo();
 	};
-	
+
 	class Builder : public ax::widget::Builder {
 	public:
 		Builder();
-		
+
 		virtual std::shared_ptr<ax::Window::Backbone> Create(
 			const ax::Point& pos, const std::string& file_path);
-		
+
 		std::shared_ptr<ax::Window::Backbone> Create(ax::Xml::Node& node);
 	};
 
@@ -211,23 +211,24 @@ public:
 		_value = value;
 		win->Update();
 	}
-	
+
 	ax::util::Flag GetFlags() const
 	{
 		return _flags;
 	}
-	
+
 	ax::util::Range2D<double> GetRange() const
 	{
 		return _range;
 	}
-	
+
 	void SetRange(const ax::util::Range2D<double>& range);
-	
-	ax::util::Control::Type GetControlType() const {
+
+	ax::util::Control::Type GetControlType() const
+	{
 		return _type;
 	}
-	
+
 	void SetControlType(ax::util::Control::Type type);
 
 private:

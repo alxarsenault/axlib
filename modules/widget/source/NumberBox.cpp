@@ -141,7 +141,7 @@ void ax::NumberBox::Info::SetAttribute(const std::pair<std::string, std::string>
 }
 
 ax::NumberBox::Component::Component(ax::Window* win, Info* info)
-: widget::Component(win, info)
+	: widget::Component(win, info)
 {
 }
 
@@ -149,13 +149,14 @@ void ax::NumberBox::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& w
 {
 	ax::Window* win = GetWindow();
 	ax::NumberBox* number_box(win->GetBackbone<ax::NumberBox>());
-	ax::NumberBox::Component* widget_comp = static_cast<ax::NumberBox::Component*>(win->component.Get("Widget").get());
+	ax::NumberBox::Component* widget_comp
+		= static_cast<ax::NumberBox::Component*>(win->component.Get("Widget").get());
 	ax::NumberBox::Info* info = static_cast<ax::NumberBox::Info*>(widget_comp->GetInfo());
 
 	widget_node.AddAttribute("builder", "NumberBox");
-	
+
 	ax::Rect rect = win->dimension.GetRect();
-	
+
 	widget_node.AddNode(xml.CreateNode("position", std::to_string(rect.position)));
 	widget_node.AddNode(xml.CreateNode("size", std::to_string(rect.size)));
 
@@ -167,7 +168,7 @@ void ax::NumberBox::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& w
 	info_node.AddAttribute("selected", info->selected.ToString());
 	info_node.AddAttribute("contour", info->contour.ToString());
 	info_node.AddAttribute("font_color", info->font_color.ToString());
-	
+
 	info_node.AddAttribute("img", info->img);
 	info_node.AddAttribute("single_img", std::to_string(info->single_img));
 
@@ -182,11 +183,13 @@ std::vector<std::pair<std::string, std::string>> ax::NumberBox::Component::GetBu
 	ax::NumberBox* number_box(win->GetBackbone<ax::NumberBox>());
 
 	std::vector<std::pair<std::string, std::string>> atts;
-	atts.push_back(std::pair<std::string, std::string>("position", win->dimension.GetRect().position.ToString()));
+	atts.push_back(
+		std::pair<std::string, std::string>("position", win->dimension.GetRect().position.ToString()));
 	atts.push_back(std::pair<std::string, std::string>("size", win->dimension.GetSize().ToString()));
 	atts.push_back(std::pair<std::string, std::string>("flags", std::to_string(number_box->GetFlags())));
 	atts.push_back(std::pair<std::string, std::string>("range", number_box->GetRange().ToString()));
-	atts.push_back(std::pair<std::string, std::string>("type", std::to_string(int(number_box->GetControlType()))));
+	atts.push_back(
+		std::pair<std::string, std::string>("type", std::to_string(int(number_box->GetControlType()))));
 	return atts;
 }
 
@@ -196,13 +199,14 @@ std::vector<ax::widget::ParamInfo> ax::NumberBox::Component::GetBuilderAttribute
 		ax::widget::ParamInfo(ax::widget::ParamType::SIZE, "size"),
 		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "flags"),
 		ax::widget::ParamInfo(ax::widget::ParamType::RANGE, "range"),
-		ax::widget::ParamInfo(ax::widget::ParamType::INTEGER, "type")};
+		ax::widget::ParamInfo(ax::widget::ParamType::INTEGER, "type") };
 }
 
-void ax::NumberBox::Component::SetBuilderAttributes(const std::vector<std::pair<std::string, std::string>>& attributes)
+void ax::NumberBox::Component::SetBuilderAttributes(
+	const std::vector<std::pair<std::string, std::string>>& attributes)
 {
 	ax::NumberBox* number_box = static_cast<ax::NumberBox*>(GetWindow()->backbone.get());
-	
+
 	for (auto& n : attributes) {
 		if (n.first == "position") {
 			ax::Point pos = ax::Point(n.second);
@@ -216,7 +220,8 @@ void ax::NumberBox::Component::SetBuilderAttributes(const std::vector<std::pair<
 			number_box->SetRange(ax::util::Range2D<double>(n.second));
 		}
 		else if (n.first == "type") {
-			number_box->SetControlType(ax::util::Control::Type(static_cast<ax::util::Control::Type>(std::stoi(n.second))));
+			number_box->SetControlType(
+				ax::util::Control::Type(static_cast<ax::util::Control::Type>(std::stoi(n.second))));
 		}
 	}
 }
@@ -230,14 +235,14 @@ void ax::NumberBox::Component::ReloadInfo()
 {
 	ax::NumberBox* nbox_obj = static_cast<ax::NumberBox*>(_win->backbone.get());
 	ax::NumberBox::Info* info = static_cast<ax::NumberBox::Info*>(_info);
-	
+
 	if (nbox_obj->_bgImg->GetImagePath() != info->img) {
 		/// @todo Leak --> use shared_ptr.
 		nbox_obj->_bgImg = new Image(info->img);
 	}
-	
+
 	nbox_obj->_currentColor = info->normal;
-	
+
 	_win->Update();
 }
 
@@ -245,15 +250,16 @@ ax::NumberBox::Builder::Builder()
 {
 }
 
-std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(const Point& pos, const std::string& file_path)
+std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(
+	const Point& pos, const std::string& file_path)
 {
 	ax::Xml xml(file_path);
-	
+
 	if (!xml.Parse()) {
 		ax::console::Error("Parsing error.");
 		return nullptr;
 	}
-	
+
 	ax::Xml::Node control = xml.GetNode("Widget");
 	std::string builder_name = control.GetAttribute("builder");
 	std::string obj_name = control.GetAttribute("name");
@@ -261,8 +267,9 @@ std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(const Point
 	const ax::Size size(control.GetChildNodeValue("size"));
 	const ax::util::Flag flags = std::stoi(control.GetChildNodeValue("flags"));
 	const ax::util::Range2D<double> range(control.GetChildNodeValue("range"));
-	const ax::util::Control::Type type(static_cast<ax::util::Control::Type>(std::stoi(control.GetChildNodeValue("type"))));
-	
+	const ax::util::Control::Type type(
+		static_cast<ax::util::Control::Type>(std::stoi(control.GetChildNodeValue("type"))));
+
 	ax::Xml::Node info_node = control.GetNode("info");
 	ax::NumberBox::Info k_info;
 	k_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
@@ -271,11 +278,12 @@ std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(const Point
 	k_info.selected = ax::Color::FromString(info_node.GetAttribute("selected"));
 	k_info.contour = ax::Color::FromString(info_node.GetAttribute("contour"));
 	k_info.font_color = ax::Color::FromString(info_node.GetAttribute("font_color"));
-	
+
 	k_info.img = info_node.GetAttribute("img");
 	k_info.single_img = (bool)std::stoi(info_node.GetAttribute("single_img"));
-	
-	return ax::shared<ax::NumberBox>(ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range, type);
+
+	return ax::shared<ax::NumberBox>(
+		ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range, type);
 }
 
 std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(Xml::Node& node)
@@ -288,10 +296,11 @@ std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(Xml::Node& 
 
 	const ax::util::Flag flags = std::stoi(control.GetChildNodeValue("flags"));
 	const ax::util::Range2D<double> range(control.GetChildNodeValue("range"));
-	const ax::util::Control::Type type(static_cast<ax::util::Control::Type>(std::stoi(control.GetChildNodeValue("type"))));
-	
+	const ax::util::Control::Type type(
+		static_cast<ax::util::Control::Type>(std::stoi(control.GetChildNodeValue("type"))));
+
 	ax::Xml::Node info_node = control.GetNode("info");
-	
+
 	ax::NumberBox::Info k_info;
 	k_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
 	k_info.hover = ax::Color::FromString(info_node.GetAttribute("hover"));
@@ -299,11 +308,12 @@ std::shared_ptr<ax::Window::Backbone> ax::NumberBox::Builder::Create(Xml::Node& 
 	k_info.selected = ax::Color::FromString(info_node.GetAttribute("selected"));
 	k_info.contour = ax::Color::FromString(info_node.GetAttribute("contour"));
 	k_info.font_color = ax::Color::FromString(info_node.GetAttribute("font_color"));
-	
+
 	k_info.img = info_node.GetAttribute("img");
 	k_info.single_img = (bool)std::stoi(info_node.GetAttribute("single_img"));
-	
-	return ax::shared<ax::NumberBox>(ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range, type);
+
+	return ax::shared<ax::NumberBox>(
+		ax::Rect(pos, size), ax::NumberBox::Events(), k_info, flags, 0.0, range, type);
 }
 
 /*
@@ -324,7 +334,8 @@ ax::NumberBox::NumberBox(const ax::Rect& rect, const ax::NumberBox::Events& even
 {
 	win = ax::Window::Create(rect);
 
-	win->component.Add("Widget", widget::Component::Ptr(new ax::NumberBox::Component(win, new ax::NumberBox::Info(info))));
+	win->component.Add(
+		"Widget", widget::Component::Ptr(new ax::NumberBox::Component(win, new ax::NumberBox::Info(info))));
 
 	win->property.AddProperty("Editable");
 
@@ -367,7 +378,8 @@ ax::NumberBox::NumberBox(const ax::Point& pos, const ax::NumberBox::Events& even
 {
 	win = ax::Window::Create(ax::Rect(pos, ax::Size(50, 20)));
 
-	win->component.Add("Widget", widget::Component::Ptr(new ax::NumberBox::Component(win, new ax::NumberBox::Info(info))));
+	win->component.Add(
+		"Widget", widget::Component::Ptr(new ax::NumberBox::Component(win, new ax::NumberBox::Info(info))));
 
 	win->property.AddProperty("Editable");
 

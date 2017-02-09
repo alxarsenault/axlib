@@ -103,9 +103,9 @@ namespace widget {
 		virtual void SetInfo(const std::vector<std::pair<std::string, std::string>>& attributes);
 
 		ax::widget::Info* GetInfo();
-		
-		template<typename T>
-		T* GetInfo() {
+
+		template <typename T> T* GetInfo()
+		{
 			return static_cast<T*>(_info);
 		}
 
@@ -139,7 +139,7 @@ namespace widget {
 			SaveFromWidgetNode(xml, widget_node);
 			return widget_node;
 		}
-		
+
 		virtual bool Save(const std::string file_path)
 		{
 			ax::Xml xml;
@@ -149,10 +149,9 @@ namespace widget {
 			xml.Save(file_path);
 			return false;
 		}
-		
+
 		virtual void SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_node)
 		{
-			
 		}
 
 		virtual void SetSaveChildCallback(std::function<void(ax::Xml&, ax::Xml::Node&, ax::Window*)> fct)

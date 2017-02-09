@@ -55,8 +55,7 @@ public:
 
 		virtual std::vector<widget::ParamInfo> GetParametersInfo() const
 		{
-			return {
-				widget::ParamInfo(widget::ParamType::FILEPATH, "img_path"),
+			return { widget::ParamInfo(widget::ParamType::FILEPATH, "img_path"),
 				widget::ParamInfo(widget::ParamType::SIZE, "sprite_size"),
 				widget::ParamInfo(widget::ParamType::INTEGER, "n_sprite") };
 		}
@@ -106,13 +105,14 @@ public:
 	Sprite(const ax::Rect& rect, const ax::Sprite::Info& info);
 
 	ax::Window::Backbone* GetCopy();
-	
+
 	void SetCurrentIndex(int index);
-	
-	int GetCurrentIndex() const {
+
+	int GetCurrentIndex() const
+	{
 		return _nCurrentImg;
 	}
-	
+
 	int GetNumberOfSprite() const;
 
 protected:

@@ -64,7 +64,7 @@ namespace event {
 		{
 			_fct(_msg);
 
-			if(_msg) {
+			if (_msg) {
 				delete _msg;
 			}
 		}

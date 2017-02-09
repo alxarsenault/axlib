@@ -79,9 +79,9 @@ namespace core {
 		void SetCursor(const Core::Cursor& cursor_id);
 
 		void SetResizable(bool resizable);
-		
+
 		inline void SetBorderLess();
-		
+
 		inline void SetDefaultBorder();
 
 		void SetTitleBar(bool titlebar);
@@ -89,8 +89,9 @@ namespace core {
 		void SetFocusAndCenter();
 
 		std::string GetPasteboardConent();
-		
-		inline void SetPasteboardContent(const std::string& str) {
+
+		inline void SetPasteboardContent(const std::string& str)
+		{
 			_core->SetPasteboardContent(str);
 		}
 
@@ -117,13 +118,13 @@ namespace core {
 	private:
 		Core* _core;
 	};
-	
+
 	// Implementation.
 	void Facade::SetBorderLess()
 	{
 		_core->SetBorderLess();
 	}
-	
+
 	void Facade::SetDefaultBorder()
 	{
 		_core->SetDefaultBorder();

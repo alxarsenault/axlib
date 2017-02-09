@@ -71,15 +71,15 @@ namespace core {
 		virtual void SetResizable(bool resizable);
 
 		virtual void SetTitleBar(bool titlebar);
-		
+
 		virtual void SetBorderLess();
-		
+
 		virtual void SetDefaultBorder();
 
 		virtual void SetFocusAndCenter();
 
 		virtual std::string GetPasteboardContent();
-		
+
 		virtual void SetPasteboardContent(const std::string& str);
 
 	private:

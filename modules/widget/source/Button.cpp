@@ -166,23 +166,23 @@ void Button::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_n
 	ax::Button* btn = win->GetBackbone<ax::Button>();
 	ax::Button::Component::Ptr widget_comp = win->component.Get<ax::Button::Component>("Widget");
 	ax::Button::Info* info = widget_comp->GetInfo<ax::Button::Info>();
-	
+
 	widget_node.AddAttribute("builder", "Button");
-	
+
 	const ax::Rect rect = win->dimension.GetRect();
-	
+
 	// Position.
 	{
 		std::string value_str(std::to_string(rect.position.x) + ", " + std::to_string(rect.position.y));
 		widget_node.AddNode(xml.CreateNode("position", value_str));
 	}
-	
+
 	// Size.
 	{
 		std::string value_str(std::to_string(rect.size.w) + ", " + std::to_string(rect.size.h));
 		widget_node.AddNode(xml.CreateNode("size", value_str));
 	}
-	
+
 	ax::Xml::Node info_node = xml.CreateNode("info");
 	widget_node.AddNode(info_node);
 	info_node.AddAttribute("normal", info->normal.ToString());
@@ -192,19 +192,19 @@ void Button::Component::SaveFromWidgetNode(ax::Xml& xml, ax::Xml::Node& widget_n
 	info_node.AddAttribute("contour", info->contour.ToString());
 	info_node.AddAttribute("font_color", info->font_color.ToString());
 	info_node.AddAttribute("corner_radius", std::to_string(info->corner_radius));
-	
+
 	widget_node.AddNode(xml.CreateNode("img_path", btn->GetImagePath()));
 	widget_node.AddNode(xml.CreateNode("label", btn->GetLabel()));
 	widget_node.AddNode(xml.CreateNode("msg", btn->GetMsg()));
-	
+
 	ax::Xml::Node flag_node = xml.CreateNode("flags");
 	widget_node.AddNode(flag_node);
-	
+
 	ax::util::Flag flags = btn->GetFlags();
 	const bool v_single_img = ax::util::HasFlag(Button::Flags::SINGLE_IMG, flags);
 	const bool v_img_resize = ax::util::HasFlag(Button::Flags::IMG_RESIZE, flags);
 	const bool v_can_selected = ax::util::HasFlag(Button::Flags::CAN_SELECTED, flags);
-	
+
 	flag_node.AddNode(xml.CreateNode("single_img", std::to_string((int)v_single_img)));
 	flag_node.AddNode(xml.CreateNode("img_resize", std::to_string((int)v_img_resize)));
 	flag_node.AddNode(xml.CreateNode("can_selected", std::to_string((int)v_can_selected)));
@@ -231,14 +231,14 @@ std::vector<std::pair<std::string, std::string>> Button::Component::GetBuilderAt
 	atts.push_back(std::pair<std::string, std::string>("msg", btn->GetMsg()));
 
 	ax::util::Flag flags = btn->GetFlags();
-	atts.push_back(std::pair<std::string, std::string>("single_img",
-		std::to_string((int)ax::util::HasFlag(Button::Flags::SINGLE_IMG, flags))));
-	
-	atts.push_back(std::pair<std::string, std::string>("img_resize",
-		std::to_string((int)ax::util::HasFlag(Button::Flags::IMG_RESIZE, flags))));
-	
-	atts.push_back(std::pair<std::string, std::string>("can_selected",
-		std::to_string((int)ax::util::HasFlag(Button::Flags::CAN_SELECTED, flags))));
+	atts.push_back(std::pair<std::string, std::string>(
+		"single_img", std::to_string((int)ax::util::HasFlag(Button::Flags::SINGLE_IMG, flags))));
+
+	atts.push_back(std::pair<std::string, std::string>(
+		"img_resize", std::to_string((int)ax::util::HasFlag(Button::Flags::IMG_RESIZE, flags))));
+
+	atts.push_back(std::pair<std::string, std::string>(
+		"can_selected", std::to_string((int)ax::util::HasFlag(Button::Flags::CAN_SELECTED, flags))));
 
 	return atts;
 }
@@ -249,7 +249,7 @@ std::vector<ax::widget::ParamInfo> Button::Component::GetBuilderAttributesInfo()
 		ax::widget::ParamInfo(ax::widget::ParamType::SIZE, "size"),
 		ax::widget::ParamInfo(ax::widget::ParamType::FILEPATH, "img_path"),
 		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "label"),
-//		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "flags"),
+		//		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "flags"),
 		ax::widget::ParamInfo(ax::widget::ParamType::TEXT, "msg"),
 		ax::widget::ParamInfo(ax::widget::ParamType::BOOLEAN, "single_img"),
 		ax::widget::ParamInfo(ax::widget::ParamType::BOOLEAN, "img_resize"),
@@ -361,31 +361,31 @@ std::shared_ptr<ax::Window::Backbone> Button::Builder::Create(ax::Attribute& nod
 	return nullptr;
 }
 
-std::shared_ptr<ax::Window::Backbone> Button::Builder::CreateFromNodePosition(ax::Xml::Node& node, const ax::Point& pos)
+std::shared_ptr<ax::Window::Backbone> Button::Builder::CreateFromNodePosition(
+	ax::Xml::Node& node, const ax::Point& pos)
 {
 	ax::Size size(node.GetChildNodeValue("size"));
 	std::string img_path = node.GetChildNodeValue("img_path");
 	std::string label = node.GetChildNodeValue("label");
-	
-	
+
 	ax::Xml::Node flags_node = node.GetNode("flags");
 	const std::string f_single_img = flags_node.GetChildNodeValue("single_img");
 	const std::string f_img_resize = flags_node.GetChildNodeValue("img_resize");
 	const std::string f_can_selected = flags_node.GetChildNodeValue("can_selected");
-	
+
 	bool v_single_img = (bool)std::stoi(f_single_img);
 	bool v_img_resize = (bool)std::stoi(f_img_resize);
 	bool v_can_selected = (bool)std::stoi(f_can_selected);
-	
+
 	ax::util::Flag flags = 0;
 	ax::util::SetFlag(Flags::SINGLE_IMG, v_single_img, flags);
 	ax::util::SetFlag(Flags::IMG_RESIZE, v_img_resize, flags);
 	ax::util::SetFlag(Flags::CAN_SELECTED, v_can_selected, flags);
-	
+
 	std::string msg = node.GetChildNodeValue("msg");
-	
+
 	ax::Xml::Node info_node = node.GetNode("info");
-	
+
 	ax::Button::Info btn_info;
 	btn_info.normal = ax::Color::FromString(info_node.GetAttribute("normal"));
 	btn_info.hover = ax::Color::FromString(info_node.GetAttribute("hover"));
@@ -394,10 +394,10 @@ std::shared_ptr<ax::Window::Backbone> Button::Builder::CreateFromNodePosition(ax
 	btn_info.contour = ax::Color::FromString(info_node.GetAttribute("contour"));
 	btn_info.font_color = ax::Color::FromString(info_node.GetAttribute("font_color"));
 	btn_info.corner_radius = std::stoi(info_node.GetAttribute("corner_radius"));
-	
+
 	auto btn = ax::shared<ax::Button>(
 		ax::Rect(pos, size), ax::Button::Events(), btn_info, img_path, label, flags, msg);
-	
+
 	return btn;
 }
 
@@ -482,11 +482,11 @@ Button::Button(const Point& pos, const Button::Events& events, std::string label
 
 void Button::SetFlags(ax::util::Flag flags)
 {
-	if(flags == _flags) {
+	if (flags == _flags) {
 		// Nothing to do.
 		return;
 	}
-	
+
 	_flags = flags;
 	win->Update();
 }

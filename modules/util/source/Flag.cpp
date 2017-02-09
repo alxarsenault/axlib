@@ -28,14 +28,14 @@ namespace util {
 	{
 		return ((flags & flag_to_verity) != 0);
 	}
-	
+
 	void SetFlag(const Flag& flag_to_set, bool value, Flag& flags)
 	{
-		if(value) {
+		if (value) {
 			flags |= flag_to_set;
 			return;
 		}
-		
+
 		flags &= ~(flag_to_set);
 	}
 

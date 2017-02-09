@@ -19,10 +19,10 @@ namespace util {
 			, right(r)
 		{
 		}
-		
+
 		Range2D(const std::string& size_str)
-		: left(0)
-		, right(1)
+			: left(0)
+			, right(1)
 		{
 			// Split string.
 			std::vector<std::string> size_elem;
@@ -30,19 +30,19 @@ namespace util {
 			size_t pos = 0;
 			std::string token;
 			const std::string delimiter(",");
-			
+
 			while ((pos = r.find(delimiter)) != std::string::npos) {
 				token = r.substr(0, pos);
 				size_elem.push_back(token);
 				r.erase(0, pos + delimiter.length());
 			}
-			
+
 			size_elem.push_back(r);
-			
+
 			if (size_elem.size() != 2) {
 				return;
 			}
-			
+
 			left = (T)std::stod(size_elem[0]);
 			right = (T)std::stod(size_elem[1]);
 		}
@@ -93,7 +93,7 @@ namespace util {
 
 			return v;
 		}
-		
+
 		std::string ToString() const
 		{
 			return std::to_string(left) + ", " + std::to_string(right);

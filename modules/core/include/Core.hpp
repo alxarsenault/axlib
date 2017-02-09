@@ -129,14 +129,13 @@ namespace core {
 		virtual void SetTitleBar(bool titlebar)
 		{
 		}
-		
+
 		virtual void SetBorderLess()
 		{
 		}
-		
+
 		virtual void SetDefaultBorder()
 		{
-			
 		}
 
 		virtual void SetFocusAndCenter()
@@ -147,7 +146,7 @@ namespace core {
 		{
 			return "";
 		}
-		
+
 		virtual void SetPasteboardContent(const std::string& str)
 		{
 		}
