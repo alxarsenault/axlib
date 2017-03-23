@@ -81,6 +81,9 @@ target_link_libraries(axLibDyn  ${FREETYPE_LIBRARY})
 target_link_libraries(axLibDyn "-framework Cocoa")
 target_link_libraries(axLibDyn "-framework OpenGL")
 
+# Developement Project.
+add_subdirectory(dev/sizer)
+
 # Examples.
 if (BUILD_EXAMPLES)
 	add_subdirectory(example/example01)

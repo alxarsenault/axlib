@@ -21,12 +21,14 @@
  */
 
 #include "CocoaInterface.h"
+#include "CocoaWindowObjc.h"
 #include "Util.hpp"
 
 #import <Cocoa/Cocoa.h>
 #import <Foundation/Foundation.h>
+#include <fst/print.h>
 
-namespace cocoa {
+namespace cocoa {    
 	void AddEventToDispatchQueue()
 	{
 		dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
@@ -182,6 +184,43 @@ namespace cocoa {
 		
 #endif // DEBUG.
 	}
+    
+    void* CreateWindow(const ax::Rect& rect)
+    {
+        CocoaWindowObjc * window = [[CocoaWindowObjc alloc]
+                                    initWithRect:NSMakeRect(rect.position.x, rect.position.y, rect.size.w, rect.size.h)];
+        return window;
+    }
+    
+    void CreateWindow()
+    {
+        fst::print("CreateWindow");
+        
+        
+        
+        
+        
+        
+        
+        CocoaWindowObjc * window = [[CocoaWindowObjc alloc] initWithRect:NSMakeRect(100, 100, 200, 200)];
+        
+        
+//        NSRect frame = NSMakeRect(100, 100, 200, 200);
+//        NSUInteger styleMask = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable |
+//        NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable;
+//        
+//        NSRect rect = [NSWindow contentRectForFrameRect:frame styleMask:styleMask];
+//        CocoaWindow * window = [[CocoaWindow alloc] initWithContentRect:rect
+//                                                        styleMask:styleMask backing: NSBackingStoreBuffered
+//                                                            defer:false];
+//        [window setBackgroundColor:[NSColor blueColor]];
+//                [window makeKeyAndOrderFront: window];
+//        
+//        [window display];
+        
+  
+        
+    }
 	
 	void* CreateNSWindowFromApp(void* parent, void*& child, void*& appDelegate)
 	{

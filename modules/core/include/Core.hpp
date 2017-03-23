@@ -176,6 +176,11 @@ namespace core {
 		/// implementatiion.
 		void CallAfterGUILoadFunction();
 
+		/////////////
+		virtual void CreateWindow()
+		{
+		}
+
 	protected:
 		std::shared_ptr<ax::event::Manager> _evtManager;
 

@@ -5,10 +5,6 @@
 #include "axCoreMac.hpp"
 
 namespace cocoa {
-//	OpenGLView::OpenGLView() {
-//		_app_delegate = (type::AppDelegate*)[[CocoaAppDelegate alloc] init];
-//	}
-	
 	OpenGLView::OpenGLView(ax::core::CoreMac* core, const ax::Size& size) : _core(core) {
 		_app_delegate = (type::AppDelegate*)[[CocoaAppDelegate alloc] initWithRect:
 			NSMakeRect(0.0f, 0.0f, size.w, size.h) core:core cpp_view:this];

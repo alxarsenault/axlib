@@ -82,6 +82,8 @@ namespace core {
 
 		virtual void SetPasteboardContent(const std::string& str);
 
+		void CreateWindow();
+
 	private:
 		cocoa::Application _cocoa_app;
 		std::shared_ptr<cocoa::OpenGLView> _cocoa_view;

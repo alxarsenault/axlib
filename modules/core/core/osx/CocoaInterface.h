@@ -20,6 +20,10 @@ namespace cocoa {
 	
 	std::string GetAppPath();
 	std::string GetAppDirectory();
+    
+    void CreateWindow();
+    
+    void* CreateWindow(const ax::Rect& rect);
 	
 	void* CreateNSWindowFromApp(void* parent, void*& child, void*& appDelegate);
 	//{

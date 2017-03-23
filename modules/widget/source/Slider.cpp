@@ -599,15 +599,17 @@ std::shared_ptr<ax::Window::Backbone> Slider::Builder::Create(ax::Xml::Node& con
 ax::Slider::Slider(const ax::Rect& rect, const ax::Slider::Events& events, const ax::Slider::Info& info,
 	ax::util::Flag flags)
 	// Members.
-	: _events(events),
-	  //	  _info(info),
-	  _currentBgColor(info.bgColorNormal),
-	  _currentSliderColor(info.sliderColorNormal),
-	  _flags(flags),
-	  _nCurrentImg(axBTN_NORMAL),
-	  _delta_click(0),
+	: _events(events)
+	,
+	//	  _info(info),
+	_currentBgColor(info.bgColorNormal)
+	, _currentSliderColor(info.sliderColorNormal)
+	, _flags(flags)
+	, _nCurrentImg(axBTN_NORMAL)
+	, _delta_click(0)
+	,
 
-	  _sliderValue(0.0)
+	_sliderValue(0.0)
 //	  _bg_alpha(1.0)
 {
 

@@ -153,5 +153,11 @@ namespace core {
 	{
 		cocoa::SetPasteboardContent(str);
 	}
+
+	void CoreMac::CreateWindow()
+	{
+		cocoa::CreateWindow();
+		fst::print("test");
+	}
 }
 }

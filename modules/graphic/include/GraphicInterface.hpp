@@ -9,7 +9,7 @@
 #pragma once
 
 #include "Util.hpp"
-
+// ax::rndr
 namespace ax {
 namespace GL {
 	void Resize(const ax::Size& size);

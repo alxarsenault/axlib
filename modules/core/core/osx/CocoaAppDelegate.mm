@@ -274,7 +274,7 @@ void RunLoopObserverCallback(CFRunLoopObserverRef observer, CFRunLoopActivity ac
 }
 
 - (void)rightMouseDown:(NSEvent*)event
-{
+{    
 	NSPoint locationInView = [self convertPoint:[event locationInWindow] fromView:nil];
 	const ax::Point pos(locationInView.x, locationInView.y);
 	
