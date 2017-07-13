@@ -40,17 +40,22 @@ Frame::Frame(const ax::Rect& rect)
 	_frame = std::make_shared<cocoa::Window>(rect);
 #endif // __APPLE__
 
-	_context_id = ax::rndr::Engine::GetInstance().CreateContext();
+//	_context_id = ax::rndr::Engine::GetInstance().CreateContext();
 }
 
 void Frame::SetSize(const ax::Size& size)
 {
-	ax::rndr::Context* context = ax::rndr::Engine::GetInstance().GetContext(_context_id);
-	if (context == nullptr) {
-		return;
-	}
-
-	context->Resize(size);
+//	ax::rndr::Context* context = ax::rndr::Engine::GetInstance().GetContext(_context_id);
+//	if (context == nullptr) {
+//		return;
+//	}
+//
+//	context->Resize(size);
 	_frame->SetSize(size);
 }
+    
+//    void Frame::SetDrawFunction(std::function<void()> df)
+//    {
+//        _frame->SetDrawFunction(df);
+//    }
 }

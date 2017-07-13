@@ -23,12 +23,44 @@
 #pragma once
 
 #include "Util.hpp"
+#include "Context.hpp"
+#include "shader.h"
+#include <functional>
+#include <fst/print.h>
 
 namespace ax {
 
 class FrameInterface {
 public:
+    FrameInterface();
+    
 	virtual void SetSize(const ax::Size& size) = 0;
+    
+    void OnTest()
+    {
+        fst::print("DEBUG TEST :", _debug_int);
+    }
+    
+    void Init(const ax::Size& size);
+    
+    void OnDraw(const ax::Size& size);
+    
+//    inline void OnDraw() {
+//        fst::print("ONDRAW", _debug_int);
+//        if(_on_draw_fct) {
+//            _on_draw_fct();
+//        }
+//    }
+    
+//    inline void SetDrawFunction(std::function<void()> df) {
+//        _on_draw_fct = df;
+//    }
+    
+private:
+//    std::function<void()> _on_draw_fct = nullptr;
+    int _debug_int;
+    unsigned long _context_id;
+    ax::rndr::shader _shader;
 };
 } // ax.
 

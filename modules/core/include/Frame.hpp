@@ -32,10 +32,12 @@ public:
 	Frame(const ax::Rect& rect);
 
 	void SetSize(const ax::Size& size);
+    
+//    void SetDrawFunction(std::function<void()> df);
 
 private:
 	std::shared_ptr<FrameInterface> _frame;
-    unsigned long _context_id;
+//    unsigned long _context_id;
 };
 } // ax.
 

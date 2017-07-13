@@ -1,4 +1,5 @@
 #include "CocoaWindowObjc.h"
+#include "CocoaWindow.h"
 #include <fst/print.h>
 #include "Render.hpp"
 #include "Util.hpp"
@@ -12,6 +13,11 @@
 
 @implementation CocoaWindowObjc
 
+- (void) SetWindow:(cocoa::Window*)window
+{
+//    _cc_window = window;
+}
+
 - (void) SetSize:(NSSize)size
 {
     [_ns_window setContentSize:size];
@@ -19,9 +25,11 @@
     
 }
 
-- (id)initWithRect:(NSRect)contentSize
+//- (id)initWithRect:(NSRect)contentSize
+- (id) initWithRect:(NSRect)contentSize frame:(ax::FrameInterface*) frame_interface
 {
-    if ( self = [super initWithFrame:contentSize] ) {        
+    if ( self = [super initWithFrame:contentSize] ) {
+        _frame_interface = frame_interface;
         // allocate window
         unsigned int frame_style_flags = NSWindowStyleMaskTitled | NSWindowStyleMaskClosable |
         NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable;
@@ -39,32 +47,34 @@
         
         [self wantsBestResolutionOpenGLSurface];
         
+        _frame_interface->Init(ax::Size(contentSize.size.width, contentSize.size.height));
         
-        _context.Init();
-        _context.Resize(ax::Size(contentSize.size.width, contentSize.size.height));
+        
+//        _context.Init(ax::Size(contentSize.size.width, contentSize.size.height));
+//        _context.Resize(ax::Size(contentSize.size.width, contentSize.size.height));
         ///////////////////////
-        const char* v_normal("uniform sampler2D texture1; 						\
-                                   uniform mat4 mvp_matrix;							\
-                                   attribute vec4 vPosition;							\
-                                   attribute vec4 vColor;								\
-                                   varying vec4 fragColor;							\
-                                   \
-                                   void main()										\
-                                   {													\
-                                   fragColor = vColor;								\
-                                   gl_Position = mvp_matrix * vPosition;			\
-                                   }													");
-        
-        // Normal fragment shader.
-        const char* f_normal("varying vec4 fragColor;							\
-                                   uniform sampler2D texture1;						\
-                                   \
-                                   void main()										\
-                                   {													\
-                                   gl_FragColor = fragColor;						\
-                                   }													");
-        _shader.compile(v_normal, f_normal);
-        _shader.link({{0, "vPosition"}, {1, "vTexCoord"}, {2, "vColor"}});
+//        const char* v_normal("uniform sampler2D texture1; 						\
+//                                   uniform mat4 mvp_matrix;							\
+//                                   attribute vec4 vPosition;							\
+//                                   attribute vec4 vColor;								\
+//                                   varying vec4 fragColor;							\
+//                                   \
+//                                   void main()										\
+//                                   {													\
+//                                   fragColor = vColor;								\
+//                                   gl_Position = mvp_matrix * vPosition;			\
+//                                   }													");
+//        
+//        // Normal fragment shader.
+//        const char* f_normal("varying vec4 fragColor;							\
+//                                   uniform sampler2D texture1;						\
+//                                   \
+//                                   void main()										\
+//                                   {													\
+//                                   gl_FragColor = fragColor;						\
+//                                   }													");
+//        _shader.compile(v_normal, f_normal);
+//        _shader.link({{0, "vPosition"}, {1, "vTexCoord"}, {2, "vColor"}});
         
     }
     
@@ -78,7 +88,7 @@
 
 - (void) drawRect: (NSRect) bounds
 {
-    
+    _frame_interface->OnDraw(ax::Size(bounds.size.width, bounds.size.height));
 //    glClearColor(0, 0, 0, 0);
 //    glClear(GL_COLOR_BUFFER_BIT);
 //    glColor3f(1.0f, 0.85f, 0.35f);
@@ -92,43 +102,44 @@
 //    glFlush();
     
     
-    _context.Clear();
-    _context.Resize(ax::Size(bounds.size.width, bounds.size.height));
+//    _context.Clear();
+//    _context.Resize(ax::Size(bounds.size.width, bounds.size.height));
+//    
+////    ax::Size global_size = ax::App::GetInstance().GetFrameSize();
+//    
+//    // Projection matrix.
+//    glm::mat4 projMat = glm::ortho((float)0.0, (float)bounds.size.width, (float)bounds.size.height, (float)0.0);
+//    
+//    ax::FRect frect(50.0, 50.0, 200.0, 20.0);
+//    
+//    // Order : bl, tl, tr, br.
+//    ax::util::RectPoints<ax::FPoint> points(frect.GetPoints<ax::FPoint>());
+//    
+//    ax::Color c0(ax::Color(255, 200, 200));
+//    ax::Color colors[4] = { c0, c0, ax::Color(0, 200, 200), c0 };
+//    
+//    _shader.activate();
+//    
+//    // ModelViewProjection matrix.
+////    ax::rndr::Matrix4x4<float> ind = ax::rndr::Matrix4x4<float>::Identity();
+//    glUniformMatrix4fv(
+//                       _shader.get_uniform_location("mvp_matrix"), 1, GL_FALSE, (float*)&projMat[0][0]);//(float*)ind.data());
+//    
+//    // Vertex coordinates.
+//    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, &points);
+//    glEnableVertexAttribArray(0);
+//    
+//    // Color coordinates.
+//    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, colors);
+//    glEnableVertexAttribArray(2);
+//    
+//    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//    
+//    glDisableVertexAttribArray(0);
+//    glDisableVertexAttribArray(2);
+//    
+//    glFlush();
     
-//    ax::Size global_size = ax::App::GetInstance().GetFrameSize();
-    
-    // Projection matrix.
-    glm::mat4 projMat = glm::ortho((float)0.0, (float)bounds.size.width, (float)bounds.size.height, (float)0.0);
-    
-    ax::FRect frect(50.0, 50.0, 200.0, 20.0);
-    
-    // Order : bl, tl, tr, br.
-    ax::util::RectPoints<ax::FPoint> points(frect.GetPoints<ax::FPoint>());
-    
-    ax::Color c0(ax::Color(255, 200, 200));
-    ax::Color colors[4] = { c0, c0, ax::Color(0, 200, 200), c0 };
-    
-    _shader.activate();
-    
-    // ModelViewProjection matrix.
-//    ax::rndr::Matrix4x4<float> ind = ax::rndr::Matrix4x4<float>::Identity();
-    glUniformMatrix4fv(
-                       _shader.get_uniform_location("mvp_matrix"), 1, GL_FALSE, (float*)&projMat[0][0]);//(float*)ind.data());
-    
-    // Vertex coordinates.
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, &points);
-    glEnableVertexAttribArray(0);
-    
-    // Color coordinates.
-    glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE, 0, colors);
-    glEnableVertexAttribArray(2);
-    
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    
-    glDisableVertexAttribArray(0);
-    glDisableVertexAttribArray(2);
-    
-    glFlush();
 }
 
 - (void)lockFocus
